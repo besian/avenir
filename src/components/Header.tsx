@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Icon } from './Icon';
 import { Logo } from './Logo';
+import { MobileMenu } from './MobileMenu';
 import { useUI } from './UIProvider';
 import { IC } from '@/lib/icons';
 import { CONTACT, NAV_LINKS } from '@/lib/content';
@@ -13,6 +14,11 @@ export function Header() {
   const pathname = usePathname();
   const { openPalette } = useUI();
   const [scrolled, setScrolled] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const closeMenu = useCallback(() => setMenu(false), []);
+
+  // Close the phone menu whenever the route changes.
+  useEffect(() => setMenu(false), [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -62,15 +68,22 @@ export function Header() {
           <Icon d={IC.search} size={18} stroke={2.2} />
         </button>
         <div className="hdr__mobile">
-          <button type="button" onClick={openPalette} aria-label="Search" className="m-search">
-            <Icon d={IC.search} size={18} stroke={2.2} />
+          <button type="button" onClick={openPalette} aria-label="Search" className="m-icon">
+            <Icon d={IC.search} size={22} stroke={2.2} />
           </button>
-          <button type="button" onClick={openPalette} className="m-menu">
-            <Icon d={IC.menu} size={16} stroke={2.2} />
-            Menu
+          <button
+            type="button"
+            onClick={() => setMenu(true)}
+            aria-label="Open menu"
+            aria-expanded={menu}
+            aria-controls="mobile-menu"
+            className="m-icon m-icon--end"
+          >
+            <Icon d={IC.menu} size={24} />
           </button>
         </div>
       </div>
+      {menu && <MobileMenu onClose={closeMenu} onSearch={openPalette} isCurrent={isCurrent} />}
     </header>
   );
 }

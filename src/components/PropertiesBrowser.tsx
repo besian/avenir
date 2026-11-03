@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Icon } from './Icon';
 import { HeartIcon } from './HeartIcon';
 import { IC } from '@/lib/icons';
 import { AREAS, PROPERTIES, byOrder, homesCount, labels, propertyHref, type Property } from '@/lib/properties';
 import { useSaved } from '@/lib/storage';
+import { useModal } from '@/lib/useModal';
 
 type View = 'Grid' | 'Map';
 const STATUS = ['All', 'Available', 'Coming soon'] as const;
@@ -20,6 +22,8 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
   const [showSaved, setShowSaved] = useState(false);
   const [view, setView] = useState<View>(defaultView);
   const [hoverId, setHoverId] = useState<string | null>(null);
+  const [sheet, setSheet] = useState(false);
+  const closeSheet = useCallback(() => setSheet(false), []);
   const { saved, toggle, isSaved } = useSaved();
 
   const list = PROPERTIES.filter(
@@ -30,7 +34,8 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
       (!showSaved || saved.includes(p.id)),
   ).sort(byOrder);
 
-  const filtersActive = status !== 'All' || area !== 'All areas' || beds > 0 || showSaved;
+  const filterCount = (status !== 'All' ? 1 : 0) + (area !== 'All areas' ? 1 : 0) + (beds > 0 ? 1 : 0);
+  const filtersActive = filterCount > 0 || showSaved;
   const clear = () => {
     setStatus('All');
     setArea('All areas');
@@ -54,14 +59,19 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
     <>
       <div className="filterbar">
         <div className="wrap filterbar__in">
-          <div role="group" aria-label="Availability" className="seg">
+          <button type="button" className="filters-btn mob-only" onClick={() => setSheet(true)} aria-haspopup="dialog">
+            <Icon d={IC.sliders} size={16} />
+            Filters
+            {filterCount > 0 && <span className="filters-btn__n">{filterCount}</span>}
+          </button>
+          <div role="group" aria-label="Availability" className="seg desk-only">
             {STATUS.map((v) => (
               <button key={v} type="button" className="seg__opt" aria-pressed={status === v} onClick={() => setStatus(v)}>
                 {v}
               </button>
             ))}
           </div>
-          <label className="select-wrap">
+          <label className="select-wrap desk-only">
             Area
             <select aria-label="Area" value={area} onChange={(e) => setArea(e.target.value)}>
               <option>All areas</option>
@@ -70,7 +80,7 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
               ))}
             </select>
           </label>
-          <div role="group" aria-label="Bedrooms" className="seg">
+          <div role="group" aria-label="Bedrooms" className="seg desk-only">
             <span className="seg__label">Beds</span>
             {BEDS.map(([v, label]) => (
               <button key={v} type="button" className="seg__opt seg__opt--num" aria-pressed={beds === v} onClick={() => setBeds(v)}>
@@ -79,14 +89,15 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
             ))}
           </div>
           {filtersActive && (
-            <button type="button" className="clear-btn" onClick={clear}>
+            <button type="button" className="clear-btn desk-only" onClick={clear}>
               Clear filters
             </button>
           )}
           <span className="spacer" />
           <button type="button" className="saved-btn" aria-pressed={showSaved} onClick={() => setShowSaved(!showSaved)}>
             <HeartIcon size={16} filled={showSaved || saved.length > 0} />
-            Saved · {saved.length}
+            <span className="hide-sm">Saved · </span>
+            {saved.length}
           </button>
           <div role="group" aria-label="View" className="seg">
             {(
@@ -97,12 +108,27 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
             ).map(([v, icon]) => (
               <button key={v} type="button" className="seg__opt" aria-pressed={view === v} aria-label={`${v} view`} onClick={() => setView(v)}>
                 <Icon d={icon} size={15} />
-                {v}
+                <span className="hide-sm">{v}</span>
               </button>
             ))}
           </div>
         </div>
       </div>
+
+      {sheet && (
+        <FilterSheet
+          onClose={closeSheet}
+          count={list.length}
+          status={status}
+          setStatus={setStatus}
+          area={area}
+          setArea={setArea}
+          beds={beds}
+          setBeds={setBeds}
+          onClear={clear}
+          active={filterCount > 0}
+        />
+      )}
 
       <section className="wrap results">
         <p aria-live="polite" className="results__count">
@@ -201,5 +227,75 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
         )}
       </section>
     </>
+  );
+}
+
+interface SheetProps {
+  onClose: () => void;
+  count: number;
+  status: (typeof STATUS)[number];
+  setStatus: (v: (typeof STATUS)[number]) => void;
+  area: string;
+  setArea: (v: string) => void;
+  beds: number;
+  setBeds: (v: number) => void;
+  onClear: () => void;
+  active: boolean;
+}
+
+/** Phone-only bottom sheet holding the availability, area and bedroom filters. */
+function FilterSheet({ onClose, count, status, setStatus, area, setArea, beds, setBeds, onClear, active }: SheetProps) {
+  useModal(onClose);
+  return createPortal(
+    <div className="sheet-backdrop" onClick={onClose}>
+      <div role="dialog" aria-modal="true" aria-labelledby="fsheet-title" className="sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="sheet__head">
+          <h2 id="fsheet-title" className="sheet__title">Filters</h2>
+          <button type="button" className="m-icon m-icon--end" onClick={onClose} aria-label="Close filters" autoFocus>
+            <Icon d={IC.close} size={22} />
+          </button>
+        </div>
+        <div className="sheet__body">
+          <div className="sheet__group" role="group" aria-labelledby="fs-avail">
+            <p className="sheet__label" id="fs-avail">Availability</p>
+            <div className="seg seg--full">
+              {STATUS.map((v) => (
+                <button key={v} type="button" className="seg__opt" aria-pressed={status === v} onClick={() => setStatus(v)}>
+                  {v}
+                </button>
+              ))}
+            </div>
+          </div>
+          <label className="sheet__group">
+            <span className="sheet__label">Area</span>
+            <select className="input" value={area} onChange={(e) => setArea(e.target.value)}>
+              <option>All areas</option>
+              {AREAS.map((a) => (
+                <option key={a}>{a}</option>
+              ))}
+            </select>
+          </label>
+          <div className="sheet__group" role="group" aria-labelledby="fs-beds">
+            <p className="sheet__label" id="fs-beds">Bedrooms</p>
+            <div className="seg seg--full">
+              {BEDS.map(([v, label]) => (
+                <button key={v} type="button" className="seg__opt" aria-pressed={beds === v} onClick={() => setBeds(v)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="sheet__foot">
+          <button type="button" className="clear-btn" onClick={onClear} disabled={!active}>
+            Clear all
+          </button>
+          <button type="button" className="btn btn--primary" onClick={onClose}>
+            Show {homesCount(count)}
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body,
   );
 }
