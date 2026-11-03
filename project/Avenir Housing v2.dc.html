@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-dde96aff-1d9b-453e-9ff9-3f5aeda3bf73/styles.css">
+<script src="_ds/modernist-dde96aff-1d9b-453e-9ff9-3f5aeda3bf73/_ds_bundle.js"></script>
+<style>
+:root{--color-bg:#f5f4ef;--color-surface:#eaeae2;--color-text:#1b211d;--color-divider:color-mix(in srgb,#1b211d 22%,transparent);--color-accent:#22543f;--color-accent-100:#eef4ee;--color-accent-200:#dbe7dc;--color-accent-300:#bcd3bf;--color-accent-400:#a3c09f;--color-accent-500:#3d6e57;--color-accent-600:#1a4534;--color-accent-700:#16392b;--color-accent-800:#112d22;--color-accent-900:#0c2019;--color-neutral-100:#f6f6f2;--color-neutral-200:#e6e7e0;--color-neutral-300:#d3d5cd;--color-neutral-400:#b5b8af;--color-neutral-500:#979a91;--color-neutral-600:#797d74;--color-neutral-700:#5b5f57;--color-neutral-800:#40443d;--color-neutral-900:#292d27}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);text-wrap:pretty;-webkit-font-smoothing:antialiased}
+a{color:var(--color-accent-700)}
+a:hover{color:var(--color-accent)}
+h1,h2,h3,h4,p{margin:0}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+::view-transition-old(root){animation:vt-out .18s ease both}
+::view-transition-new(root){animation:vt-in .28s ease both}
+@keyframes vt-out{to{opacity:0;transform:translateY(-6px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}nav button{transition:none!important}::view-transition-old(root),::view-transition-new(root){animation:none}}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:40;background:{{ hdr.bg }};backdrop-filter:{{ hdr.blur }};-webkit-backdrop-filter:{{ hdr.blur }};box-shadow:{{ hdr.shadow }};transition:background .25s ease,box-shadow .25s ease">
+  <div style="height:{{ hdr.barH }};overflow:hidden;background:var(--color-accent-800);color:var(--color-accent-100);transition:height .25s ease">
+    <div style="max-width:1280px;margin:0 auto;height:36px;padding:0 clamp(20px,5vw,72px);display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px;white-space:nowrap">
+      <span style="display:flex;align-items:center;gap:8px;min-width:0"><sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><span>Already a tenant?</span></sc-if><button onClick="{{ go.repair }}" style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 8px;margin-left:-8px;background:none;border:0;border-radius:3px;cursor:pointer;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--color-bg)" style-hover="background:var(--color-accent-700)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ic.wrench }}"></path></svg>Request a repair</button></span>
+      <span style="display:flex;align-items:center;gap:8px"><sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><span>Emergency or risk to safety?</span></sc-if><a href="tel:+447507921011" style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 8px;margin-right:-8px;border-radius:3px;font-weight:600;color:var(--color-bg);text-decoration:none" style-hover="background:var(--color-accent-700);color:var(--color-bg)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ic.phone }}"></path></svg>+44 7507 921011</a></span>
+    </div>
+  </div>
+  <div style="max-width:1280px;margin:0 auto;height:{{ hdr.h }};padding:0 clamp(20px,5vw,72px);display:flex;align-items:center;gap:clamp(16px,3vw,40px);transition:height .25s ease">
+    <button onClick="{{ go.home }}" aria-label="Avenir Housing home" style="display:flex;align-items:center;height:42px;background:none;border:0;padding:0;cursor:pointer;flex:none"><span style="display:inline-flex;align-items:center;gap:0.42em;font-size:{{ hdr.logoFs }};line-height:1;white-space:nowrap;transition:font-size .25s ease"><svg viewBox="0 0 40 40" style="width:1.35em;height:1.35em;flex:none;display:block" aria-hidden="true"><path fill="none" stroke="var(--color-accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M4.5 22.5L20 8L35.5 22.5"></path><circle fill="var(--color-accent)" cx="20" cy="31" r="6"></circle></svg><span style="font-family:var(--font-heading);letter-spacing:-0.035em;display:inline-flex;gap:0.22em;align-items:baseline"><span style="font-weight:800;color:var(--color-accent)">avenir</span><span style="font-weight:300;color:var(--color-accent-500)">housing</span></span></span></button>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main" style="display:flex;align-items:center;justify-content:center;gap:4px;flex:1;min-width:0">
+        <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="5">
+          <button onClick="{{ l.onClick }}" aria-current="{{ l.current }}" style="position:relative;display:inline-flex;align-items:center;justify-content:center;height:42px;background-color:transparent;background-image:linear-gradient(var(--color-accent),var(--color-accent));background-repeat:no-repeat;background-position:50% calc(100% - 6px);background-size:0% 2px;border:0;border-radius:4px;padding:0 {{ navPad }};cursor:pointer;white-space:nowrap;font-family:var(--font-body);font-size:15px;font-weight:{{ l.weight }};letter-spacing:-0.005em;color:{{ l.color }};transition:background-size .35s cubic-bezier(.2,.8,.2,1),color .15s" style-hover="color:var(--color-text);background-size:calc(100% - 16px) 2px">{{ l.label }}<span style="position:absolute;left:50%;bottom:4px;width:4px;height:4px;margin-left:-2px;border-radius:2px;background:{{ l.dot }}"></span></button>
+        </sc-for>
+      </nav>
+      <button onClick="{{ openPal }}" aria-label="Search (⌘K)" title="Search (⌘K)" style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0;background-color:transparent;background-image:linear-gradient(var(--color-accent),var(--color-accent));background-repeat:no-repeat;background-position:50% calc(100% - 6px);background-size:0% 2px;border:0;border-radius:4px;cursor:pointer;flex:none;white-space:nowrap;font-family:var(--font-body);font-size:15px;font-weight:500;color:var(--color-neutral-800);transition:background-size .35s cubic-bezier(.2,.8,.2,1),color .15s" style-hover="color:var(--color-text);background-size:calc(100% - 16px) 2px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0M21 21l-4.3-4.3"></path></svg></button>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <span style="flex:1"></span>
+      <button onClick="{{ openPal }}" aria-label="Search" style="width:44px;height:44px;display:grid;place-items:center;background:color-mix(in srgb,var(--color-text) 5%,transparent);border:0;border-radius:4px;cursor:pointer;color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0M21 21l-4.3-4.3"></path></svg></button>
+      <button onClick="{{ openPal }}" style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px;background:var(--color-text);border:0;border-radius:4px;font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;color:var(--color-bg)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"></path></svg>Menu</button>
+    </sc-if>
+  </div>
+</header>
+
+<main style="flex:1;padding-top:116px">
+
+<sc-if value="{{ is.home }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Home" style="border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1280px;margin:0 auto;min-height:calc(100svh - {{ heroOffset }});box-sizing:border-box;padding:clamp(24px,5vh,72px) clamp(20px,5vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));align-items:center;gap:clamp(32px,4vw,64px)">
+      <div style="display:flex;flex-direction:column;gap:clamp(16px,3vh,28px);min-width:0">
+      <h1 style="font-size:clamp(36px,min(4.6vw,8vh),76px);line-height:0.98;letter-spacing:-0.035em;font-weight:800;margin-left:-0.05em;max-width:12ch">Supporting people. Building futures.</h1>
+      <p style="font-size:clamp(16px,1.3vw,18px);line-height:1.55;max-width:44ch;color:var(--color-neutral-800)">A stable home, and the tools and guidance people need to rebuild their lives.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <button onClick="{{ go.properties }}" style="display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 20px;background:var(--color-accent);color:var(--color-bg);border:0;border-radius:4px;font-family:var(--font-heading);font-weight:600;font-size:16px;cursor:pointer" style-hover="background:var(--color-accent-600)">Find a home <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+        <button onClick="{{ go.refer }}" style="display:inline-flex;align-items:center;height:52px;padding:0 20px;background:transparent;color:var(--color-text);border:1px solid var(--color-text);border-radius:4px;font-family:var(--font-heading);font-weight:600;font-size:16px;cursor:pointer" style-hover="background:var(--color-text);color:var(--color-bg)">Make a referral</button>
+      </div>
+      </div>
+      <div style="position:relative;width:100%;height:clamp(320px,calc(100svh - 220px),720px);min-height:0">
+        <image-slot id="home-hero" shape="rounded" radius="6" fit="cover" placeholder="Drop a hero photo — resident at home"></image-slot>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--color-accent-100);border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1280px;margin:0 auto;padding:18px clamp(20px,5vw,72px);display:flex;align-items:center;gap:12px 28px;flex-wrap:wrap">
+      <span style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-heading);font-weight:800;font-size:17px"><span style="width:10px;height:10px;background:var(--color-accent)"></span>{{ availNowLabel }}</span>
+      <span style="font-size:15px;color:var(--color-neutral-800);flex:1;min-width:220px">{{ availAreas }}</span>
+      <button onClick="{{ go.properties }}" style="display:inline-flex;align-items:center;gap:8px;background:none;border:0;padding:6px 0;cursor:pointer;font-family:var(--font-heading);font-weight:600;font-size:15px;color:var(--color-accent-700);border-radius:4px" style-hover="color:var(--color-accent)">See homes <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+    </div>
+  </section>
+
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px)">
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px">
+      <h2 style="font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-0.025em">How can we help?</h2>
+      <p style="font-size:15px;color:var(--color-neutral-700)">Choose what fits — each path takes a few minutes.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ pathCols }};gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+      <sc-for list="{{ paths }}" as="p" hint-placeholder-count="4">
+        <button onClick="{{ p.onClick }}" style="text-align:left;background:var(--color-bg);border:0;padding:28px;cursor:pointer;display:flex;flex-direction:column;gap:14px;color:var(--color-text);font-family:var(--font-body);min-height:280px" style-hover="background:var(--color-accent-100)">
+          <span style="width:52px;height:52px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);border-radius:4px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ p.icon }}"></path></svg></span>
+          <span style="font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700);margin-top:8px">{{ p.kicker }}</span>
+          <span style="font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:1.1;letter-spacing:-0.01em">{{ p.title }}</span>
+          <span style="font-size:15px;line-height:1.55;color:var(--color-neutral-800);flex:1">{{ p.body }}</span>
+          <span style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-heading);font-weight:700;font-size:14px;color:var(--color-accent-700)">{{ p.cta }} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--color-divider)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px)">
+      <div style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px">
+        <div style="display:flex;flex-direction:column;gap:12px"><p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Available now</p><h2 style="font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-0.025em">Homes ready to move into</h2></div>
+        <button onClick="{{ go.properties }}" style="display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;background:transparent;color:var(--color-text);border:1px solid var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;border-radius:4px" style-hover="background:var(--color-text);color:var(--color-bg)">All properties</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px">
+        <sc-for list="{{ featured }}" as="p" hint-placeholder-count="3">
+          <button onClick="{{ p.open }}" style="text-align:left;background:var(--color-bg);border:1px solid var(--color-divider);padding:0;cursor:pointer;display:flex;flex-direction:column;color:var(--color-text);font-family:var(--font-body);border-radius:5px;overflow:hidden" style-hover="border-color:var(--color-text)">
+            <span style="position:relative;display:block;width:100%;aspect-ratio:3/2;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px)">
+              <span style="position:absolute;top:12px;left:12px;font-size:12px;font-weight:600;padding:5px 9px;background:{{ p.tagBg }};color:{{ p.tagFg }};border-radius:2px">{{ p.avail }}</span>
+              <span style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-700)">photo</span>
+            </span>
+            <span style="padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:1.15">{{ p.title }}</span>
+              <span style="font-size:14px;color:var(--color-neutral-700)">{{ p.addressLine }}</span>
+              <span style="font-size:14px;margin-top:6px">{{ p.specLine }}</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-divider)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px)">
+      <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Our approach</p>
+      <h2 style="font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-0.025em;margin-bottom:36px;max-width:18ch">Homes that feel like yours, support that fits you.</h2>
+      <div style="display:grid;grid-template-columns:{{ cols2 }};gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+        <sc-for list="{{ approach }}" as="a" hint-placeholder-count="4">
+          <div style="background:var(--color-surface);padding:32px;display:flex;flex-direction:column;gap:14px">
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:15px;color:var(--color-accent)">{{ a.n }}</span>
+            <h3 style="font-size:24px;line-height:1.15;letter-spacing:-0.01em">{{ a.title }}</h3>
+            <p style="font-size:16px;line-height:1.65;color:var(--color-neutral-800)">{{ a.text }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--color-text);color:var(--color-bg)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,120px) clamp(20px,5vw,72px);display:flex;flex-direction:column;gap:48px">
+      <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-400)">Our mission</p>
+      <p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(32px,4.6vw,64px);line-height:1.04;letter-spacing:-0.025em;max-width:20ch">We don’t just offer homes — <span style="color:var(--color-accent-400)">we support people in building futures.</span></p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px 48px;border-top:1px solid color-mix(in srgb,var(--color-bg) 30%,transparent);padding-top:32px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-400)">Who we help</p>
+          <sc-for list="{{ whoWeHelp }}" as="w" hint-placeholder-count="3">
+            <div style="display:flex;gap:12px;align-items:baseline;font-size:17px;font-weight:600;line-height:1.4"><span style="width:8px;height:8px;background:var(--color-accent-400);flex:none"></span>{{ w }}</div>
+          </sc-for>
+        </div>
+        <div><p style="font-family:var(--font-heading);font-weight:800;font-size:72px;line-height:1;letter-spacing:-0.04em">10+</p><p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-400);margin-top:8px">Years of experience</p></div>
+        <div><p style="font-family:var(--font-heading);font-weight:800;font-size:72px;line-height:1;letter-spacing:-0.04em">100%</p><p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-400);margin-top:8px">Happy customers</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px 64px;margin-bottom:36px">
+      <div style="display:flex;flex-direction:column;gap:12px"><p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">The team</p><h2 style="font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-0.025em">People you can talk to</h2></div>
+      <p style="font-size:16px;line-height:1.7;color:var(--color-neutral-800);align-self:end">Experienced housing and care professionals focused on safeguarding, attention to detail and consistently high standards — so every tenant feels safe, respected and listened to.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:24px">
+      <sc-for list="{{ team }}" as="t" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="aspect-ratio:4/5;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);display:flex;align-items:flex-end;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-700)">headshot</div>
+          <div style="border-top:1px solid var(--color-text);padding-top:12px"><p style="font-family:var(--font-heading);font-weight:800;font-size:18px">{{ t.name }}</p><p style="font-size:14px;color:var(--color-neutral-700);margin-top:4px">{{ t.role }}</p></div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--color-divider)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px);display:grid;grid-template-columns:{{ faqCols }};gap:40px 64px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:18px;position:{{ faqPos }};top:96px;align-self:start">
+        <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Questions</p>
+        <h2 style="font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-0.025em">FAQs</h2>
+        <label style="display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border:1px solid var(--color-neutral-300);background:var(--color-bg)" style-focus-within="border-color:var(--color-accent)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-700)" stroke-width="2.2" stroke-linecap="round"><path d="M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0M21 21l-4.3-4.3"></path></svg>
+          <input value="{{ faqQ }}" onChange="{{ setFaqQ }}" placeholder="Search questions" aria-label="Search questions" style="flex:1;border:0;outline:none;background:transparent;font:inherit;font-size:16px;color:var(--color-text);min-width:0;border-radius:4px">
+        </label>
+        <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800)">Can’t find it? <a href="#" onClick="{{ go.contactLink }}">Get in touch</a> — we reply promptly and confidentially.</p>
+      </div>
+      <div style="min-width:0">
+        <sc-if value="{{ faqEmpty }}" hint-placeholder-val="{{ false }}"><p style="padding:24px 0;border-top:1px solid var(--color-divider);font-size:16px;color:var(--color-neutral-800)">No questions match “{{ faqQ }}”.</p></sc-if>
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="8">
+          <div style="border-top:1px solid var(--color-divider)">
+            <button onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;min-height:68px;padding:16px 0;background:none;border:0;cursor:pointer;text-align:left;font-family:var(--font-heading);font-weight:600;font-size:18px;color:var(--color-text);border-radius:4px" style-hover="color:var(--color-accent-700)">
+              <span>{{ f.q }}</span>
+              <span style="width:32px;height:32px;display:grid;place-items:center;flex:none;background:{{ f.signBg }};color:{{ f.signFg }};font-size:20px;line-height:1">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 56px 24px 0;font-size:16px;line-height:1.7;color:var(--color-neutral-800);display:flex;flex-direction:column;gap:10px">
+                <p>{{ f.a }}</p>
+                <sc-for list="{{ f.bullets }}" as="b" hint-placeholder-count="0"><div style="display:flex;gap:12px;align-items:baseline"><span style="width:7px;height:7px;background:var(--color-accent);flex:none"></span>{{ b }}</div></sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <div style="border-top:1px solid var(--color-divider)"></div>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.propList }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Properties" style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px) 32px;display:flex;flex-direction:column;gap:18px">
+    <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Find a home</p>
+    <h1 style="font-size:clamp(44px,6vw,88px);line-height:0.98;letter-spacing:-0.035em;margin-left:-0.04em">Safe, stable homes.</h1>
+    <p style="font-size:18px;line-height:1.55;max-width:52ch;color:var(--color-neutral-800)">Furnished with care across South London, with support from our team. Rent is often covered by Housing Benefit.</p>
+  </section>
+  <div style="position:sticky;top:{{ stickyTop }};z-index:30;background:color-mix(in srgb,var(--color-bg) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1280px;margin:0 auto;padding:10px clamp(20px,5vw,72px);display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px">
+      <div role="group" aria-label="Availability" style="display:flex;align-items:center;gap:2px;padding:3px;background:color-mix(in srgb,var(--color-text) 6%,transparent);border-radius:5px;flex:none">
+        <sc-for list="{{ statusChips }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.onClick }}" aria-pressed="{{ c.on }}" style="height:34px;padding:0 12px;border:0;border-radius:3px;background:{{ c.segBg }};color:{{ c.segFg }};box-shadow:{{ c.segShadow }};font-family:var(--font-body);font-size:14px;font-weight:{{ c.segWeight }};cursor:pointer;white-space:nowrap;transition:background .15s,color .15s">{{ c.label }}</button></sc-for>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;height:40px;padding:0 4px 0 12px;background:color-mix(in srgb,var(--color-text) 6%,transparent);border-radius:5px;flex:none;font-size:14px;color:var(--color-neutral-700)">Area<select aria-label="Area" value="{{ propArea }}" onChange="{{ setPropArea }}" style="height:34px;padding:0 8px;font:inherit;font-size:14px;font-weight:600;color:var(--color-text);background:transparent;border:0;border-radius:3px;cursor:pointer;outline-offset:0"><option>All areas</option><option>Streatham</option><option>Norbury</option><option>Tooting</option><option>Croydon</option><option>Brixton</option><option>Mitcham</option></select></label>
+      <div role="group" aria-label="Bedrooms" style="display:flex;align-items:center;gap:2px;padding:3px;background:color-mix(in srgb,var(--color-text) 6%,transparent);border-radius:5px;flex:none"><span style="font-size:14px;color:var(--color-neutral-700);padding:0 6px 0 9px">Beds</span>
+        <sc-for list="{{ bedChips }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.onClick }}" aria-pressed="{{ c.on }}" style="height:34px;padding:0 12px;border:0;border-radius:3px;background:{{ c.segBg }};color:{{ c.segFg }};box-shadow:{{ c.segShadow }};font-family:var(--font-body);font-size:14px;font-weight:{{ c.segWeight }};cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;min-width:40px;padding:0 10px">{{ c.label }}</button></sc-for>
+      </div>
+      <sc-if value="{{ filtersActive }}" hint-placeholder-val="{{ false }}"><button onClick="{{ clearFilters }}" style="height:40px;padding:0 10px;background:none;border:0;border-radius:4px;cursor:pointer;flex:none;white-space:nowrap;font-family:var(--font-body);font-size:14px;font-weight:500;color:var(--color-accent-700);text-decoration:underline;text-underline-offset:3px" style-hover="background:color-mix(in srgb,var(--color-text) 6%,transparent)">Clear filters</button></sc-if>
+      <span style="flex:1;min-width:0"></span>
+      <button onClick="{{ savedChip.onClick }}" aria-pressed="{{ savedChip.on }}" style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border:0;border-radius:5px;background:{{ savedChip.tBg }};color:{{ savedChip.tFg }};font-family:var(--font-body);font-size:14px;font-weight:500;cursor:pointer;flex:none;white-space:nowrap" style-hover="background:var(--color-accent-100)"><svg width="16" height="16" viewBox="0 0 24 24" fill="{{ savedChip.fill }}" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>{{ savedChip.label }}</button>
+      <div role="group" aria-label="View" style="display:flex;align-items:center;gap:2px;padding:3px;background:color-mix(in srgb,var(--color-text) 6%,transparent);border-radius:5px;flex:none">
+        <sc-for list="{{ viewOpts }}" as="c" hint-placeholder-count="2"><button onClick="{{ c.onClick }}" aria-pressed="{{ c.on }}" aria-label="{{ c.label }} view" style="height:34px;padding:0 12px;border:0;border-radius:3px;background:{{ c.segBg }};color:{{ c.segFg }};box-shadow:{{ c.segShadow }};font-family:var(--font-body);font-size:14px;font-weight:{{ c.segWeight }};cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;display:inline-flex;align-items:center;gap:6px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ c.icon }}"></path></svg>{{ c.label }}</button></sc-for>
+      </div>
+    </div>
+  </div>
+  <section style="max-width:1280px;margin:0 auto;padding:24px clamp(20px,5vw,72px) clamp(56px,8vw,104px)">
+    <p aria-live="polite" style="font-size:14px;color:var(--color-neutral-700);margin-bottom:20px">{{ propCount }}</p>
+    <sc-if value="{{ noProps }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:48px 0;border-top:1px solid var(--color-divider);display:flex;flex-direction:column;gap:16px;align-items:flex-start">
+        <h3 style="font-size:24px">No homes match those filters.</h3>
+        <p style="font-size:16px;color:var(--color-neutral-800);max-width:52ch">New homes come up regularly. Clear the filters, or call us and we’ll tell you what’s coming.</p>
+        <button onClick="{{ clearFilters }}" style="min-height:44px;padding:0 16px;background:transparent;border:1px solid var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;color:var(--color-text);border-radius:4px" style-hover="background:var(--color-text);color:var(--color-bg)">Clear filters</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ propGrid }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:28px 24px">
+        <sc-for list="{{ properties }}" as="p" hint-placeholder-count="6">
+          <article style="position:relative;display:flex;flex-direction:column;border:1px solid var(--color-divider);background:var(--color-bg);border-radius:5px;overflow:hidden" style-hover="border-color:var(--color-text)">
+            <button onClick="{{ p.open }}" aria-label="View {{ p.title }}" style="position:relative;display:block;width:100%;aspect-ratio:3/2;border:0;padding:0;cursor:pointer;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px)">
+              <span style="position:absolute;top:12px;left:12px;font-family:var(--font-body);font-size:12px;font-weight:600;padding:5px 9px;background:{{ p.tagBg }};color:{{ p.tagFg }};border-radius:2px">{{ p.avail }}</span>
+              <span style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-700)">photo · {{ p.photos }}</span>
+            </button>
+            <button onClick="{{ p.toggleSave }}" aria-pressed="{{ p.saved }}" aria-label="{{ p.saveLabel }} {{ p.title }}" style="position:absolute;top:8px;right:8px;width:44px;height:44px;display:grid;place-items:center;background:var(--color-bg);border:0;cursor:pointer;color:{{ p.heartColor }};border-radius:4px" style-hover="background:var(--color-accent-100)"><svg width="20" height="20" viewBox="0 0 24 24" fill="{{ p.heartFill }}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button>
+            <button onClick="{{ p.open }}" style="text-align:left;background:none;border:0;padding:18px 20px 20px;cursor:pointer;display:flex;flex-direction:column;gap:6px;color:var(--color-text);font-family:var(--font-body);flex:1;border-radius:4px">
+              <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">{{ p.type }}</span>
+              <span style="font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:1.15">{{ p.title }}</span>
+              <span style="font-size:14px;color:var(--color-neutral-700)">{{ p.addressLine }}</span>
+              <span style="display:flex;gap:18px;font-size:14px;margin-top:auto;padding-top:14px;border-top:1px solid var(--color-divider)">
+                <span style="display:inline-flex;align-items:center;gap:6px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ic.bed }}"></path></svg><strong>{{ p.beds }}</strong></span>
+                <span style="display:inline-flex;align-items:center;gap:6px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ic.bath }}"></path></svg><strong>{{ p.baths }}</strong></span>
+                <span style="display:inline-flex;align-items:center;gap:6px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ic.sofa }}"></path></svg><strong>{{ p.rec }}</strong></span>
+                <span style="margin-left:auto;color:var(--color-neutral-700)">{{ p.support }} support</span>
+              </span>
+            </button>
+          </article>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ propMap }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:24px;align-items:start">
+        <div style="display:flex;flex-direction:column;border-top:1px solid var(--color-divider)">
+          <sc-for list="{{ properties }}" as="p" hint-placeholder-count="6">
+            <div onMouseEnter="{{ p.hover }}" onMouseLeave="{{ p.unhover }}" style="display:flex;gap:16px;align-items:center;padding:14px 8px;border-bottom:1px solid var(--color-divider);background:{{ p.rowBg }}">
+              <span style="width:32px;height:32px;display:grid;place-items:center;background:{{ p.pinBg }};color:var(--color-bg);font-family:var(--font-heading);font-weight:800;font-size:14px;flex:none">{{ p.n }}</span>
+              <button onClick="{{ p.open }}" style="flex:1;min-width:0;text-align:left;background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;gap:3px;color:var(--color-text);font-family:var(--font-body);border-radius:5px;overflow:hidden">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:17px">{{ p.title }}</span>
+                <span style="font-size:13px;color:var(--color-neutral-700)">{{ p.area }} · {{ p.specLine }}</span>
+              </button>
+              <span style="font-size:12px;font-weight:600;padding:4px 8px;background:{{ p.tagBg }};color:{{ p.tagFg }};flex:none;border-radius:2px">{{ p.avail }}</span>
+              <button onClick="{{ p.toggleSave }}" aria-pressed="{{ p.saved }}" aria-label="{{ p.saveLabel }} {{ p.title }}" style="width:44px;height:44px;display:grid;place-items:center;background:none;border:0;cursor:pointer;color:{{ p.heartColor }};flex:none;border-radius:4px"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{ p.heartFill }}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="position:sticky;top:150px;aspect-ratio:1/1;max-height:70vh;width:100%;border:1px solid var(--color-divider);background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px)">
+          <span style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-700)">map — South London</span>
+          <sc-for list="{{ properties }}" as="p" hint-placeholder-count="0">
+            <button onClick="{{ p.open }}" onMouseEnter="{{ p.hover }}" onMouseLeave="{{ p.unhover }}" aria-label="{{ p.title }}" style="position:absolute;left:{{ p.mx }}%;top:{{ p.my }}%;width:36px;height:36px;margin:-18px 0 0 -18px;display:grid;place-items:center;background:{{ p.pinBg }};color:var(--color-bg);border:1px solid var(--color-bg);font-family:var(--font-heading);font-weight:700;font-size:14px;cursor:pointer;z-index:{{ p.pinZ }};transform:{{ p.pinScale }};transition:transform .15s,background .15s;box-shadow:var(--shadow-md);border-radius:4px">{{ p.n }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.propDetail }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Property detail" style="max-width:1280px;margin:0 auto;padding:20px clamp(20px,5vw,72px) 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:16px">
+      <nav aria-label="Breadcrumb" style="display:flex;gap:8px;align-items:center;font-size:14px;color:var(--color-neutral-700)">
+        <button onClick="{{ closeProp }}" style="background:none;border:0;padding:8px 0;cursor:pointer;font:inherit;color:var(--color-accent-700);text-decoration:underline;text-underline-offset:3px;border-radius:4px">Find a home</button><span>/</span><span>{{ sel.area }}</span>
+      </nav>
+      <div style="display:flex;gap:6px">
+        <button onClick="{{ prevProp }}" aria-label="Previous home" style="width:44px;height:44px;display:grid;place-items:center;background:none;border:1px solid var(--color-neutral-300);cursor:pointer;color:var(--color-text);border-radius:4px" style-hover="border-color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 18-6-6 6-6"></path></svg></button>
+        <button onClick="{{ nextProp }}" aria-label="Next home" style="width:44px;height:44px;display:grid;place-items:center;background:none;border:1px solid var(--color-neutral-300);cursor:pointer;color:var(--color-text);border-radius:4px" style-hover="border-color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"></path></svg></button>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:20px 40px;flex-wrap:wrap;border-top:1px solid var(--color-divider);padding:28px 0">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <span style="font-size:12px;font-weight:600;padding:5px 10px;background:{{ sel.tagBg }};color:{{ sel.tagFg }};border-radius:2px">{{ sel.avail }}</span>
+          <span style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">{{ sel.type }}</span>
+        </div>
+        <h1 style="font-size:clamp(40px,5.4vw,76px);line-height:1;letter-spacing:-0.03em;margin-left:-0.04em">{{ sel.title }}</h1>
+        <p style="font-size:17px;color:var(--color-neutral-800)">{{ sel.addressLine }}</p>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onClick="{{ saveSel }}" aria-pressed="{{ sel.saved }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--color-text);cursor:pointer;font-family:var(--font-heading);font-weight:600;font-size:14px;color:{{ sel.heartColor }};border-radius:4px" style-hover="background:var(--color-accent-100)"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{ sel.heartFill }}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>{{ sel.saveLabel }}</button>
+        <button onClick="{{ shareProp }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--color-text);cursor:pointer;font-family:var(--font-heading);font-weight:600;font-size:14px;color:var(--color-text);border-radius:4px" style-hover="background:var(--color-accent-100)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v13M16 6l-4-4-4 4M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path></svg>Share</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));grid-auto-rows:minmax(160px,auto);gap:8px">
+      <div style="grid-column:span 2;grid-row:span 2;min-height:340px;display:flex;align-items:flex-end;padding:14px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">{{ sel.gallery0 }}</div>
+      <sc-for list="{{ sel.galleryRest }}" as="g" hint-placeholder-count="4">
+        <div style="position:relative;display:flex;align-items:flex-end;padding:12px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">{{ g.label }}<sc-if value="{{ g.more }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--color-text) 72%,transparent);color:var(--color-bg);font-family:var(--font-heading);font-weight:800;font-size:18px">+{{ g.moreCount }} photos</span></sc-if></div>
+      </sc-for>
+    </div>
+  </section>
+  <section style="max-width:1280px;margin:0 auto;padding:40px clamp(20px,5vw,72px) clamp(56px,8vw,104px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:48px 64px;align-items:start">
+    <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:48px">
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+        <div style="background:var(--color-bg);padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:1">{{ sel.beds }}</span><span style="font-size:13px;color:var(--color-neutral-700)">{{ sel.bedsLabel }}</span></div>
+        <div style="background:var(--color-bg);padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:1">{{ sel.baths }}</span><span style="font-size:13px;color:var(--color-neutral-700)">{{ sel.bathsLabel }}</span></div>
+        <div style="background:var(--color-bg);padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:1">{{ sel.rec }}</span><span style="font-size:13px;color:var(--color-neutral-700)">{{ sel.recLabel }}</span></div>
+        <div style="background:var(--color-bg);padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:1">{{ sel.support }}</span><span style="font-size:13px;color:var(--color-neutral-700)">support</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2 style="font-size:28px;letter-spacing:-0.02em">About this home</h2>
+        <sc-for list="{{ sel.description }}" as="d" hint-placeholder-count="2"><p style="font-size:17px;line-height:1.7;color:var(--color-neutral-800);max-width:66ch">{{ d }}</p></sc-for>
+      </div>
+      <div>
+        <h2 style="font-size:28px;letter-spacing:-0.02em;margin-bottom:16px">What’s included</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0 24px">
+          <sc-for list="{{ sel.features }}" as="ft" hint-placeholder-count="8"><div style="display:flex;gap:10px;align-items:center;font-size:15px;padding:12px 0;border-bottom:1px solid var(--color-divider)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="3"><path d="M20 6 9 17l-5-5"></path></svg>{{ ft }}</div></sc-for>
+        </div>
+      </div>
+      <div>
+        <h2 style="font-size:28px;letter-spacing:-0.02em;margin-bottom:16px">Key facts</h2>
+        <sc-for list="{{ sel.facts }}" as="k" hint-placeholder-count="9"><div style="display:grid;grid-template-columns:minmax(140px,1fr) minmax(0,2fr);gap:16px;padding:14px 0;border-top:1px solid var(--color-divider);font-size:15px"><span style="color:var(--color-neutral-700)">{{ k.label }}</span><span style="font-weight:600">{{ k.value }}</span></div></sc-for>
+        <div style="border-top:1px solid var(--color-divider)"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:24px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h2 style="font-size:28px;letter-spacing:-0.02em">Getting around</h2>
+          <sc-for list="{{ sel.transport }}" as="t" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--color-divider);font-size:15px"><span>{{ t.place }}</span><span style="color:var(--color-neutral-700);flex:none">{{ t.time }}</span></div></sc-for>
+        </div>
+        <div style="min-height:240px;display:flex;align-items:flex-end;padding:12px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">map — {{ sel.area }} {{ sel.pc }}</div>
+      </div>
+    </div>
+    <aside style="position:sticky;top:96px;border:1px solid var(--color-text);border-radius:5px;padding:24px;display:flex;flex-direction:column;gap:16px;background:var(--color-bg);box-shadow:var(--shadow-md)">
+      <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Availability</p>
+      <p style="font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:1.1">{{ sel.avail }}</p>
+      <p style="font-size:14px;line-height:1.55;color:var(--color-neutral-800)">Rent is often covered by Housing Benefit. We assess each application to make sure we can meet the person’s needs.</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button onClick="{{ go.refer }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:52px;padding:0 16px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer;text-align:left;border-radius:4px" style-hover="background:var(--color-accent-600)">Refer someone <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+        <button onClick="{{ go.applySelf }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:52px;padding:0 16px;background:transparent;color:var(--color-text);border:1px solid var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer;text-align:left;border-radius:4px" style-hover="background:var(--color-text);color:var(--color-bg)">Apply for myself <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+      </div>
+      <div style="border-top:1px solid var(--color-divider);padding-top:14px;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:13px;color:var(--color-neutral-700)">Questions about this home?</span>
+        <a href="tel:+447507921011" style="font-family:var(--font-heading);font-weight:700;font-size:20px;text-decoration:none">+44 7507 921011</a>
+        <span style="font-size:12px;color:var(--color-neutral-700)">Quote ref. {{ sel.ref }}</span>
+      </div>
+    </aside>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.apply }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Refer or apply" style="max-width:880px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,5vw,40px) clamp(56px,8vw,104px);display:flex;flex-direction:column;gap:28px">
+    <sc-if value="{{ aDone }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="width:56px;height:56px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);border-radius:4px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <h1 style="font-size:clamp(40px,5.6vw,72px);line-height:1;letter-spacing:-0.03em">{{ aDoneTitle }}</h1>
+        <p style="font-size:18px;line-height:1.6;max-width:52ch">A member of the team will call within two working days. Everything shared is kept confidential.</p>
+        <div style="border:1px solid var(--color-divider)">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--color-divider)"><span style="color:var(--color-neutral-700)">Your reference</span><strong style="font-family:var(--font-heading);font-size:18px">{{ aRef }}</strong></div>
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;font-size:15px">
+            <p style="font-weight:700">What happens next</p>
+            <p>1 · We review the details and check we can meet the person’s needs.</p>
+            <p>2 · We call to talk it through and arrange a visit.</p>
+            <p>3 · If it’s a good fit, we agree a move-in date together.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button onClick="{{ go.properties }}" style="display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer;border-radius:4px" style-hover="background:var(--color-accent-600)">Browse homes</button>
+          <button onClick="{{ newApply }}" style="min-height:48px;padding:0 16px;background:transparent;border:1px solid var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer;color:var(--color-text);border-radius:4px" style-hover="background:var(--color-text);color:var(--color-bg)">Start another</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ aWizard }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline">
+          <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">{{ aStepLabel }}</p>
+          <sc-if value="{{ hasDraft }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:var(--color-neutral-700);display:flex;gap:8px">Progress saved on this device<button onClick="{{ clearDraft }}" style="background:none;border:0;padding:0;cursor:pointer;font:inherit;color:var(--color-accent-700);text-decoration:underline;border-radius:4px">Clear</button></span></sc-if>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px" aria-hidden="true">
+          <sc-for list="{{ aProgress }}" as="g" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:8px"><span style="height:4px;background:{{ g.bar }}"></span><span style="font-size:13px;color:{{ g.fg }};font-weight:{{ g.weight }}">{{ g.t }}</span></div></sc-for>
+        </div>
+      </div>
+
+      <sc-if value="{{ aStep0 }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <h1 style="font-size:clamp(36px,5vw,60px);line-height:1.02;letter-spacing:-0.03em">Who is this for?</h1>
+          <p style="font-size:17px;line-height:1.6;color:var(--color-neutral-800);max-width:56ch">You can apply directly or be referred by a local authority, support agency or charity. It takes about five minutes.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px">
+            <sc-for list="{{ aModes }}" as="m" hint-placeholder-count="2">
+              <button onClick="{{ m.onClick }}" style="text-align:left;padding:24px;border:1px solid {{ m.border }};background:{{ m.bg }};cursor:pointer;display:flex;flex-direction:column;gap:12px;color:var(--color-text);font-family:var(--font-body);min-height:180px;border-radius:5px" style-hover="border-color:var(--color-accent)">
+                <span style="width:48px;height:48px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);border-radius:4px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ m.icon }}"></path></svg></span>
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:22px">{{ m.label }}</span>
+                <span style="font-size:15px;color:var(--color-neutral-800)">{{ m.hint }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <p style="font-size:15px;color:var(--color-neutral-800)">Prefer to talk? Call <a href="tel:+447507921011">+44 7507 921011</a> and we’ll fill it in with you.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ aStep1 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <h1 style="font-size:clamp(32px,4.4vw,52px);line-height:1.02;letter-spacing:-0.03em;margin-bottom:4px">Contact details</h1>
+          <sc-if value="{{ isRef }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--color-divider);border-radius:5px;background:var(--color-surface)">
+            <p style="font-family:var(--font-heading);font-weight:800;font-size:18px">About you (referrer)</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px 16px">
+              <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Your name</span><input value="{{ af.refName.value }}" onChange="{{ af.refName.set }}" autocomplete="name" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+              <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Organisation</span><input value="{{ af.refOrg.value }}" onChange="{{ af.refOrg.set }}" autocomplete="organization" placeholder="e.g. Lambeth Council" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+              <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Work email</span><input value="{{ af.refEmail.value }}" onChange="{{ af.refEmail.set }}" type="email" autocomplete="email" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+            </div>
+          </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--color-divider);border-radius:5px;background:var(--color-bg)">
+            <p style="font-family:var(--font-heading);font-weight:800;font-size:18px">{{ aWho }}</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px 16px">
+              <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Full name</span><input value="{{ af.name.value }}" onChange="{{ af.name.set }}"  style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+              <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Phone</span><input value="{{ af.phone.value }}" onChange="{{ af.phone.set }}" type="tel" inputmode="tel" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+              <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Email<span style="font-size:13px;font-weight:400;color:var(--color-neutral-700)">Optional</span></span><input value="{{ af.email.value }}" onChange="{{ af.email.set }}" type="email" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Best way to get in touch</span><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ prefChips }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.onClick }}" aria-pressed="{{ c.on }}" style="height:40px;padding:0 14px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};font-family:var(--font-body);font-size:14px;cursor:pointer;border-radius:4px">{{ c.label }}</button></sc-for></div></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ aStep2 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <h1 style="font-size:clamp(32px,4.4vw,52px);line-height:1.02;letter-spacing:-0.03em;margin-bottom:4px">Current situation</h1>
+          <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--color-divider);border-radius:5px;background:var(--color-bg)">
+            <p style="font-family:var(--font-heading);font-weight:800;font-size:18px">Housing situation</p>
+            <div role="radiogroup" aria-label="Current housing situation" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:8px">
+              <sc-for list="{{ sitChips }}" as="c" hint-placeholder-count="6">
+                <button onClick="{{ c.onClick }}" role="radio" aria-checked="{{ c.on }}" style="display:flex;align-items:center;gap:12px;height:52px;padding:0 14px;border:1px solid {{ c.border }};background:{{ c.bg }};cursor:pointer;text-align:left;font-family:var(--font-body);font-size:15px;color:var(--color-text);border-radius:4px"><span style="width:18px;height:18px;border:1.5px solid var(--color-text);border-radius:50%;display:grid;place-items:center;flex:none"><span style="width:8px;height:8px;border-radius:50%;background:{{ c.dot }}"></span></span>{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--color-divider);border-radius:5px;background:var(--color-bg)">
+            <p style="font-family:var(--font-heading);font-weight:800;font-size:18px">Support needs</p>
+            <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;color:var(--color-neutral-800)">Share only what you’re comfortable with.<span style="font-size:13px;color:var(--color-neutral-700)">Optional</span></span><textarea rows="5" value="{{ af.needs.value }}" onChange="{{ af.needs.set }}" placeholder="Health, finances, independence goals — anything that helps us understand." style="width:100%;box-sizing:border-box;padding:12px 14px;font:inherit;font-size:16px;font-weight:400;line-height:1.5;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px;resize:vertical" style-focus="border-color:var(--color-accent);outline:none"></textarea></label>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ aStep3 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <h1 style="font-size:clamp(32px,4.4vw,52px);line-height:1.02;letter-spacing:-0.03em">Check and send</h1>
+          <div style="border-top:1px solid var(--color-text)">
+            <sc-for list="{{ review }}" as="r" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,2fr) auto;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--color-divider);font-size:15px">
+                <span style="color:var(--color-neutral-700)">{{ r.label }}</span><span style="font-weight:600;word-break:break-word">{{ r.value }}</span>
+                <button onClick="{{ r.edit }}" style="background:none;border:0;padding:4px 0;cursor:pointer;font:inherit;font-size:14px;color:var(--color-accent-700);text-decoration:underline;border-radius:4px">Edit</button>
+              </div>
+            </sc-for>
+          </div>
+          <label style="display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5;padding:16px;background:var(--color-surface);border-radius:5px;cursor:pointer"><input type="checkbox" checked="{{ consent }}" onChange="{{ setConsent }}" style="width:20px;height:20px;accent-color:var(--color-accent);margin:1px 0 0;flex:none">I consent to Avenir Housing storing this information to assess the application. It’s kept confidential and never shared without permission.</label>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ aShowNav }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--color-divider);padding-top:20px">
+          <button onClick="{{ aBack }}" style="display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 4px;background:none;border:0;cursor:pointer;font-family:var(--font-heading);font-weight:600;font-size:15px;color:var(--color-text);border-radius:4px" style-hover="color:var(--color-accent-700)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>Back</button>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+            <sc-if value="{{ aCannot }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:var(--color-neutral-700);max-width:36ch">{{ aHint }}</span></sc-if>
+            <button onClick="{{ aNext }}" aria-disabled="{{ aCannot }}" style="display:inline-flex;align-items:center;gap:12px;min-height:52px;padding:0 20px;background:{{ aNextBg }};color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:600;font-size:16px;cursor:pointer;border-radius:4px">{{ aNextLabel }} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+          </div>
+        </div>
+      </sc-if>
+    </sc-if>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.repair }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Report a repair" style="max-width:1280px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,5vw,72px) clamp(56px,8vw,104px)">
+    <a href="tel:+447507921011" style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:16px 20px;background:var(--color-text);color:var(--color-bg);text-decoration:none;margin-bottom:36px;border-radius:5px" style-hover="background:var(--color-neutral-900);color:var(--color-bg)">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-400)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ic.alert }}"></path></svg>
+      <span style="font-size:16px;flex:1;min-width:220px"><strong>Emergency or risk to safety?</strong> Don’t use the form — call us now.</span>
+      <span style="font-family:var(--font-heading);font-weight:800;font-size:18px;border-bottom:1px solid var(--color-accent-400)">+44 7507 921011</span>
+    </a>
+    <sc-if value="{{ rDone }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:20px;max-width:720px">
+        <span style="width:56px;height:56px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg);border-radius:4px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <h1 style="font-size:clamp(40px,5.6vw,72px);line-height:1;letter-spacing:-0.03em">Repair reported.</h1>
+        <p style="font-size:18px;line-height:1.6">We’ll review it and call you to arrange the repair or an inspection. Quote your reference if you call.</p>
+        <div style="border:1px solid var(--color-divider)">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--color-divider)"><span style="color:var(--color-neutral-700)">Reference</span><strong style="font-family:var(--font-heading);font-size:18px">{{ rRef }}</strong></div>
+          <sc-for list="{{ rSummary }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:16px;padding:12px 20px;border-bottom:1px solid var(--color-divider);font-size:15px"><span style="color:var(--color-neutral-700)">{{ r.label }}</span><span style="font-weight:600">{{ r.value }}</span></div></sc-for>
+        </div>
+        <div><button onClick="{{ newRepair }}" style="min-height:48px;padding:0 16px;background:transparent;border:1px solid var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer;color:var(--color-text);border-radius:4px" style-hover="background:var(--color-text);color:var(--color-bg)">Report another issue</button></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ rWizard }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:40px 64px;align-items:start">
+        <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">{{ rStepLabel }}</p>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px" aria-hidden="true"><sc-for list="{{ rProgress }}" as="g" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:8px"><span style="height:4px;background:{{ g.bar }}"></span><span style="font-size:13px;color:{{ g.fg }};font-weight:{{ g.weight }}">{{ g.t }}</span></div></sc-for></div>
+          </div>
+          <sc-if value="{{ r0 }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <h1 style="font-size:clamp(36px,5vw,60px);line-height:1.02;letter-spacing:-0.03em">What needs fixing?</h1>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:8px">
+                <sc-for list="{{ repCats }}" as="c" hint-placeholder-count="7">
+                  <button onClick="{{ c.onClick }}" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:20px;min-height:120px;padding:18px;border:1px solid var(--color-text);background:{{ c.bg }};color:{{ c.fg }};cursor:pointer;text-align:left;font-family:var(--font-heading);font-weight:600;font-size:16px;border-radius:5px" style-hover="background:var(--color-accent-100)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ c.icon }}"></path></svg>{{ c.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ r1 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <h1 style="font-size:clamp(36px,5vw,60px);line-height:1.02;letter-spacing:-0.03em">How urgent is it?</h1>
+              <div role="radiogroup" aria-label="Urgency" style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ repUrgs }}" as="u" hint-placeholder-count="3">
+                  <button onClick="{{ u.onClick }}" style="display:flex;align-items:center;gap:16px;min-height:72px;padding:14px 18px;border:1px solid {{ u.border }};background:{{ u.bg }};cursor:pointer;text-align:left;color:var(--color-text);font-family:var(--font-body);border-radius:4px"><span style="width:20px;height:20px;border:1px solid var(--color-text);display:grid;place-items:center;flex:none"><span style="width:10px;height:10px;background:{{ u.dot }}"></span></span><span style="display:flex;flex-direction:column;gap:3px"><span style="font-family:var(--font-heading);font-weight:800;font-size:18px">{{ u.label }}</span><span style="font-size:14px;color:var(--color-neutral-800)">{{ u.hint }}</span></span></button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ rEmergency }}" hint-placeholder-val="{{ false }}">
+                <div role="alert" style="display:flex;flex-direction:column;gap:14px;padding:24px;background:var(--color-text);color:var(--color-bg)">
+                  <p style="font-family:var(--font-heading);font-weight:800;font-size:24px">Please call us now.</p>
+                  <p style="font-size:16px;line-height:1.55;color:var(--color-neutral-300)">If there’s a smell of gas, call the National Gas Emergency line on 0800 111 999. If anyone is in danger, call 999.</p>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <a href="tel:+447507921011" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px;background:var(--color-accent-400);color:var(--color-text);font-family:var(--font-heading);font-weight:700;font-size:16px;text-decoration:none;border-radius:4px">Call +44 7507 921011</a>
+                    <button onClick="{{ rLogAnyway }}" style="min-height:52px;padding:0 16px;background:transparent;border:1px solid var(--color-bg);color:var(--color-bg);font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer;border-radius:4px">I’ve called — log it online too</button>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ rShowBackTop }}" hint-placeholder-val="{{ false }}"><div><button onClick="{{ rBackTop }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 4px;background:none;border:0;cursor:pointer;font-family:var(--font-heading);font-weight:600;font-size:15px;color:var(--color-text);border-radius:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>Back</button></div></sc-if>
+            </div>
+          </sc-if>
+          <sc-if value="{{ r2 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:22px">
+              <h1 style="font-size:clamp(32px,4.4vw,52px);line-height:1.02;letter-spacing:-0.03em">Tell us more</h1>
+              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:14px;font-weight:500">Where in the home?</span><div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ locChips }}" as="c" hint-placeholder-count="6"><button onClick="{{ c.onClick }}" style="min-height:44px;padding:0 14px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};font-family:var(--font-body);font-size:15px;cursor:pointer;border-radius:4px">{{ c.label }}</button></sc-for></div></div>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Describe the problem<textarea rows="5" value="{{ rf.desc.value }}" onChange="{{ rf.desc.set }}" placeholder="When did it start, and is anything damaged?" style="padding:12px 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px;resize:vertical" style-focus="border-color:var(--color-accent);outline:none"></textarea></label>
+              <label style="display:flex;align-items:center;gap:14px;min-height:72px;padding:16px;border:1px dashed var(--color-neutral-400);cursor:pointer;font-size:15px" style-hover="border-color:var(--color-accent)"><span style="font-family:var(--font-heading);font-weight:700">Add photos</span><span style="color:var(--color-neutral-700);font-size:14px">optional — helps us bring the right parts</span><input type="file" accept="image/*" multiple style="font-size:13px;margin-left:auto;max-width:200px"></label>
+            </div>
+          </sc-if>
+          <sc-if value="{{ r3 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:22px">
+              <h1 style="font-size:clamp(32px,4.4vw,52px);line-height:1.02;letter-spacing:-0.03em">Your details</h1>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Full name<input value="{{ rf.name.value }}" onChange="{{ rf.name.set }}" autocomplete="name" style="min-height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Phone<input type="tel" value="{{ rf.phone.value }}" onChange="{{ rf.phone.set }}" autocomplete="tel" style="min-height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+              </div>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Property address<input value="{{ rf.address.value }}" onChange="{{ rf.address.set }}" autocomplete="street-address" style="min-height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+            </div>
+          </sc-if>
+          <sc-if value="{{ rShowNav }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--color-divider);padding-top:20px">
+              <button onClick="{{ rBack }}" style="display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 4px;background:none;border:0;cursor:pointer;font-family:var(--font-heading);font-weight:600;font-size:15px;color:var(--color-text);border-radius:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>Back</button>
+              <button onClick="{{ rNext }}" style="display:inline-flex;align-items:center;gap:12px;min-height:52px;padding:0 20px;background:{{ rNextBg }};color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:600;font-size:16px;cursor:pointer;border-radius:4px">{{ rNextLabel }} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+            </div>
+          </sc-if>
+        </div>
+        <aside style="position:sticky;top:96px;border-top:1px solid var(--color-text);padding-top:20px;display:flex;flex-direction:column;gap:4px">
+          <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700);margin-bottom:8px">Your request</p>
+          <sc-for list="{{ rSummary }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--color-divider);font-size:15px"><span style="color:var(--color-neutral-700)">{{ r.label }}</span><span style="font-weight:600;text-align:right">{{ r.value }}</span></div></sc-for>
+          <p style="font-size:14px;line-height:1.55;color:var(--color-neutral-800);margin-top:12px">All information is kept confidential and used only to arrange the repair.</p>
+        </aside>
+      </div>
+    </sc-if>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.landlords }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Landlords" style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,72px) clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px 64px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Landlords & partners</p>
+      <h1 style="font-size:clamp(44px,6vw,88px);line-height:0.98;letter-spacing:-0.035em;margin-left:-0.04em">Homes that change lives.</h1>
+      <p style="font-size:18px;line-height:1.55;max-width:46ch;color:var(--color-neutral-800)">We partner with landlords and local organisations to create secure, sustainable homes and stronger communities.</p>
+    </div>
+    <div style="aspect-ratio:4/3;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);display:flex;align-items:flex-end;padding:14px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">photo — furnished room</div>
+  </section>
+  <section style="border-top:1px solid var(--color-divider);background:var(--color-surface)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,72px)">
+      <h2 style="font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:28px">Who we work with</h2>
+      <div style="display:grid;grid-template-columns:{{ pathCols }};gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+        <sc-for list="{{ partners }}" as="p" hint-placeholder-count="4"><div style="background:var(--color-surface);padding:28px;display:flex;flex-direction:column;gap:12px"><span style="width:10px;height:10px;background:var(--color-accent)"></span><h3 style="font-size:20px">{{ p.title }}</h3><p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800)">{{ p.body }}</p></div></sc-for>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:48px 64px;align-items:start">
+    <div>
+      <h2 style="font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px">How a partnership works</h2>
+      <sc-for list="{{ partnerSteps }}" as="s" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px 20px;padding:22px 0;border-top:1px solid var(--color-divider)"><span style="font-family:var(--font-heading);font-weight:800;font-size:24px;color:var(--color-accent)">{{ s.n }}</span><div style="display:flex;flex-direction:column;gap:6px"><h3 style="font-size:20px">{{ s.title }}</h3><p style="font-size:16px;line-height:1.6;color:var(--color-neutral-800)">{{ s.body }}</p></div></div></sc-for>
+      <div style="border-top:1px solid var(--color-divider)"></div>
+    </div>
+    <div style="border:1px solid var(--color-text);border-radius:5px;padding:28px;background:var(--color-bg);box-shadow:var(--shadow-md)">
+      <sc-if value="{{ llSent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:14px"><span style="width:14px;height:14px;background:var(--color-accent)"></span><h3 style="font-size:26px">Thanks — we’ll be in touch.</h3><p style="font-size:16px;line-height:1.6">Someone from the team will call within two working days to talk about your property.</p><div><button onClick="{{ resetLl }}" style="min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;color:var(--color-text);border-radius:4px">Send another</button></div></div>
+      </sc-if>
+      <sc-if value="{{ llOpen }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitLl }}" style="display:flex;flex-direction:column;gap:16px">
+          <h3 style="font-size:24px">Tell us about your property</h3>
+          <p style="font-size:14px;color:var(--color-neutral-700);margin-top:-8px">Two minutes. No commitment.</p>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Name<input required value="{{ llf.name.value }}" onChange="{{ llf.name.set }}" style="min-height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:16px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Email<input type="email" required value="{{ llf.email.value }}" onChange="{{ llf.email.set }}" style="min-height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Phone<input type="tel" value="{{ llf.phone.value }}" onChange="{{ llf.phone.set }}" style="min-height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500">Property postcode<input required value="{{ llf.postcode.value }}" onChange="{{ llf.postcode.set }}" placeholder="e.g. SW16 3QL" style="min-height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px;text-transform:uppercase" style-focus="border-color:var(--color-accent);outline:none"></label>
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:14px;font-weight:500">Bedrooms</span><div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ llBeds }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.onClick }}" style="min-height:44px;min-width:56px;padding:0 14px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};font-family:var(--font-body);font-size:15px;cursor:pointer;border-radius:4px">{{ c.label }}</button></sc-for></div></div>
+          <button type="submit" style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;padding:0 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:600;font-size:16px;cursor:pointer;margin-top:4px;border-radius:4px" style-hover="background:var(--color-accent-600)">Send <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+        </form>
+      </sc-if>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.support }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Support" style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,72px) clamp(40px,5vw,56px);display:flex;flex-direction:column;gap:18px">
+    <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Support</p>
+    <h1 style="font-size:clamp(44px,6vw,88px);line-height:0.98;letter-spacing:-0.035em;margin-left:-0.04em">Support, tailored to you.</h1>
+    <p style="font-size:18px;line-height:1.55;max-width:58ch;color:var(--color-neutral-800)">Person-centred care that recognises each person’s circumstances. Staff presence depends on the property and each resident’s needs.</p>
+  </section>
+  <section style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(56px,7vw,96px)">
+    <div style="display:grid;grid-template-columns:{{ cols5 }};gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+      <sc-for list="{{ supportAreas }}" as="a" hint-placeholder-count="5"><div style="grid-column:{{ a.span }};background:var(--color-bg);padding:28px;display:flex;flex-direction:column;gap:12px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ a.icon }}"></path></svg><h3 style="font-size:20px;line-height:1.2;margin-top:8px">{{ a.title }}</h3><p style="font-size:15px;line-height:1.55;color:var(--color-neutral-800)">{{ a.body }}</p></div></sc-for>
+    </div>
+  </section>
+  <section style="background:var(--color-accent);color:var(--color-bg)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,5vw,72px)">
+      <h2 style="font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px">Already a tenant?</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px">
+        <button onClick="{{ go.repair }}" style="display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:72px;padding:0 22px;background:var(--color-bg);color:var(--color-text);border:0;cursor:pointer;font-family:var(--font-heading);font-weight:700;font-size:19px;text-align:left;border-radius:4px" style-hover="background:var(--color-accent-100)">Report a repair <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button>
+        <a href="#complaints" style="display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:72px;padding:0 20px;border:1px solid var(--color-bg);color:var(--color-bg);text-decoration:none;font-family:var(--font-heading);font-weight:700;font-size:19px;border-radius:4px" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Make a complaint <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12l7 7 7-7"></path></svg></a>
+        <a href="tel:+447507921011" style="display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:72px;padding:0 20px;border:1px solid var(--color-bg);color:var(--color-bg);text-decoration:none;font-family:var(--font-heading);font-weight:700;font-size:19px;border-radius:4px" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Call the team <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+      </div>
+    </div>
+  </section>
+  <section id="complaints" style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,72px);scroll-margin-top:80px">
+    <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Complaints</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px 64px;margin-bottom:36px">
+      <h2 style="font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-0.02em">Unhappy with something? Tell us.</h2>
+      <p style="font-size:16px;line-height:1.7;color:var(--color-neutral-800)">Email <a href="mailto:info@avenirhousing.co.uk">info@avenirhousing.co.uk</a> with your contact details, what happened, and any relevant dates or documents. We handle every complaint fairly and discreetly.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ cols3 }};gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+      <sc-for list="{{ complaintSteps }}" as="c" hint-placeholder-count="3"><div style="background:var(--color-bg);padding:28px;display:flex;flex-direction:column;gap:10px"><span style="font-family:var(--font-heading);font-weight:800;font-size:clamp(32px,3.4vw,44px);line-height:1;color:var(--color-accent);letter-spacing:-0.03em">{{ c.time }}</span><h3 style="font-size:18px">{{ c.title }}</h3><p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800)">{{ c.body }}</p></div></sc-for>
+    </div>
+    <p style="font-size:15px;line-height:1.6;margin-top:20px;color:var(--color-neutral-800)">Escalations go to our Director at <a href="mailto:ismail@avenirhousing.co.uk">ismail@avenirhousing.co.uk</a>.</p>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.contact }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Contact" style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,72px) 36px;display:flex;flex-direction:column;gap:18px">
+    <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Contact</p>
+    <h1 style="font-size:clamp(44px,6vw,88px);line-height:0.98;letter-spacing:-0.035em;margin-left:-0.04em">Let’s talk.</h1>
+    <p style="font-size:18px;line-height:1.55;max-width:56ch;color:var(--color-neutral-800)">Referrals, partnerships or just a question — we respond promptly and confidentially.</p>
+  </section>
+  <section style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,72px)">
+    <div style="display:grid;grid-template-columns:{{ cols3 }};gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+      <sc-for list="{{ channels }}" as="c" hint-placeholder-count="3">
+        <a href="{{ c.href }}" target="_blank" rel="noopener" style="background:var(--color-bg);padding:24px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-decoration:none;color:var(--color-text);min-width:0" style-hover="background:var(--color-accent-100);color:var(--color-text)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ c.icon }}"></path></svg>
+          <span style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700);margin-top:22px">{{ c.label }}</span>
+          <span style="font-family:var(--font-heading);font-weight:800;font-size:clamp(15px,1.5vw,19px);line-height:1.3;letter-spacing:-0.01em;max-width:100%">{{ c.value }}</span>
+          <span style="font-size:14px;color:var(--color-neutral-700)">{{ c.hint }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,5vw,72px) clamp(56px,8vw,104px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:32px clamp(40px,6vw,96px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="font-size:clamp(28px,3.4vw,40px);line-height:1.05;letter-spacing:-0.02em">Send a message</h2>
+      <p style="font-size:16px;line-height:1.6;color:var(--color-neutral-800);max-width:36ch">We reply within a working day. For anything urgent, please call.</p>
+    </div>
+    <div style="grid-column:span 2;min-width:0;max-width:720px">
+    <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:14px;padding:28px;background:var(--color-surface);border-radius:5px"><span style="width:14px;height:14px;background:var(--color-accent);border-radius:2px"></span><h2 style="font-size:30px">Message sent.</h2><p style="font-size:16px;line-height:1.6">We’ll be in touch shortly.</p><div><button onClick="{{ resetContact }}" style="min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;color:var(--color-text);border-radius:4px">Send another</button></div></div>
+    </sc-if>
+    <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submitContact }}" style="display:flex;flex-direction:column;gap:24px;padding:24px;border:1px solid var(--color-divider);border-radius:5px;background:var(--color-bg)">
+        <div style="display:flex;flex-direction:column;gap:10px"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">It’s about</span><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ topics }}" as="c" hint-placeholder-count="5"><button type="button" onClick="{{ c.onClick }}" aria-pressed="{{ c.on }}" style="height:40px;padding:0 14px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};font-family:var(--font-body);font-size:14px;cursor:pointer;border-radius:4px">{{ c.label }}</button></sc-for></div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px 16px">
+          <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Name</span><input required autocomplete="name" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+          <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Email</span><input type="email" required autocomplete="email" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+          <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Phone<span style="font-size:13px;font-weight:400;color:var(--color-neutral-700)">Optional</span></span><input type="tel" autocomplete="tel" style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;font:inherit;font-size:16px;font-weight:400;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px" style-focus="border-color:var(--color-accent);outline:none"></label>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:600">Message</span><textarea required rows="6" style="width:100%;box-sizing:border-box;padding:12px 14px;font:inherit;font-size:16px;font-weight:400;line-height:1.5;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-neutral-300);border-radius:4px;resize:vertical" style-focus="border-color:var(--color-accent);outline:none"></textarea></label>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><button type="submit" style="display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 20px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:600;font-size:16px;cursor:pointer;border-radius:4px" style-hover="background:var(--color-accent-600)">Send message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></button><span style="font-size:13px;color:var(--color-neutral-700)">Kept confidential.</span></div>
+      </form>
+    </sc-if>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ showClose }}" hint-placeholder-val="{{ true }}">
+  <section style="background:var(--color-accent);color:var(--color-bg)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px);display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap">
+      <h2 style="font-size:clamp(44px,6vw,96px);line-height:0.98;letter-spacing:-0.035em;margin-left:-0.04em;max-width:12ch">Not sure where to start? Talk to us.</h2>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="tel:+447507921011" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px;background:var(--color-bg);color:var(--color-text);font-family:var(--font-heading);font-weight:600;font-size:15px;text-decoration:none;border-radius:4px" style-hover="background:var(--color-text);color:var(--color-bg)">Call +44 7507 921011</a>
+        <button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 18px;background:transparent;color:var(--color-bg);border:1px solid var(--color-bg);font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer;border-radius:4px" style-hover="background:var(--color-accent-600)">Send a message</button>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+</main>
+
+<footer style="border-top:1px solid var(--color-divider)">
+  <div style="max-width:1280px;margin:0 auto;padding:40px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:40px 64px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px;max-width:300px">
+      <span role="img" aria-label="Avenir Housing" style="align-self:flex-start"><span style="display:inline-flex;align-items:center;gap:0.42em;font-size:21px;line-height:1;white-space:nowrap;transition:font-size .25s ease"><svg viewBox="0 0 40 40" style="width:1.35em;height:1.35em;flex:none;display:block" aria-hidden="true"><path fill="none" stroke="var(--color-accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M4.5 22.5L20 8L35.5 22.5"></path><circle fill="var(--color-accent)" cx="20" cy="31" r="6"></circle></svg><span style="font-family:var(--font-heading);letter-spacing:-0.035em;display:inline-flex;gap:0.22em;align-items:baseline"><span style="font-weight:800;color:var(--color-accent)">avenir</span><span style="font-weight:300;color:var(--color-accent-500)">housing</span></span></span></span>
+      <p style="font-size:14px;line-height:1.5;color:var(--color-neutral-700)">Safe, supported accommodation for vulnerable adults.</p>
+    </div>
+    <div style="display:flex;gap:40px 56px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start"><p style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Explore</p><sc-for list="{{ footerExplore }}" as="l" hint-placeholder-count="3"><button onClick="{{ l.onClick }}" style="background:none;border:0;padding:2px 0;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--color-text);text-align:left;border-radius:4px" style-hover="color:var(--color-accent-700)">{{ l.label }}</button></sc-for></div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start"><p style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Get help</p><sc-for list="{{ footerHelp }}" as="l" hint-placeholder-count="3"><button onClick="{{ l.onClick }}" style="background:none;border:0;padding:2px 0;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--color-text);text-align:left;border-radius:4px" style-hover="color:var(--color-accent-700)">{{ l.label }}</button></sc-for></div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px"><p style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Contact</p><a href="tel:+447507921011" style="color:var(--color-text);text-decoration:none">+44 7507 921011</a><a href="mailto:info@avenirhousing.co.uk" style="color:var(--color-text);text-decoration:none">info@avenirhousing.co.uk</a><span style="color:var(--color-neutral-700)">656 Streatham High Road, SW16 3QL</span></div>
+    </div>
+  </div>
+  <div style="border-top:1px solid var(--color-divider)">
+    <div style="max-width:1280px;margin:0 auto;padding:16px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--color-neutral-700)"><span>© Avenir Housing CIC</span><a href="#" style="color:var(--color-neutral-700);text-decoration:none">Privacy policy</a></div>
+  </div>
+  <sc-if value="{{ showMobileBar }}" hint-placeholder-val="{{ false }}"><div style="height:72px"></div></sc-if>
+</footer>
+
+<sc-if value="{{ showHouses }}" hint-placeholder-val="{{ false }}">
+  <div ref="{{ houseRef }}" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:5"></div>
+</sc-if>
+
+<sc-if value="{{ showMobileBar }}" hint-placeholder-val="{{ false }}">
+  <nav aria-label="Quick actions" style="position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:1fr 1fr 1.4fr;background:var(--color-bg);border-top:1px solid var(--color-text);padding-bottom:env(safe-area-inset-bottom)">
+    <a href="tel:+447507921011" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:64px;color:var(--color-text);text-decoration:none;font-size:12px;font-weight:600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ic.phone }}"></path></svg>Call</a>
+    <button onClick="{{ openPal }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:64px;background:none;border:0;border-left:1px solid var(--color-divider);color:var(--color-text);font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0M21 21l-4.3-4.3"></path></svg>Search</button>
+    <button onClick="{{ go.apply }}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:64px;background:var(--color-accent);border:0;color:var(--color-bg);font-family:var(--font-heading);font-weight:600;font-size:15px;cursor:pointer">Refer or apply</button>
+  </nav>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:60;padding:12px 18px;background:var(--color-text);color:var(--color-bg);font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);border-radius:4px">{{ toast }}</div>
+</sc-if>
+
+<sc-if value="{{ pal }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closePal }}" style="position:fixed;inset:0;z-index:70;background:color-mix(in srgb,var(--color-text) 45%,transparent);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;justify-content:center;align-items:flex-start;padding:max(12px,10vh) 12px 12px">
+    <div role="dialog" aria-modal="true" aria-label="Search or jump to" onClick="{{ stop }}" style="width:100%;max-width:640px;background:var(--color-bg);border:1px solid var(--color-text);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;max-height:80vh;border-radius:6px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:12px;padding:0 12px 0 18px;border-bottom:1px solid var(--color-divider)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round"><path d="M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0M21 21l-4.3-4.3"></path></svg>
+        <input autoFocus="{{ true }}" value="{{ palQ }}" onChange="{{ setPalQ }}" onKeyDown="{{ palKey }}" placeholder="Try “repair”, “refer” or “Streatham”" aria-label="Search" style="flex:1;min-width:0;height:64px;border:0;outline:none;background:transparent;font:inherit;font-size:18px;color:var(--color-text);border-radius:4px">
+        <button onClick="{{ closePal }}" style="min-height:32px;padding:0 8px;background:none;border:1px solid var(--color-neutral-400);cursor:pointer;font-family:var(--font-body);font-size:12px;color:var(--color-neutral-700);border-radius:4px">Esc</button>
+      </div>
+      <div role="listbox" style="overflow:auto;padding:6px 0">
+        <sc-if value="{{ palEmpty }}" hint-placeholder-val="{{ false }}"><p style="padding:20px 18px;font-size:15px;color:var(--color-neutral-800)">Nothing found. Call <a href="tel:+447507921011">+44 7507 921011</a> and we’ll help.</p></sc-if>
+        <sc-for list="{{ palResults }}" as="r" hint-placeholder-count="6">
+          <button onClick="{{ r.run }}" onMouseEnter="{{ r.hoverSel }}" role="option" style="width:100%;display:flex;align-items:center;gap:14px;min-height:56px;padding:8px 18px 8px 15px;background:{{ r.bg }};border:0;border-left:3px solid {{ r.mark }};cursor:pointer;text-align:left;font-family:var(--font-body);color:var(--color-text);border-radius:4px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="{{ r.icon }}"></path></svg>
+            <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:15px">{{ r.label }}</span><span style="font-size:13px;color:var(--color-neutral-700)">{{ r.hint }}</span></span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:16px;padding:10px 18px;border-top:1px solid var(--color-divider);font-size:12px;color:var(--color-neutral-700)"><span>↑↓ to move</span><span>↵ to open</span><span>Esc to close</span></div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;houseParallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Homepage&quot;},&quot;propertyView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Grid&quot;,&quot;Map&quot;],&quot;default&quot;:&quot;Grid&quot;,&quot;tsType&quot;:&quot;'Grid'|'Map'&quot;,&quot;section&quot;:&quot;Properties&quot;},&quot;mobileActionBar&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Mobile&quot;},&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;properties&quot;,&quot;landlords&quot;,&quot;apply&quot;,&quot;support&quot;,&quot;repair&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+class Component extends DCLogic {
+  IC = {
+    home: 'M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
+    user: 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M8 7a4 4 0 1 0 8 0a4 4 0 1 0-8 0',
+    userPlus: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M5 7a4 4 0 1 0 8 0a4 4 0 1 0-8 0M19 8v6M22 11h-6',
+    building: 'M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18ZM6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4',
+    wrench: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
+    phone: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z',
+    mail: 'M22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+    pin: 'M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0M9 10a3 3 0 1 0 6 0a3 3 0 1 0-6 0',
+    shield: 'M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1zM9 12l2 2 4-4',
+    message: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z',
+    alert: 'm21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01',
+    drop: 'M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z',
+    flame: 'M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z',
+    zap: 'M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z',
+    waves: 'M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1',
+    door: 'M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14M2 20h20M14 12v.01',
+    fridge: 'M5 6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zM5 10h14M15 7v6',
+    help: 'M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01',
+    bed: 'M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M12 4v6M2 18h20',
+    bath: 'M10 4 8 6M17 19v2M2 12h20M7 19v2M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5',
+    sofa: 'M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0zM4 18v2M20 18v2M12 4v9'
+  };
+  ls(k, d) { try { const v = localStorage.getItem('avenir2.' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  save(k, v) { try { localStorage.setItem('avenir2.' + k, JSON.stringify(v)); } catch (e) {} }
+  state = {
+    page: this.ls('page', this.props.startPage || 'home'), mobile: typeof window !== 'undefined' && window.innerWidth < 900,
+    pal: false, palQ: '', palIdx: 0, toast: '',
+    faq: 0, faqQ: '',
+    propFilter: 'All', propArea: 'All areas', propBeds: 0, showSaved: false, propView: null, propSel: null, hoverId: null,
+    saved: this.ls('saved', []),
+    apply: this.ls('apply', { step: 0, mode: 'self', d: {} }), applySent: null,
+    rep: { step: 0, cat: '', urg: '', loc: '', desc: '', name: '', phone: '', address: '' }, repSent: null,
+    ll: {}, llSent: false, topic: 'A referral', contactSent: false
+  };
+  houseRef = (el) => {
+    if (this._houses) { this._houses.dispose(); this._houses = null; }
+    if (el) this._houses = this.startHouses(el);
+  };
+  componentDidMount() {
+    this._key = (e) => {
+      const t = e.target, typing = t && /INPUT|TEXTAREA|SELECT/.test(t.tagName);
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); this.setState(s => ({ pal: !s.pal, palQ: '', palIdx: 0 })); }
+      else if (e.key === '/' && !typing && !this.state.pal) { e.preventDefault(); this.setState({ pal: true, palQ: '', palIdx: 0 }); }
+      else if (e.key === 'Escape' && this.state.pal) this.setState({ pal: false });
+    };
+    this._rs = () => { const m = window.innerWidth < 900, w = window.innerWidth >= 1180; if (m !== this.state.mobile || w !== this.state.wide) this.setState({ mobile: m, wide: w }); };
+    this._rs();
+    this._sc = () => { const v = window.scrollY > 8; if (v !== this.state.scrolled) this.setState({ scrolled: v }); };
+    window.addEventListener('keydown', this._key); window.addEventListener('resize', this._rs); window.addEventListener('scroll', this._sc, { passive: true }); this._sc();
+  }
+  componentWillUnmount() {
+    if (this._houses) this._houses.dispose();
+    window.removeEventListener('keydown', this._key); window.removeEventListener('resize', this._rs); window.removeEventListener('scroll', this._sc);
+    clearTimeout(this._tt);
+  }
+  startHouses(el) {
+    let alive = true, raf = 0, renderer, cleanup = [];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (async () => {
+      const [THREE, buf] = await Promise.all([import('https://esm.sh/three@0.160.0'), fetch('assets/house.bin').then(r => r.arrayBuffer())]);
+      if (!alive) return;
+      const head = new Uint32Array(buf, 0, 2);
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(buf, 8, head[0] * 3), 3));
+      geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, 8 + head[0] * 12, head[1]), 1));
+      geo.computeVertexNormals();
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      el.appendChild(renderer.domElement);
+      const scene = new THREE.Scene();
+      const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -2000, 2000);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x8fa58f, 1.6));
+      const sun = new THREE.DirectionalLight(0xffffff, 1.8); sun.position.set(-0.6, 1, 0.8); scene.add(sun);
+      const cols = [0x22543f, 0xa3c09f];
+      const spec = [[0.76, 200, 90, 0.55, 80], [0.9, 360, 170, 1.35, 160], [0.68, 560, 74, 0.4, 240], [0.95, 660, 120, 1.6, 120], [0.6, 470, 60, 0.8, 300], [0.82, 140, 64, 1.25, 200]];
+      const houses = spec.map((s, i) => {
+        const mat = new THREE.MeshStandardMaterial({ color: cols[i % 2], roughness: 0.7, metalness: 0, flatShading: true, transparent: true });
+        const m = new THREE.Mesh(geo, mat); scene.add(m);
+        return { m, mat, x: s[0], y: s[1], size: s[2], speed: s[3], fade: s[4], ry: i * 1.3, dir: i % 2 ? 1 : -1 };
+      });
+      let W = 0, H = 0;
+      const resize = () => { W = el.clientWidth; H = el.clientHeight; renderer.setSize(W, H); cam.left = 0; cam.right = W; cam.top = 0; cam.bottom = -H; cam.updateProjectionMatrix(); };
+      resize(); window.addEventListener('resize', resize); cleanup.push(() => window.removeEventListener('resize', resize));
+      const ease = (t) => t * t * (3 - 2 * t), t0 = performance.now();
+      const frame = () => {
+        if (!alive) return;
+        const sc = window.scrollY, t = (performance.now() - t0) / 1000, mobile = W < 760;
+        houses.forEach((h, i) => {
+          if (mobile && (h.x < 0.75 || i > 3)) { h.m.visible = false; return; }
+          const life = reduce ? 0 : Math.min(1, Math.max(0, (sc - h.fade) / 420)), k = 1 - ease(life);
+          const size = (mobile ? h.size * 0.5 : h.size) * k;
+          h.m.visible = k > 0.01;
+          const bob = reduce ? 0 : Math.sin(t * 0.9 + i) * 6;
+          h.m.position.set(h.x * W, -(h.y - sc * (reduce ? 1 : h.speed) + bob - life * 120), 0);
+          h.m.scale.setScalar(size);
+          h.m.rotation.set(0.32 + life * 0.6, h.ry + h.dir * (sc * 0.004 + (reduce ? 0 : t * 0.15)) + life * Math.PI, h.dir * life * 0.4);
+          h.mat.opacity = Math.min(1, k * 1.4);
+        });
+        renderer.render(scene, cam);
+        raf = requestAnimationFrame(frame);
+      };
+      frame();
+    })().catch(e => console.warn('house layer', e));
+    return { dispose: () => { alive = false; cancelAnimationFrame(raf); cleanup.forEach(f => f()); if (renderer) { renderer.dispose(); renderer.domElement.remove(); } } };
+  }
+  nav(page, extra) {
+    this.save('page', page);
+    const apply = () => new Promise(r => this.setState({ page, pal: false, ...(extra || {}) }, r));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (document.startViewTransition && !reduce) document.startViewTransition(() => apply().then(() => window.scrollTo(0, 0)));
+    else { apply(); window.scrollTo(0, 0); }
+  }
+  toast(msg) { clearTimeout(this._tt); this.setState({ toast: msg }); this._tt = setTimeout(() => this.setState({ toast: '' }), 2600); }
+  setApply(patch) { this.setState(s => { const apply = { ...s.apply, ...patch }; this.save('apply', apply); return { apply }; }); }
+  setD(k, v) { this.setState(s => { const apply = { ...s.apply, d: { ...s.apply.d, [k]: v } }; this.save('apply', apply); return { apply }; }); }
+  setRep(patch) { this.setState(s => ({ rep: { ...s.rep, ...patch } })); }
+  renderVals() {
+    const s = this.state, p = s.page, IC = this.IC;
+    const accent = 'var(--color-accent)', ink = 'var(--color-text)', paper = 'var(--color-bg)', line = 'var(--color-neutral-300)';
+    const go = {
+      home: () => this.nav('home'), properties: () => this.nav('properties', { propSel: null }), landlords: () => this.nav('landlords'),
+      apply: () => this.nav('apply'),
+      applySelf: () => this.nav('apply', { applySent: null, apply: { ...s.apply, mode: 'self', step: Math.max(1, s.apply.step) } }),
+      refer: () => this.nav('apply', { applySent: null, apply: { ...s.apply, mode: 'referral', step: Math.max(1, s.apply.step) } }),
+      support: () => this.nav('support'), repair: () => this.nav('repair'), contact: () => this.nav('contact'),
+      contactLink: (e) => { e.preventDefault(); this.nav('contact'); }
+    };
+    const navLinks = [['Find a home', 'properties'], ['Refer or apply', 'apply'], ['Landlords', 'landlords'], ['Support', 'support'], ['Contact', 'contact']]
+      .map(([label, k]) => ({ label, onClick: go[k], current: p === k ? 'page' : undefined, color: p === k ? 'var(--color-accent-700)' : ink, weight: p === k ? 600 : 500, color: p === k ? ink : 'var(--color-neutral-800)', dot: p === k ? accent : 'transparent' }));
+    const fl = (arr) => arr.map(([label, k]) => ({ label, onClick: go[k] }));
+
+    // properties
+    const shared = ['Fully furnished', 'Bills included', 'Wi-Fi', 'Shared kitchen', 'Washing machine', 'Shared lounge'];
+    const allProps = [
+      { id: 'AH-101', title: '24 Leigham Court Road', area: 'Streatham', pc: 'SW16 1EH', type: 'Shared supported house', beds: 5, bedsUnit: 'Bedrooms', baths: 3, bathsUnit: 'Bathrooms', rec: 1, support: 'Medium', status: 'Available', ord: 0, avail: 'Available now', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Lambeth', photos: 12, mx: 46, my: 38,
+        summary: 'A bright Victorian house with a large garden, five minutes from Streatham station.', features: [...shared, 'Private garden', 'Bike storage'],
+        transport: [['Streatham station', '6 min walk'], ['Buses 57, 109, 250', '2 min walk'], ['Streatham Common', '8 min walk']] },
+      { id: 'AH-102', title: '8 Norbury Crescent', area: 'Norbury', pc: 'SW16 3LX', type: 'Shared supported house', beds: 4, bedsUnit: 'Bedrooms', baths: 2, bathsUnit: 'Bathrooms', rec: 1, support: 'Medium', status: 'Available', ord: 1, avail: 'From 1 Nov 2026', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Croydon', photos: 9, mx: 42, my: 58,
+        summary: 'A quiet, family-sized home on a residential street with two shared bathrooms.', features: [...shared, 'Dining room', 'Rear patio'],
+        transport: [['Norbury station', '5 min walk'], ['Buses 60, 109', '3 min walk'], ['Norbury Park', '10 min walk']] },
+      { id: 'AH-103', title: '51 Smallwood Road', area: 'Tooting', pc: 'SW17 0TN', type: 'Detached house', beds: 3, bedsUnit: 'Bedrooms', baths: 2, bathsUnit: 'Bathrooms', rec: 1, support: 'Medium', status: 'Available', ord: 0, avail: 'Available now', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Wandsworth', photos: 14, mx: 22, my: 34,
+        summary: 'Contemporary two-storey detached home with spacious bedrooms, two full bathrooms and open-plan living areas, plus a landscaped front garden.', features: [...shared, 'Open-plan living', 'Landscaped front garden'],
+        transport: [['Tooting Broadway (Northern line)', '8 min walk'], ['Tooting station', '10 min walk'], ['Tooting Bec Common', '12 min walk']] },
+      { id: 'AH-104', title: '117 Addiscombe Road', area: 'Croydon', pc: 'CR0 6SR', type: 'Shared supported house', beds: 6, bedsUnit: 'Bedrooms', baths: 3, bathsUnit: 'Bathrooms', rec: 2, support: 'High', status: 'Coming soon', ord: 2, avail: 'From Jan 2027', staff: 'Staff on site daily', suitable: 'Vulnerable adults, 18+', la: 'Croydon', photos: 6, mx: 72, my: 78,
+        summary: 'A newly refurbished house with on-site staff presence and a ground-floor accessible room.', features: [...shared, 'Accessible ground-floor room', 'Staff office'],
+        transport: [['East Croydon station', '9 min walk'], ['Tram — Lebanon Road', '3 min walk'], ['Croydon town centre', '12 min walk']] },
+      { id: 'AH-105', title: '42 Acre Lane', area: 'Brixton', pc: 'SW2 5RF', type: 'Self-contained flats', beds: 3, bedsUnit: 'One-bed flats', baths: 3, bathsUnit: 'Private bathrooms', rec: 0, support: 'Low', status: 'Full', ord: 9, avail: 'Currently full', staff: 'Weekly support visits', suitable: 'Adults moving towards independence', la: 'Lambeth', photos: 8, mx: 50, my: 14,
+        summary: 'Three one-bedroom flats close to Brixton’s shops, market and transport links.', features: ['Fully furnished', 'Wi-Fi', 'Private kitchen', 'Private bathroom', 'Secure entry', 'Bike storage'],
+        transport: [['Brixton (Victoria line)', '6 min walk'], ['Clapham North (Northern line)', '9 min walk'], ['Brockwell Park', '14 min walk']] },
+      { id: 'AH-106', title: '305 London Road', area: 'Mitcham', pc: 'CR4 3LB', type: 'Shared supported house', beds: 5, bedsUnit: 'Bedrooms', baths: 2, bathsUnit: 'Bathrooms', rec: 1, support: 'Medium', status: 'Available', ord: 0, avail: 'Available now', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Merton', photos: 11, mx: 24, my: 66,
+        summary: 'A spacious semi-detached house with a large shared kitchen and off-street parking.', features: [...shared, 'Off-street parking', 'Garden'],
+        transport: [['Mitcham Junction', '8 min walk'], ['Tram — Mitcham', '5 min walk'], ['Mitcham Common', '6 min walk']] }
+    ];
+    const tag = { 'Available': ['var(--color-accent)', 'var(--color-bg)'], 'Full': ['var(--color-neutral-200)', 'var(--color-neutral-800)'], 'Coming soon': ['var(--color-text)', 'var(--color-bg)'] };
+    const pl = (n, one, many) => n === 1 ? one : many;
+    const openProp = (id) => this.nav('properties', { propSel: id });
+    const toggleSave = (id) => this.setState(st => { const saved = st.saved.includes(id) ? st.saved.filter(x => x !== id) : [...st.saved, id]; this.save('saved', saved); return { saved }; });
+    const decorate = (x, i) => {
+      const isSaved = s.saved.includes(x.id);
+      const bedsLabel = x.bedsUnit === 'Bedrooms' ? pl(x.beds, 'bedroom', 'bedrooms') : 'one-bed flats';
+      return { ...x, n: i + 1, addressLine: x.area + ', London ' + x.pc, bedsLabel, bathsLabel: x.bathsUnit === 'Bathrooms' ? pl(x.baths, 'bathroom', 'bathrooms') : 'private baths', recLabel: pl(x.rec, 'reception', 'receptions'),
+        specLine: x.beds + ' ' + bedsLabel + ' · ' + x.baths + ' bath · ' + x.type.toLowerCase(),
+        tagBg: tag[x.status][0], tagFg: tag[x.status][1], open: () => openProp(x.id),
+        saved: isSaved, heartFill: isSaved ? 'currentColor' : 'none', heartColor: isSaved ? 'var(--color-accent)' : 'var(--color-text)', saveLabel: isSaved ? 'Saved' : 'Save',
+        toggleSave: (e) => { if (e) e.stopPropagation(); toggleSave(x.id); },
+        hover: () => this.setState({ hoverId: x.id }), unhover: () => this.setState({ hoverId: null }),
+        pinBg: s.hoverId === x.id ? ink : (x.status === 'Available' ? accent : 'var(--color-neutral-600)'), pinZ: s.hoverId === x.id ? 3 : 1, pinScale: s.hoverId === x.id ? 'scale(1.2)' : 'none',
+        rowBg: s.hoverId === x.id ? 'var(--color-accent-100)' : 'transparent' };
+    };
+    let list = allProps.filter(x => (s.propFilter === 'All' || x.status === s.propFilter) && (s.propArea === 'All areas' || x.area === s.propArea) && x.beds >= s.propBeds && (!s.showSaved || s.saved.includes(x.id)));
+    list.sort((a, b) => a.ord - b.ord);
+    const properties = list.map(decorate);
+    const availList = allProps.filter(x => x.status === 'Available');
+    const featured = availList.slice().sort((a, b) => a.ord - b.ord).slice(0, 3).map(decorate);
+    const selIdx = allProps.findIndex(x => x.id === s.propSel);
+    let sel = {};
+    if (selIdx >= 0) {
+      const x = allProps[selIdx];
+      sel = { ...decorate(x, selIdx), ref: x.id,
+        gallery0: 'photo — ' + x.title.toLowerCase() + ', front',
+        galleryRest: ['living room', 'bedroom', 'kitchen', 'bathroom'].map((r, i) => ({ label: r, more: i === 3 && x.photos > 5, moreCount: x.photos - 5 })),
+        description: [x.summary + ' Each room is furnished with care, and residents are encouraged to personalise their space and build a sense of ownership and belonging.', 'Support is tailored to each resident — from budgeting and benefits to healthcare and life skills — with ' + x.staff.toLowerCase() + ' from our trained team.'],
+        facts: [['Property type', x.type], [x.bedsUnit, String(x.beds)], [x.bathsUnit, String(x.baths)], ['Reception rooms', String(x.rec)], ['Bills', x.features.includes('Bills included') ? 'Included' : 'Not included'], ['Support level', x.support], ['Staff presence', x.staff], ['Suitable for', x.suitable], ['Local authority', x.la]].map(([label, value]) => ({ label, value })),
+        transport: x.transport.map(([place, time]) => ({ place, time }))
+      };
+    }
+    const stepProp = (d) => openProp(allProps[(selIdx + d + allProps.length) % allProps.length].id);
+    const chip = (on) => ({ on, bg: on ? ink : 'transparent', fg: on ? paper : ink, border: on ? ink : line, segBg: on ? paper : 'transparent', segFg: on ? ink : 'var(--color-neutral-800)', segShadow: on ? '0 1px 2px rgba(27,33,29,.12), 0 0 0 1px rgba(27,33,29,.06)' : 'none', segWeight: on ? 600 : 500 });
+    const view = s.propView || this.props.propertyView || 'Grid';
+
+    // palette
+    const intents = [
+      { label: 'Find an available home', hint: 'Properties', icon: IC.home, kw: 'property house room flat available search', run: go.properties },
+      { label: 'Apply for accommodation', hint: 'For myself', icon: IC.user, kw: 'apply need home myself homeless', run: go.applySelf },
+      { label: 'Refer someone', hint: 'Councils, agencies, charities', icon: IC.userPlus, kw: 'referral refer council agency charity', run: go.refer },
+      { label: 'Report a repair', hint: 'Tenants', icon: IC.wrench, kw: 'repair fix broken maintenance leak heating', run: go.repair },
+      { label: 'Emergency — call now', hint: '+44 7507 921011', icon: IC.alert, kw: 'emergency urgent danger flood gas safety call phone', run: () => { window.location.href = 'tel:+447507921011'; } },
+      { label: 'Let your property to us', hint: 'Landlords & partners', icon: IC.building, kw: 'landlord partner let property work', run: go.landlords },
+      { label: 'Support we offer', hint: 'Budgeting, health, life skills', icon: IC.shield, kw: 'support help budgeting benefits mental health', run: go.support },
+      { label: 'Make a complaint', hint: 'How we handle it', icon: IC.message, kw: 'complaint unhappy problem', run: go.support },
+      { label: 'Contact us', hint: 'Call, email or visit', icon: IC.mail, kw: 'contact email call address visit', run: go.contact },
+      ...allProps.map(x => ({ label: x.title, hint: x.area + ' · ' + x.avail, icon: IC.pin, kw: 'home property ' + x.area + ' ' + x.type, run: () => openProp(x.id) }))
+    ];
+    const terms = s.palQ.toLowerCase().split(/\s+/).filter(Boolean);
+    const palAll = (terms.length ? intents.filter(it => terms.every(t => (it.label + ' ' + it.hint + ' ' + it.kw).toLowerCase().includes(t))) : intents.slice(0, 9)).slice(0, 9);
+    const palIdx = Math.min(s.palIdx, Math.max(0, palAll.length - 1));
+    const palResults = palAll.map((it, i) => ({ ...it, bg: i === palIdx ? 'var(--color-accent-100)' : 'transparent', mark: i === palIdx ? accent : 'transparent', hoverSel: () => this.setState({ palIdx: i }) }));
+
+    // faqs
+    const faqsRaw = [
+      ['What support do you provide?', 'Support is tailored to each resident and may include:', ['Help with budgeting and managing benefits', 'Support accessing healthcare and mental health services', 'Life skills training (e.g. cooking, cleaning, job readiness)', 'Assistance with moving towards independent living', 'Emotional support and signposting to other services']],
+      ['How do I apply for accommodation?', 'You can apply directly, or be referred by a local authority, support agency or charity. We assess each application to make sure we can meet the individual’s needs.'],
+      ['How long can someone stay?', 'It depends on the individual’s needs and progress. Some residents stay a few months, others longer — until they’re ready to move on to more independent housing.'],
+      ['Are staff on-site?', 'Our trained support workers are available to provide guidance and assistance. Staff presence depends on the property and the needs of residents.'],
+      ['Do you work with other organisations?', 'Yes. We partner with local authorities, health services, charities and community organisations so residents receive comprehensive care and support.'],
+      ['How is your service funded?', 'Through a combination of rent (often covered by Housing Benefit), local authority funding and charitable contributions.'],
+      ['Can residents have visitors?', 'Visitors are welcome within reasonable limits, with safeguarding and safety procedures in place to protect all residents.'],
+      ['How do you keep residents safe?', 'Well-managed properties with risk assessments, safeguarding policies and trained staff. Safety and dignity are always our top priorities.']
+    ];
+    const fq = s.faqQ.toLowerCase().trim();
+    const faqs = faqsRaw.map(([q, a, b], i) => ({ q, a, b: b || [], i })).filter(f => !fq || (f.q + ' ' + f.a + ' ' + f.b.join(' ')).toLowerCase().includes(fq)).map(f => {
+      const open = fq ? true : s.faq === f.i;
+      return { q: f.q, a: f.a, bullets: f.b, open, sign: open ? '–' : '+', signBg: open ? accent : 'var(--color-surface)', signFg: open ? paper : ink, toggle: () => this.setState({ faq: s.faq === f.i ? -1 : f.i, faqQ: '' }) };
+    });
+
+    // apply wizard
+    const A = s.apply, d = A.d || {}, isRef = A.mode === 'referral';
+    const fld = (k) => ({ value: d[k] || '', set: (e) => this.setD(k, e.target.value) });
+    const aSteps = ['Who it’s for', 'Contact details', 'Situation', 'Review & send'];
+    const filled = (k) => (d[k] || '').trim().length > 0;
+    const okDetails = filled('name') && filled('phone') && (!isRef || (filled('refName') && filled('refOrg') && filled('refEmail')));
+    const aCan = [true, okDetails, !!d.situation, !!d.consent][A.step];
+    const aHint = ['', isRef ? 'Add your details, plus the name and phone of the person you’re referring.' : 'Add your name and a phone number to continue.', 'Choose the situation that fits best.', 'Tick the consent box to send.'][A.step];
+    const situations = ['Homeless or rough sleeping', 'Temporary accommodation', 'Unsafe housing', 'Leaving hospital, prison or care', 'Sofa surfing', 'Something else'];
+    const prefs = ['Phone call', 'Text message', 'Email'];
+    const review = [
+      ...(isRef ? [{ label: 'Referrer', value: [d.refName, d.refOrg, d.refEmail].filter(Boolean).join(' · '), step: 1 }] : []),
+      { label: isRef ? 'Person referred' : 'Name', value: d.name || '—', step: 1 },
+      { label: 'Phone', value: d.phone || '—', step: 1 },
+      { label: 'Email', value: d.email || 'Not given', step: 1 },
+      { label: 'Best way to reach', value: d.pref || 'Phone call', step: 1 },
+      { label: 'Situation', value: d.situation || '—', step: 2 },
+      { label: 'Support needs', value: d.needs || 'Not given', step: 2 }
+    ].map(r => ({ ...r, edit: () => this.setApply({ step: r.step }) }));
+
+    // repair wizard
+    const R = s.rep;
+    const cats = [['Plumbing', IC.drop], ['Heating & hot water', IC.flame], ['Electrical', IC.zap], ['Damp & mould', IC.waves], ['Doors, windows & locks', IC.door], ['Appliances', IC.fridge], ['Something else', IC.help]];
+    const urgs = [['Emergency', 'Risk to safety — fire, flood, gas, no secure entry'], ['Urgent', 'Affects daily living — no heating or hot water'], ['Routine', 'Can be scheduled — minor faults, wear and tear']];
+    const rSteps = ['Issue', 'Urgency', 'Details', 'Your details'];
+    const rCan = [!!R.cat, !!R.urg, R.desc.trim().length > 0, R.name.trim() && R.phone.trim() && R.address.trim()][R.step];
+    const rf = (k) => ({ value: R[k], set: (e) => this.setRep({ [k]: e.target.value }) });
+    const progress = (steps, cur) => steps.map((t, i) => ({ t, n: i + 1, bar: i <= cur ? accent : line, fg: i === cur ? ink : 'var(--color-neutral-700)', weight: i === cur ? 700 : 400 }));
+
+    const paths = [
+      { kicker: 'I need a home', title: 'Apply for accommodation', body: 'Tell us about your situation. We’ll call you back within two working days.', cta: 'Start application', icon: IC.user, onClick: go.applySelf },
+      { kicker: 'I’m referring someone', title: 'Make a referral', body: 'For local authorities, support agencies and charities. Takes about five minutes.', cta: 'Start referral', icon: IC.userPlus, onClick: go.refer },
+      { kicker: 'I’m a landlord', title: 'Let your property to us', body: 'Partner with a community interest company to create secure, sustainable homes.', cta: 'Work with us', icon: IC.building, onClick: go.landlords },
+      { kicker: 'I’m a tenant', title: 'Report a repair', body: 'Tell us what needs fixing and how urgent it is. Add photos if it helps.', cta: 'Report a repair', icon: IC.wrench, onClick: go.repair }
+    ];
+    const mobile = s.mobile;
+    return {
+      go, ic: IC, navLinks,
+      hdr: s.scrolled ? { bg: 'color-mix(in srgb,var(--color-bg) 84%,transparent)', blur: 'blur(18px) saturate(1.4)', shadow: '0 1px 0 var(--color-divider), 0 10px 30px -20px rgba(27,33,29,.35)', h: '64px', logo: '36px', logoFs: '18px', barH: '0px' } : { bg: 'transparent', blur: 'none', shadow: '0 1px 0 var(--color-divider)', h: '80px', logo: '44px', logoFs: '21px', barH: '36px' },
+      stickyTop: s.scrolled ? '65px' : '117px', heroOffset: '116px', navPad: s.wide ? '12px' : '8px', isDesktop: !mobile, isMobile: mobile, searchWide: !!s.wide, searchNarrow: !s.wide,
+      faqPos: mobile ? 'static' : 'sticky', faqCols: mobile ? 'minmax(0,1fr)' : 'minmax(0,1fr) minmax(0,2fr)',
+      cols2: mobile ? 'minmax(0,1fr)' : 'repeat(2,minmax(0,1fr))', cols3: mobile ? 'minmax(0,1fr)' : 'repeat(3,minmax(0,1fr))', cols5: mobile ? 'minmax(0,1fr)' : s.wide ? 'repeat(5,minmax(0,1fr))' : 'repeat(6,minmax(0,1fr))',
+      pathCols: mobile ? 'minmax(0,1fr)' : s.wide ? 'repeat(4,minmax(0,1fr))' : 'repeat(2,minmax(0,1fr))',
+      footerExplore: fl([['Find a home', 'properties'], ['Landlords', 'landlords'], ['Support', 'support']]),
+      footerHelp: fl([['Refer or apply', 'apply'], ['Report a repair', 'repair'], ['Contact us', 'contact']]),
+      is: { home: p === 'home', propList: p === 'properties' && selIdx < 0, propDetail: p === 'properties' && selIdx >= 0, landlords: p === 'landlords', apply: p === 'apply', support: p === 'support', repair: p === 'repair', contact: p === 'contact' },
+      houseRef: this.houseRef, showHouses: p === 'home' && (this.props.houseParallax ?? false),
+      showMobileBar: mobile && (this.props.mobileActionBar ?? true),
+      quickChips: [{ label: 'Available homes', onClick: go.properties }, { label: 'Make a referral', onClick: go.refer }, { label: 'Report a repair', onClick: go.repair }, { label: 'Make a complaint', onClick: go.support }],
+      availNowLabel: availList.filter(x => x.ord === 0).length + ' homes available now',
+      availAreas: 'In ' + [...new Set(availList.map(x => x.area))].join(', ') + ' — more coming in Croydon from January.',
+      paths, featured,
+      approach: [
+        { title: 'Trauma-informed spaces', text: 'Bare or impersonal rooms can trigger distress for people with difficult experiences. We make every home warm and welcoming from day one.' },
+        { title: 'Person-centred homes', text: 'Living spaces reflect each person’s preferences and needs, and tenants are encouraged to personalise them — building ownership, independence and belonging.' },
+        { title: 'Holistic support', text: 'Whether it’s financial hardship, mental health or other barriers, we connect people with charities, community organisations and specialist workshops.' },
+        { title: 'Joined-up partnerships', text: 'Working with Local Authorities, Housing Associations and community groups across London to tackle the root causes of homelessness.' }
+      ].map((a, i) => ({ ...a, n: '0' + (i + 1) })),
+      whoWeHelp: ['Formerly homeless individuals', 'Vulnerable adults', 'People leaving temporary or unsafe housing'],
+      team: [{ name: 'Ismail Hasan', role: 'Director & Co-founder' }, { name: 'Amaan Hafeez', role: 'Director & Co-founder' }, { name: 'Anis Hasan', role: 'Finance Manager' }, { name: 'Rayaan Hafeez', role: 'Housing Manager' }],
+      faqs, faqQ: s.faqQ, faqEmpty: faqs.length === 0, setFaqQ: (e) => this.setState({ faqQ: e.target.value }),
+
+      pal: s.pal, palQ: s.palQ, palResults, palEmpty: palResults.length === 0,
+      openPal: () => this.setState({ pal: true, palQ: '', palIdx: 0 }), closePal: () => this.setState({ pal: false }), stop: (e) => e.stopPropagation(),
+      setPalQ: (e) => this.setState({ palQ: e.target.value, palIdx: 0 }),
+      palKey: (e) => {
+        if (e.key === 'ArrowDown') { e.preventDefault(); this.setState({ palIdx: Math.min(palAll.length - 1, palIdx + 1) }); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); this.setState({ palIdx: Math.max(0, palIdx - 1) }); }
+        else if (e.key === 'Enter' && palAll[palIdx]) { e.preventDefault(); palAll[palIdx].run(); this.setState({ pal: false }); }
+      },
+      toast: s.toast, hasToast: !!s.toast,
+
+      properties, noProps: properties.length === 0, propCount: properties.length + pl(properties.length, ' home', ' homes'),
+      statusChips: ['All', 'Available', 'Coming soon'].map(v => ({ label: v === 'Available' ? 'Available' : v, ...chip(s.propFilter === v), onClick: () => this.setState({ propFilter: v }) })),
+      bedChips: [[0, 'Any'], [3, '3+'], [4, '4+'], [5, '5+']].map(([v, label]) => ({ label, ...chip(s.propBeds === v), onClick: () => this.setState({ propBeds: v }) })),
+      viewOpts: [['Grid', 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z'], ['Map', IC.pin]].map(([v, icon]) => ({ label: v, icon, ...chip(view === v), onClick: () => this.setState({ propView: v }) })),
+      propArea: s.propArea, setPropArea: (e) => this.setState({ propArea: e.target.value }),
+      savedCount: s.saved.length, savedChip: { label: 'Saved · ' + s.saved.length, on: s.showSaved, tBg: s.showSaved ? 'var(--color-accent-100)' : 'color-mix(in srgb,var(--color-text) 6%,transparent)', tFg: s.showSaved ? 'var(--color-accent-700)' : ink, fill: s.showSaved || s.saved.length ? 'currentColor' : 'none', onClick: () => this.setState({ showSaved: !s.showSaved }) },
+      filtersActive: s.propFilter !== 'All' || s.propArea !== 'All areas' || s.propBeds > 0 || s.showSaved,
+      clearFilters: () => this.setState({ propFilter: 'All', propArea: 'All areas', propBeds: 0, showSaved: false }),
+      propGrid: view === 'Grid', propMap: view === 'Map',
+      sel, closeProp: () => this.nav('properties', { propSel: null }), prevProp: () => stepProp(-1), nextProp: () => stepProp(1),
+      shareProp: () => { const url = window.location.href; if (navigator.share) navigator.share({ title: sel.title, url }).catch(() => {}); else { try { navigator.clipboard.writeText(url); } catch (e) {} this.toast('Link copied'); } },
+      saveSel: () => { toggleSave(sel.id); this.toast(sel.saved ? 'Removed from saved' : 'Saved to your shortlist'); },
+
+      aStep0: !s.applySent && A.step === 0, aStep1: !s.applySent && A.step === 1, aStep2: !s.applySent && A.step === 2, aStep3: !s.applySent && A.step === 3,
+      aWizard: !s.applySent, aDone: !!s.applySent, aRef: s.applySent, aProgress: progress(aSteps, A.step), aStepLabel: 'Step ' + (A.step + 1) + ' of 4 · ' + aSteps[A.step],
+      aShowNav: A.step > 0, aCan: !!aCan, aCannot: !aCan, aHint, aNextLabel: A.step === 3 ? (isRef ? 'Send referral' : 'Send application') : 'Continue',
+      aNextBg: aCan ? accent : 'var(--color-neutral-400)',
+      aBack: () => this.setApply({ step: Math.max(0, A.step - 1) }),
+      aNext: () => {
+        if (!aCan) return;
+        if (A.step < 3) { this.setApply({ step: A.step + 1 }); window.scrollTo(0, 0); return; }
+        const ref = 'AV-' + Math.floor(1000 + Math.random() * 9000);
+        const fresh = { step: 0, mode: A.mode, d: {} }; this.save('apply', fresh);
+        this.setState({ applySent: ref, apply: fresh }); window.scrollTo(0, 0);
+      },
+      aModes: [['self', 'Myself', 'I need somewhere safe to live', IC.user], ['referral', 'Someone I’m referring', 'I work for a council, agency or charity', IC.userPlus]].map(([v, label, hint, icon]) => ({ label, hint, icon, border: A.mode === v ? accent : line, bg: A.mode === v ? 'var(--color-accent-100)' : paper, onClick: () => this.setApply({ mode: v, step: 1 }) })),
+      isRef, aWho: isRef ? 'About the person you’re referring' : 'About you', aDoneTitle: isRef ? 'Referral sent.' : 'Application sent.',
+      af: { refName: fld('refName'), refOrg: fld('refOrg'), refEmail: fld('refEmail'), name: fld('name'), phone: fld('phone'), email: fld('email'), needs: fld('needs') },
+      prefChips: prefs.map(v => ({ label: v, ...chip((d.pref || 'Phone call') === v), onClick: () => this.setD('pref', v) })),
+      sitChips: situations.map(v => ({ label: v, on: d.situation === v, border: d.situation === v ? accent : line, bg: d.situation === v ? 'var(--color-accent-100)' : paper, dot: d.situation === v ? accent : 'transparent', onClick: () => this.setD('situation', v) })),
+      review, consent: !!d.consent, setConsent: (e) => this.setD('consent', e.target.checked),
+      hasDraft: A.step > 0 && !s.applySent, clearDraft: () => { const fresh = { step: 0, mode: 'self', d: {} }; this.save('apply', fresh); this.setState({ apply: fresh }); },
+      newApply: () => this.setState({ applySent: null }),
+
+      rWizard: !s.repSent, rDone: !!s.repSent, rRef: s.repSent, rProgress: progress(rSteps, R.step), rStepLabel: 'Step ' + (R.step + 1) + ' of 4 · ' + rSteps[R.step],
+      r0: !s.repSent && R.step === 0, r1: !s.repSent && R.step === 1, r2: !s.repSent && R.step === 2, r3: !s.repSent && R.step === 3,
+      rShowNav: R.step > 1, rCan: !!rCan, rNextLabel: R.step === 3 ? 'Send repair request' : 'Continue', rNextBg: rCan ? accent : 'var(--color-neutral-400)',
+      rEmergency: R.urg === 'Emergency' && R.step === 1,
+      rBack: () => this.setRep({ step: Math.max(0, R.step - 1) }),
+      rBackTop: () => this.setRep({ step: 0 }), rShowBackTop: R.step === 1,
+      rNext: () => { if (!rCan) return; if (R.step < 3) { this.setRep({ step: R.step + 1 }); return; } this.setState({ repSent: 'AR-' + Math.floor(1000 + Math.random() * 9000) }); window.scrollTo(0, 0); },
+      rLogAnyway: () => this.setRep({ step: 2 }),
+      repCats: cats.map(([label, icon]) => ({ label, icon, bg: R.cat === label ? ink : paper, fg: R.cat === label ? paper : ink, onClick: () => this.setRep({ cat: label, step: 1 }) })),
+      repUrgs: urgs.map(([label, hint]) => ({ label, hint, border: R.urg === label ? (label === 'Emergency' ? ink : accent) : line, bg: R.urg === label ? (label === 'Emergency' ? 'var(--color-neutral-200)' : 'var(--color-accent-100)') : paper, dot: R.urg === label ? ink : 'transparent', onClick: () => this.setRep({ urg: label, step: label === 'Emergency' ? 1 : 2 }) })),
+      locChips: ['Kitchen', 'Bathroom', 'Bedroom', 'Living area', 'Hallway or stairs', 'Outside'].map(v => ({ label: v, ...chip(R.loc === v), onClick: () => this.setRep({ loc: v }) })),
+      rf: { desc: rf('desc'), name: rf('name'), phone: rf('phone'), address: rf('address') },
+      rSummary: [['Issue', R.cat], ['Urgency', R.urg], ['Where', R.loc]].map(([label, value]) => ({ label, value: value || '—' })),
+      newRepair: () => this.setState({ repSent: null, rep: { step: 0, cat: '', urg: '', loc: '', desc: '', name: '', phone: '', address: '' } }),
+
+      partners: [
+        { title: 'Landlords', body: 'Let your property to a community interest company that houses and supports vulnerable adults.' },
+        { title: 'Local Authorities', body: 'Joined-up support that tackles the root causes of homelessness.' },
+        { title: 'Housing Associations', body: 'Helping individuals move towards stability and independence.' },
+        { title: 'Charities & community groups', body: 'Connecting residents with the right resources and opportunities.' }
+      ],
+      partnerSteps: [
+        { n: '01', title: 'Tell us about it', body: 'Share your property or organisation and what you’re looking for.' },
+        { n: '02', title: 'We review together', body: 'We assess suitability and agree how we’ll work together.' },
+        { n: '03', title: 'Homes made welcoming', body: 'We prepare comfortable, welcoming homes and support each tenant to settle and thrive.' }
+      ],
+      llf: ['name', 'email', 'phone', 'postcode'].reduce((o, k) => (o[k] = { value: s.ll[k] || '', set: (e) => this.setState(st => ({ ll: { ...st.ll, [k]: e.target.value } })) }, o), {}),
+      llBeds: ['1–2', '3', '4', '5+'].map(v => ({ label: v, ...chip(s.ll.beds === v), onClick: () => this.setState(st => ({ ll: { ...st.ll, beds: v } })) })),
+      llSent: s.llSent, llOpen: !s.llSent, submitLl: (e) => { e.preventDefault(); this.setState({ llSent: true }); }, resetLl: () => this.setState({ llSent: false, ll: {} }),
+
+      supportAreas: [['Budgeting & benefits', 'Help managing money and claiming what you’re entitled to.', IC.shield], ['Health & wellbeing', 'Support accessing healthcare and mental health services.', IC.help], ['Life skills', 'Cooking, cleaning and getting job-ready.', IC.home], ['Moving on', 'Steps towards independent living, at your pace.', IC.door], ['Someone to talk to', 'Emotional support and signposting to other services.', IC.message]].map(([title, body, icon], i) => ({ title, body, icon, span: (mobile || s.wide) ? 'auto' : (i < 3 ? 'span 2' : 'span 3') })),
+      complaintSteps: [
+        { time: '24–48 hrs', title: 'We acknowledge', body: 'We’ll confirm we’ve received your complaint.' },
+        { time: '3 days', title: 'We investigate', body: 'A full written response within 3 working days — we’ll keep you updated if it takes longer.' },
+        { time: '10 days', title: 'Escalation', body: 'Not satisfied? Our Director reviews it, with a final response within 10 working days.' }
+      ],
+      channels: [
+        { label: 'Call us', value: '+44 7507 921011', hint: 'Fastest for urgent issues', href: 'tel:+447507921011', icon: IC.phone },
+        { label: 'Email', value: 'info@avenirhousing.co.uk', hint: 'We reply within a working day', href: 'mailto:info@avenirhousing.co.uk', icon: IC.mail },
+        { label: 'Visit', value: '656 Streatham High Road, SW16 3QL', hint: 'Open in maps', href: 'https://maps.app.goo.gl/fsE7RHoMwUdPWpNe8', icon: IC.pin }
+      ],
+      topics: ['A referral', 'A partnership or property', 'An existing tenancy', 'A complaint', 'Something else'].map(v => ({ label: v, ...chip(s.topic === v), onClick: () => this.setState({ topic: v }) })),
+      contactSent: s.contactSent, contactOpen: !s.contactSent,
+      submitContact: (e) => { e.preventDefault(); this.setState({ contactSent: true }); }, resetContact: () => this.setState({ contactSent: false }),
+      showClose: p !== 'contact' && p !== 'apply' && p !== 'repair'
+    };
+  }
+}
+</script>
+</body>
+</html>

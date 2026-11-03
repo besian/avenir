@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-dde96aff-1d9b-453e-9ff9-3f5aeda3bf73/styles.css">
+<script src="_ds/modernist-dde96aff-1d9b-453e-9ff9-3f5aeda3bf73/_ds_bundle.js"></script>
+<style>
+:root{
+--color-bg:#f5f4ef;--color-surface:#eaeae2;--color-text:#1b211d;
+--color-divider:color-mix(in srgb,#1b211d 32%,transparent);
+--color-accent:#22543f;
+--color-accent-100:#eef4ee;--color-accent-200:#dbe7dc;--color-accent-300:#bcd3bf;--color-accent-400:#a3c09f;--color-accent-500:#3d6e57;--color-accent-600:#1a4534;--color-accent-700:#16392b;--color-accent-800:#112d22;--color-accent-900:#0c2019;
+--color-neutral-100:#f6f6f2;--color-neutral-200:#e6e7e0;--color-neutral-300:#d3d5cd;--color-neutral-400:#b5b8af;--color-neutral-500:#979a91;--color-neutral-600:#797d74;--color-neutral-700:#5b5f57;--color-neutral-800:#40443d;--color-neutral-900:#292d27;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);text-wrap:pretty;-webkit-font-smoothing:antialiased}
+a{color:var(--color-accent-700)}
+a:hover{color:var(--color-accent)}
+h1,h2,h3,h4,p{margin:0}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="position:sticky;top:0;z-index:20;background:var(--color-bg);border-bottom:2px solid var(--color-divider)">
+  <div style="max-width:1200px;margin:0 auto;padding:14px clamp(20px,5vw,72px);display:flex;align-items:center;gap:12px 32px;flex-wrap:wrap">
+    <button onClick="{{ go.home }}" aria-label="Avenir Housing home" style="display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;cursor:pointer;color:var(--color-text);font-family:var(--font-heading)">
+      <img src="assets/avenir-logo.png" alt="Avenir Housing" style="height:44px;width:auto;mix-blend-mode:multiply">
+    </button>
+    <nav style="display:flex;gap:4px 22px;flex-wrap:wrap;flex:1">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+        <button onClick="{{ l.onClick }}" style="background:none;border:0;padding:6px 0;cursor:pointer;font-family:var(--font-body);font-size:15px;color:{{ l.color }};border-bottom:2px solid {{ l.line }}" style-hover="color:var(--color-accent)">{{ l.label }}</button>
+      </sc-for>
+    </nav>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onClick="{{ go.repair }}" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;background:transparent;color:var(--color-text);border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer" style-hover="background:var(--color-text);color:var(--color-bg)">Report a repair</button>
+      <button onClick="{{ go.apply }}" style="display:inline-flex;align-items:center;gap:8px;padding:12px 16px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer" style-hover="background:var(--color-accent-600)">Refer or apply</button>
+    </div>
+  </div>
+</header>
+
+<main style="flex:1">
+
+<sc-if value="{{ is.homeA }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Home A" style="max-width:1200px;margin:0 auto;padding:clamp(48px,8vw,112px) clamp(20px,5vw,72px) clamp(48px,6vw,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <h1 style="font-size:clamp(44px,6.4vw,88px);line-height:1.02;letter-spacing:-0.03em;font-weight:800;margin-left:-0.05em"><span style="display:block">Supporting people.</span><span style="display:block">Building futures.</span></h1>
+      <p style="font-size:18px;line-height:1.6;max-width:46ch">Offering a stable environment where individuals can access the tools and guidance they need to rebuild their lives.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">Contact us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+        <button onClick="{{ go.refer }}" style="display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:transparent;color:var(--color-text);border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-text);color:var(--color-bg)">Make a referral</button>
+      </div>
+    </div>
+    <div style="aspect-ratio:4/3;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);display:flex;align-items:flex-end;padding:14px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">photo — resident at home</div>
+  </section>
+
+  <section style="border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider)">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--color-divider)">
+        <sc-for list="{{ paths }}" as="p" hint-placeholder-count="4">
+          <button onClick="{{ p.onClick }}" style="text-align:left;background:var(--color-bg);border:0;padding:28px 24px 28px 0;cursor:pointer;display:flex;flex-direction:column;gap:10px;color:var(--color-text);font-family:var(--font-body);min-height:200px" style-hover="background:var(--color-surface)">
+            <span style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);padding-left:20px">{{ p.kicker }}</span>
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:1.15;padding-left:20px">{{ p.title }}</span>
+            <span style="font-size:14px;line-height:1.55;color:var(--color-neutral-800);padding-left:20px;flex:1">{{ p.body }}</span>
+            <span style="padding-left:20px;color:var(--color-accent)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(20px,5vw,72px)">
+    <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">What we do</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:32px 64px">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <h2 style="font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-0.02em">Our mission</h2>
+        <p style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:1.3;max-width:22ch">At Avenir, we don’t just offer homes — we support people in building futures.</p>
+      </div>
+      <p style="font-size:17px;line-height:1.7;color:var(--color-neutral-800)">At Avenir Housing CIC, our mission is to create lasting change by providing safe, stable housing for people experiencing homelessness or housing insecurity. We recognise that a secure home is the foundation for rebuilding lives, restoring independence and improve wellbeing. Through tailored support and collaboration with local authorities, charities and specialist services, we help individuals overcome barriers, build resilience and work towards a more secure independent future.</p>
+    </div>
+    <div style="margin-top:56px;border-top:2px solid var(--color-divider);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 32px">
+      <div style="padding-top:20px;display:flex;flex-direction:column;gap:12px;grid-column:span 1">
+        <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Who we help</p>
+      </div>
+      <sc-for list="{{ whoWeHelp }}" as="w" hint-placeholder-count="3">
+        <div style="padding-top:20px;display:flex;gap:12px;align-items:baseline">
+          <span style="width:10px;height:10px;background:var(--color-accent);flex:none;transform:translateY(-1px)"></span>
+          <span style="font-size:17px;line-height:1.45;font-weight:600">{{ w }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--color-divider);border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider)">
+      <div style="background:var(--color-bg);padding:28px 0;display:flex;flex-direction:column;gap:6px"><span style="font-family:var(--font-heading);font-weight:800;font-size:clamp(44px,5vw,64px);line-height:1;color:var(--color-accent);letter-spacing:-0.03em">10+</span><span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Years of experience</span></div>
+      <div style="background:var(--color-bg);padding:28px 0 28px 28px;display:flex;flex-direction:column;gap:6px"><span style="font-family:var(--font-heading);font-weight:800;font-size:clamp(44px,5vw,64px);line-height:1;color:var(--color-accent);letter-spacing:-0.03em">100%</span><span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Happy customers</span></div>
+      <div style="background:var(--color-bg);padding:0;min-height:160px"><div style="height:100%;min-height:160px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);display:flex;align-items:flex-end;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">photo — property interior</div></div>
+    </div>
+  </section>
+
+  <section style="background:var(--color-surface);border-top:2px solid var(--color-divider)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(20px,5vw,72px)">
+      <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">How it works</p>
+      <h2 style="font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:40px">Our approach</h2>
+      <sc-for list="{{ approach }}" as="a" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:minmax(56px,120px) minmax(0,1fr);gap:24px;padding:28px 0;border-top:2px solid var(--color-divider)">
+          <span style="font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:1;color:var(--color-accent)">{{ a.n }}</span>
+          <p style="font-size:17px;line-height:1.7;max-width:70ch">{{ a.text }}</p>
+        </div>
+      </sc-for>
+      <div style="border-top:2px solid var(--color-divider);padding-top:28px">
+        <button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">Contact us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.homeB }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Home B" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));border-bottom:2px solid var(--color-divider)">
+    <div style="background:var(--color-accent);color:var(--color-bg);padding:clamp(48px,8vw,120px) clamp(20px,5vw,72px);display:flex;flex-direction:column;justify-content:space-between;gap:56px;min-height:min(78vh,720px)">
+      <h1 style="font-size:clamp(52px,7.6vw,120px);line-height:0.98;letter-spacing:-0.035em;font-weight:800;margin-left:-0.05em"><span style="display:block">Supporting</span><span style="display:block">people.</span><span style="display:block">Building</span><span style="display:block">futures.</span></h1>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-bg);color:var(--color-text);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-text);color:var(--color-bg)">Contact us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+        <button onClick="{{ go.refer }}" style="display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:transparent;color:var(--color-bg);border:2px solid var(--color-bg);font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">Make a referral</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <div style="flex:1;min-height:320px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);display:flex;align-items:flex-end;padding:14px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">photo — resident at home, full-bleed</div>
+      <p style="padding:32px clamp(20px,4vw,48px);font-size:19px;line-height:1.55;border-top:2px solid var(--color-divider)">Offering a stable environment where individuals can access the tools and guidance they need to rebuild their lives.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px)">
+    <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:24px">Start here</p>
+    <sc-for list="{{ paths }}" as="p" hint-placeholder-count="4">
+      <button onClick="{{ p.onClick }}" style="width:100%;text-align:left;background:none;border:0;border-top:2px solid var(--color-divider);padding:24px 0;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 24px;align-items:center;color:var(--color-text);font-family:var(--font-body)" style-hover="color:var(--color-accent-700)">
+        <span style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">{{ p.kicker }}</span>
+          <span style="font-family:var(--font-heading);font-weight:800;font-size:clamp(26px,3.4vw,44px);line-height:1.05;letter-spacing:-0.02em">{{ p.title }}</span>
+        </span>
+        <span style="width:56px;height:56px;display:grid;place-items:center;background:var(--color-accent);color:var(--color-bg)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></span>
+      </button>
+    </sc-for>
+    <div style="border-top:2px solid var(--color-divider)"></div>
+  </section>
+
+  <section style="background:var(--color-text);color:var(--color-bg)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px);display:flex;flex-direction:column;gap:48px">
+      <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-400)">Our mission</p>
+      <p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(32px,4.6vw,64px);line-height:1.05;letter-spacing:-0.025em;max-width:20ch">At Avenir, we don’t just offer homes — <span style="color:var(--color-accent-400)">we support people in building futures.</span></p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px 64px;border-top:2px solid color-mix(in srgb,var(--color-bg) 35%,transparent);padding-top:32px">
+        <p style="font-size:17px;line-height:1.7;color:var(--color-neutral-300)">At Avenir Housing CIC, our mission is to create lasting change by providing safe, stable housing for people experiencing homelessness or housing insecurity. We recognise that a secure home is the foundation for rebuilding lives, restoring independence and improve wellbeing. Through tailored support and collaboration with local authorities, charities and specialist services, we help individuals overcome barriers, build resilience and work towards a more secure independent future.</p>
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-400)">Who we help</p>
+            <sc-for list="{{ whoWeHelp }}" as="w" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;align-items:baseline;font-size:17px;font-weight:600"><span style="width:10px;height:10px;background:var(--color-accent);flex:none"></span>{{ w }}</div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:48px;flex-wrap:wrap">
+            <div><p style="font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:1;letter-spacing:-0.03em">10+</p><p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-400);margin-top:6px">Years of experience</p></div>
+            <div><p style="font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:1;letter-spacing:-0.03em">100%</p><p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-400);margin-top:6px">Happy customers</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(20px,5vw,72px)">
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:32px">
+      <div><p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">How it works</p><h2 style="font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-0.02em">Our approach</h2></div>
+      <button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:transparent;color:var(--color-text);border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-text);color:var(--color-bg)">Contact us</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:2px;background:var(--color-divider);border:2px solid var(--color-divider)">
+      <sc-for list="{{ approach }}" as="a" hint-placeholder-count="4">
+        <div style="background:var(--color-bg);padding:32px;display:flex;flex-direction:column;gap:20px">
+          <span style="font-family:var(--font-heading);font-weight:800;font-size:64px;line-height:0.9;color:var(--color-accent);letter-spacing:-0.04em">{{ a.n }}</span>
+          <p style="font-size:16px;line-height:1.65">{{ a.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.home }}" hint-placeholder-val="{{ true }}">
+  <section style="border-top:2px solid var(--color-divider)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(20px,5vw,72px)">
+      <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">About</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:24px 64px;margin-bottom:40px">
+        <h2 style="font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-0.02em">Meet the team</h2>
+        <p style="font-size:16px;line-height:1.7;color:var(--color-neutral-800)">Our team of experienced housing and care professionals is committed to delivering high-quality, tailored support that responds to each tenant’s individual needs. Through a strong focus on safeguarding, attention to detail and continuous quality assurance, we strive to ensure every tenant feels safe, respected and listened to, while maintaining consistently high standards across our properties and services.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px">
+        <sc-for list="{{ team }}" as="t" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="aspect-ratio:4/5;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);display:flex;align-items:flex-end;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">headshot</div>
+            <div style="border-top:2px solid var(--color-divider);padding-top:12px">
+              <p style="font-family:var(--font-heading);font-weight:800;font-size:18px">{{ t.name }}</p>
+              <p style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-neutral-700);margin-top:4px">{{ t.role }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:2px solid var(--color-divider)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(20px,5vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px 64px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Questions</p>
+        <h2 style="font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-0.02em">FAQs</h2>
+        <p style="font-size:16px;line-height:1.6;color:var(--color-neutral-800)">Can’t find what you need? <a href="#" onClick="{{ go.contactLink }}">Get in touch</a> — we’ll respond promptly and confidentially.</p>
+      </div>
+      <div style="grid-column:span 2;min-width:0">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="8">
+          <div style="border-top:2px solid var(--color-divider)">
+            <button onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:20px 0;background:none;border:0;cursor:pointer;text-align:left;font-family:var(--font-heading);font-weight:800;font-size:18px;color:var(--color-text)" style-hover="color:var(--color-accent-700)">
+              <span>{{ f.q }}</span>
+              <span style="font-size:24px;line-height:1;color:var(--color-accent);flex:none;width:24px;text-align:center">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 48px 24px 0;font-size:16px;line-height:1.7;color:var(--color-neutral-800);display:flex;flex-direction:column;gap:10px">
+                <p>{{ f.a }}</p>
+                <sc-for list="{{ f.bullets }}" as="b" hint-placeholder-count="0">
+                  <div style="display:flex;gap:12px;align-items:baseline"><span style="width:8px;height:8px;background:var(--color-accent);flex:none"></span>{{ b }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <div style="border-top:2px solid var(--color-divider)"></div>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.propList }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Properties" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px) 40px;display:flex;flex-direction:column;gap:20px">
+    <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Properties</p>
+    <h1 style="font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-0.03em;margin-left:-0.04em">Safe, stable homes.</h1>
+    <p style="font-size:18px;line-height:1.6;max-width:56ch">Welcoming, comfortable living environments across London — each one furnished with care and supported by our team.</p>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(56px,8vw,104px)">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px 16px;flex-wrap:wrap;border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider);padding:14px 0;margin-bottom:32px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <div style="display:flex;border:1px solid var(--color-divider)">
+          <sc-for list="{{ propFilters }}" as="o" hint-placeholder-count="3">
+            <button onClick="{{ o.onClick }}" style="min-height:40px;padding:9px 14px;border:0;border-right:1px solid var(--color-divider);font-family:var(--font-body);font-size:14px;cursor:pointer;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button>
+          </sc-for>
+        </div>
+        <select aria-label="Property type" value="{{ propType }}" onChange="{{ setPropType }}" style="min-height:42px;padding:8px 12px;font:inherit;font-size:14px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:0;cursor:pointer"><option>All types</option><option>Shared supported house</option><option>Self-contained flats</option><option>Detached house</option></select>
+        <select aria-label="Area" value="{{ propArea }}" onChange="{{ setPropArea }}" style="min-height:42px;padding:8px 12px;font:inherit;font-size:14px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:0;cursor:pointer"><option>All areas</option><option>Streatham</option><option>Norbury</option><option>Tooting</option><option>Croydon</option><option>Brixton</option><option>Mitcham</option></select>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:14px;color:var(--color-neutral-700)">{{ propCount }}</span>
+        <div style="display:flex;border:1px solid var(--color-divider)"><sc-for list="{{ viewOpts }}" as="v" hint-placeholder-count="2"><button onClick="{{ v.onClick }}" style="min-height:40px;padding:9px 14px;border:0;border-right:1px solid var(--color-divider);font-family:var(--font-body);font-size:14px;cursor:pointer;background:{{ v.bg }};color:{{ v.fg }}">{{ v.label }}</button></sc-for></div>
+        <select aria-label="Sort" value="{{ propSort }}" onChange="{{ setPropSort }}" style="min-height:42px;padding:8px 12px;font:inherit;font-size:14px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:0;cursor:pointer"><option>Available soonest</option><option>Most bedrooms</option><option>Area A–Z</option></select>
+      </div>
+    </div>
+    <sc-if value="{{ noProps }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:40px 0;display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+        <h3 style="font-size:22px">No properties match those filters.</h3>
+        <button onClick="{{ clearPropFilters }}" style="padding:10px 14px;background:transparent;border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer;color:var(--color-text)" style-hover="background:var(--color-text);color:var(--color-bg)">Clear filters</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ propRows }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;border-top:2px solid var(--color-divider)">
+      <sc-for list="{{ properties }}" as="p" hint-placeholder-count="4">
+        <article style="display:flex;flex-wrap:wrap;gap:20px 32px;padding:24px 0;border-bottom:1px solid var(--color-divider)">
+          <button onClick="{{ p.open }}" aria-label="View {{ p.title }}" style="position:relative;flex:0 1 300px;aspect-ratio:4/3;border:0;padding:0;cursor:pointer;display:block;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-700)" style-hover="opacity:0.85">
+            <span style="position:absolute;top:10px;left:10px;font-family:var(--font-body);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 8px;background:{{ p.tagBg }};color:{{ p.tagFg }}">{{ p.status }}</span>
+            <span style="position:absolute;left:10px;bottom:10px">photo</span>
+          </button>
+          <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:12px;padding:2px 0">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap">
+              <h3 style="font-size:24px;line-height:1.1;letter-spacing:-0.02em">{{ p.title }}</h3>
+              <span style="font-size:13px;color:var(--color-neutral-700)">{{ p.availLabel }}</span>
+            </div>
+            <p style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--color-neutral-700);margin-top:-4px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>{{ p.addressLine }}</p>
+            <p style="font-size:15px;line-height:1.55;color:var(--color-neutral-800);max-width:64ch;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ p.summary }}</p>
+            <div style="display:flex;align-items:center;gap:18px;font-size:14px;color:var(--color-text)">
+              <span title="Bedrooms" style="display:inline-flex;align-items:center;gap:6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"></path><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"></path><path d="M12 4v6"></path><path d="M2 18h20"></path></svg><strong>{{ p.beds }}</strong><span style="color:var(--color-neutral-700)">{{ p.bedsLabel }}</span></span>
+              <span title="Bathrooms" style="display:inline-flex;align-items:center;gap:6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M10 4 8 6"></path><path d="M17 19v2"></path><path d="M2 12h20"></path><path d="M7 19v2"></path><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"></path></svg><strong>{{ p.baths }}</strong><span style="color:var(--color-neutral-700)">{{ p.bathsLabel }}</span></span>
+              <span title="Reception rooms" style="display:inline-flex;align-items:center;gap:6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"></path><path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"></path><path d="M4 18v2"></path><path d="M20 18v2"></path><path d="M12 4v9"></path></svg><strong>{{ p.reception }}</strong><span style="color:var(--color-neutral-700)">{{ p.receptionLabel }}</span></span>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px">
+              <button onClick="{{ p.open }}" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer" style-hover="background:var(--color-accent-600)">Property details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+              <button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;padding:9px 13px;background:transparent;color:var(--color-text);border:1px solid var(--color-divider);font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer" style-hover="border-color:var(--color-text)">Contact</button>
+            </div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+    </sc-if>
+    <sc-if value="{{ propGrid }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:36px 24px">
+      <sc-for list="{{ properties }}" as="p" hint-placeholder-count="6">
+        <button onClick="{{ p.open }}" aria-label="View {{ p.title }}" style="text-align:left;background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;gap:12px;color:var(--color-text);font-family:var(--font-body)" style-hover="color:var(--color-accent-700)">
+          <span style="position:relative;display:block;width:100%;aspect-ratio:4/3;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-700)">
+            <span style="position:absolute;top:10px;left:10px;font-family:var(--font-body);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 8px;background:{{ p.tagBg }};color:{{ p.tagFg }}">{{ p.status }}</span>
+            <span style="position:absolute;left:10px;bottom:10px">photo</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:19px;line-height:1.2;letter-spacing:-0.01em">{{ p.title }}</span>
+            <span style="font-size:14px;color:var(--color-neutral-700)">{{ p.addressLine }}</span>
+          </span>
+          <span style="display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--color-divider);padding-top:10px;color:var(--color-text)">
+            <div style="display:flex;align-items:center;gap:18px;font-size:14px;color:var(--color-text)">
+              <span title="Bedrooms" style="display:inline-flex;align-items:center;gap:6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"></path><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"></path><path d="M12 4v6"></path><path d="M2 18h20"></path></svg><strong>{{ p.beds }}</strong></span>
+              <span title="Bathrooms" style="display:inline-flex;align-items:center;gap:6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M10 4 8 6"></path><path d="M17 19v2"></path><path d="M2 12h20"></path><path d="M7 19v2"></path><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"></path></svg><strong>{{ p.baths }}</strong></span>
+              <span title="Reception rooms" style="display:inline-flex;align-items:center;gap:6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"></path><path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"></path><path d="M4 18v2"></path><path d="M20 18v2"></path><path d="M12 4v9"></path></svg><strong>{{ p.reception }}</strong></span>
+            </div>
+            <span style="font-size:12px;color:var(--color-neutral-700);white-space:nowrap">{{ p.availLabel }}</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+    </sc-if>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.propDetail }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Property detail" style="max-width:1200px;margin:0 auto;padding:28px clamp(20px,5vw,72px) 0">
+    <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;padding-bottom:20px">
+      <button onClick="{{ closeProp }}" style="background:none;border:0;padding:6px 0;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--color-text)" style-hover="color:var(--color-accent-700)">← All properties</button>
+      <div style="display:flex;gap:20px">
+        <button onClick="{{ prevProp }}" style="background:none;border:0;padding:6px 0;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--color-neutral-800)" style-hover="color:var(--color-accent-700)">← Previous</button>
+        <button onClick="{{ nextProp }}" style="background:none;border:0;padding:6px 0;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--color-neutral-800)" style-hover="color:var(--color-accent-700)">Next →</button>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:20px 40px;flex-wrap:wrap;border-top:2px solid var(--color-divider);padding:32px 0">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <span style="font-size:12px;letter-spacing:0.04em;padding:5px 10px;background:{{ sel.tagBg }};color:{{ sel.tagFg }}">{{ sel.status }}</span>
+          <span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">{{ sel.type }}</span>
+        </div>
+        <h1 style="font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-0.03em;margin-left:-0.04em">{{ sel.title }}</h1>
+        <p style="font-size:17px;color:var(--color-neutral-800)">{{ sel.addressLine }}</p>
+      </div>
+      <div style="display:flex;gap:2px;background:var(--color-divider);border:2px solid var(--color-divider)">
+        <div style="background:var(--color-bg);padding:14px 20px;display:flex;flex-direction:column;gap:2px"><span style="font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:1">{{ sel.beds }}</span><span style="font-size:12px;color:var(--color-neutral-700)">{{ sel.bedsUnit }}</span></div>
+        <div style="background:var(--color-bg);padding:14px 20px;display:flex;flex-direction:column;gap:2px"><span style="font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:1">{{ sel.baths }}</span><span style="font-size:12px;color:var(--color-neutral-700)">{{ sel.bathsUnit }}</span></div>
+        <div style="background:var(--color-bg);padding:14px 20px;display:flex;flex-direction:column;gap:2px"><span style="font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:1">{{ sel.reception }}</span><span style="font-size:12px;color:var(--color-neutral-700)">{{ sel.receptionLabel }}</span></div>
+        <div style="background:var(--color-bg);padding:14px 20px;display:flex;flex-direction:column;gap:2px"><span style="font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:1">{{ sel.support }}</span><span style="font-size:12px;color:var(--color-neutral-700)">Support level</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));grid-auto-rows:minmax(150px,auto);gap:8px">
+      <div style="grid-column:span 2;grid-row:span 2;min-height:320px;display:flex;align-items:flex-end;padding:14px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">{{ sel.gallery0 }}</div>
+      <sc-for list="{{ sel.galleryRest }}" as="g" hint-placeholder-count="4">
+        <div style="position:relative;display:flex;align-items:flex-end;padding:12px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">{{ g.label }}<sc-if value="{{ g.more }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--color-text) 72%,transparent);color:var(--color-bg);font-family:var(--font-heading);font-weight:800;font-size:18px">+{{ g.moreCount }} photos</span></sc-if></div>
+      </sc-for>
+    </div>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:48px clamp(20px,5vw,72px) clamp(56px,8vw,104px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:48px 64px;align-items:start">
+    <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:48px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2 style="font-size:28px;letter-spacing:-0.02em">About this home</h2>
+        <sc-for list="{{ sel.description }}" as="d" hint-placeholder-count="2">
+          <p style="font-size:17px;line-height:1.7;color:var(--color-neutral-800);max-width:68ch">{{ d }}</p>
+        </sc-for>
+      </div>
+      <div>
+        <h2 style="font-size:28px;letter-spacing:-0.02em;margin-bottom:16px">Key facts</h2>
+        <sc-for list="{{ sel.facts }}" as="k" hint-placeholder-count="10">
+          <div style="display:grid;grid-template-columns:minmax(140px,1fr) minmax(0,2fr);gap:16px;padding:14px 0;border-top:1px solid var(--color-divider);font-size:15px">
+            <span style="color:var(--color-neutral-700)">{{ k.label }}</span>
+            <span style="font-weight:600">{{ k.value }}</span>
+          </div>
+        </sc-for>
+        <div style="border-top:2px solid var(--color-divider)"></div>
+      </div>
+      <div>
+        <h2 style="font-size:28px;letter-spacing:-0.02em;margin-bottom:16px">What’s included</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px 24px">
+          <sc-for list="{{ sel.features }}" as="ft" hint-placeholder-count="8">
+            <div style="display:flex;gap:10px;align-items:center;font-size:15px;padding:10px 0;border-bottom:1px solid var(--color-divider)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="3"><path d="M4 12l5 5L20 6"></path></svg>{{ ft }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:24px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h2 style="font-size:28px;letter-spacing:-0.02em">Getting around</h2>
+          <sc-for list="{{ sel.transport }}" as="t" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--color-divider);font-size:15px"><span>{{ t.place }}</span><span style="color:var(--color-neutral-700);flex:none">{{ t.time }}</span></div>
+          </sc-for>
+        </div>
+        <div style="min-height:240px;display:flex;align-items:flex-end;padding:12px;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">map — {{ sel.area }} {{ sel.postcode }}</div>
+      </div>
+    </div>
+    <aside style="position:sticky;top:96px;border:2px solid var(--color-text);padding:24px;display:flex;flex-direction:column;gap:16px;background:var(--color-bg)">
+      <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Availability</p>
+      <p style="font-family:var(--font-heading);font-weight:800;font-size:26px;line-height:1.1">{{ sel.availLong }}</p>
+      <p style="font-size:14px;line-height:1.55;color:var(--color-neutral-800)">Rent is often covered by Housing Benefit. We assess each application to ensure we can meet the individual’s needs.</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button onClick="{{ go.refer }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer;text-align:left" style-hover="background:var(--color-accent-600)">Refer someone <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+        <button onClick="{{ go.apply }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:transparent;color:var(--color-text);border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer;text-align:left" style-hover="background:var(--color-text);color:var(--color-bg)">Apply for myself <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+      </div>
+      <div style="border-top:2px solid var(--color-divider);padding-top:14px;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:13px;color:var(--color-neutral-700)">Questions about this home?</span>
+        <a href="tel:+447507921011" style="font-family:var(--font-heading);font-weight:800;font-size:20px;text-decoration:none">+44 7507 921011</a>
+        <span style="font-size:12px;color:var(--color-neutral-700)">Ref. {{ sel.ref }}</span>
+      </div>
+    </aside>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.landlords }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Work with us" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px) clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px 64px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Work with us</p>
+      <h1 style="font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-0.03em;margin-left:-0.04em">Homes that change lives.</h1>
+      <p style="font-size:18px;line-height:1.6;max-width:48ch">We partner with landlords and local organisations to create secure, sustainable homes and stronger communities.</p>
+      <div><button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">Start a conversation <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button></div>
+    </div>
+    <div style="aspect-ratio:4/3;background:repeating-linear-gradient(135deg,var(--color-surface) 0 10px,var(--color-neutral-300) 10px 11px);display:flex;align-items:flex-end;padding:14px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-neutral-700)">photo — furnished room</div>
+  </section>
+  <section style="border-top:2px solid var(--color-divider);background:var(--color-surface)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,72px)">
+      <h2 style="font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:32px">Who we work with</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--color-divider);border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider)">
+        <sc-for list="{{ partners }}" as="p" hint-placeholder-count="4">
+          <div style="background:var(--color-surface);padding:28px 24px 28px 0;display:flex;flex-direction:column;gap:12px">
+            <span style="width:10px;height:10px;background:var(--color-accent);margin-left:20px"></span>
+            <h3 style="font-size:20px;padding-left:20px">{{ p.title }}</h3>
+            <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);padding-left:20px">{{ p.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,72px)">
+    <h2 style="font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:24px">How a partnership works</h2>
+    <sc-for list="{{ partnerSteps }}" as="s" hint-placeholder-count="3">
+      <div style="display:grid;grid-template-columns:minmax(56px,120px) minmax(0,320px) minmax(0,1fr);gap:12px 32px;padding:28px 0;border-top:2px solid var(--color-divider);align-items:baseline">
+        <span style="font-family:var(--font-heading);font-weight:800;font-size:28px;color:var(--color-accent)">{{ s.n }}</span>
+        <h3 style="font-size:22px">{{ s.title }}</h3>
+        <p style="font-size:16px;line-height:1.65;color:var(--color-neutral-800)">{{ s.body }}</p>
+      </div>
+    </sc-for>
+    <div style="border-top:2px solid var(--color-divider)"></div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.apply }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Tenant application" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px) 40px;display:flex;flex-direction:column;gap:20px">
+    <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Tenant application</p>
+    <h1 style="font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-0.03em;margin-left:-0.04em">Apply or refer.</h1>
+    <p style="font-size:18px;line-height:1.6;max-width:60ch">You can apply directly by contacting us, or you may be referred by a local authority, support agency, or charity. We assess each application to ensure we can meet the individual’s needs.</p>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(56px,8vw,104px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:48px 64px;align-items:start">
+    <div style="grid-column:span 2;min-width:0;border-top:2px solid var(--color-divider);padding-top:28px">
+      <sc-if value="{{ applySent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;padding:32px;background:var(--color-surface)">
+          <span style="width:14px;height:14px;background:var(--color-accent)"></span>
+          <h2 style="font-size:32px">Thank you — we’ve received it.</h2>
+          <p style="font-size:16px;line-height:1.6">A member of the team will be in touch within two working days. Everything you’ve shared is kept confidential.</p>
+          <div><button onClick="{{ resetApply }}" style="padding:10px 14px;background:transparent;border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer;color:var(--color-text)">Submit another</button></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ applyOpen }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitApply }}" style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:13px;color:var(--color-neutral-800)">This application is for</span>
+            <div style="display:flex;border:1px solid var(--color-divider);align-self:flex-start;flex-wrap:wrap">
+              <sc-for list="{{ applyModes }}" as="o" hint-placeholder-count="2">
+                <button type="button" onClick="{{ o.onClick }}" style="padding:11px 16px;border:0;border-right:1px solid var(--color-divider);font-family:var(--font-body);font-size:15px;cursor:pointer;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ isReferral }}" hint-placeholder-val="{{ false }}">
+            <fieldset style="border:0;padding:20px;margin:0;background:var(--color-surface);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+              <legend style="font-family:var(--font-heading);font-weight:800;font-size:16px;padding:0;float:left;width:100%;margin-bottom:4px">About you (referrer)</legend>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Your name<input required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Organisation<input required placeholder="e.g. Lambeth Council" style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Work email<input type="email" required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            </fieldset>
+          </sc-if>
+          <p style="font-family:var(--font-heading);font-weight:800;font-size:16px">{{ applicantHeading }}</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Full name<input required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Phone<input type="tel" style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Email (optional)<input type="email" style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Current housing situation<select style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider);border-radius:0"><option>Homeless / rough sleeping</option><option>Temporary accommodation</option><option>Unsafe housing</option><option>Leaving hospital, prison or care</option><option>Other</option></select></label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Support needs<textarea rows="5" placeholder="Anything that helps us understand the support needed — health, finances, independence goals." style="padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider);resize:vertical" style-focus="border-color:var(--color-accent);outline:none"></textarea></label>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5"><input type="checkbox" required style="width:18px;height:18px;accent-color:var(--color-accent);margin:1px 0 0"> I consent to Avenir Housing storing this information to assess the application.</label>
+          <div><button type="submit" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">{{ applySubmitLabel }} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button></div>
+        </form>
+      </sc-if>
+    </div>
+    <aside style="border-top:2px solid var(--color-text);padding-top:28px;display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Who we help</p>
+        <sc-for list="{{ whoWeHelp }}" as="w" hint-placeholder-count="3">
+          <div style="display:flex;gap:12px;align-items:baseline;font-size:16px;font-weight:600;line-height:1.4"><span style="width:8px;height:8px;background:var(--color-accent);flex:none"></span>{{ w }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;border-top:2px solid var(--color-divider);padding-top:20px">
+        <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Prefer to talk?</p>
+        <a href="tel:+447507921011" style="font-family:var(--font-heading);font-weight:800;font-size:22px;text-decoration:none">+44 7507 921011</a>
+        <a href="mailto:info@avenirhousing.co.uk" style="font-size:16px">info@avenirhousing.co.uk</a>
+      </div>
+    </aside>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.support }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Support" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px) clamp(40px,6vw,64px);display:flex;flex-direction:column;gap:20px">
+    <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Support</p>
+    <h1 style="font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-0.03em;margin-left:-0.04em">Support, tailored to you.</h1>
+    <p style="font-size:18px;line-height:1.6;max-width:62ch">We are committed to empowering vulnerable adults through tailored, person-centred care and support that recognises each individual’s unique circumstances and challenges.</p>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(56px,7vw,96px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:2px;background:var(--color-divider);border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider)">
+      <sc-for list="{{ supportAreas }}" as="s" hint-placeholder-count="5">
+        <div style="background:var(--color-bg);padding:28px 24px 28px 0;display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:var(--font-heading);font-weight:800;font-size:15px;color:var(--color-accent-700);padding-left:20px">{{ s.n }}</span>
+          <h3 style="font-size:21px;line-height:1.2;padding-left:20px">{{ s.title }}</h3>
+        </div>
+      </sc-for>
+      <div style="background:var(--color-surface);padding:28px 24px 28px 0;display:flex;flex-direction:column;gap:12px">
+        <p style="font-size:15px;line-height:1.6;padding-left:20px">Our trained support workers are available to provide guidance and assistance. Staff presence levels depend on the property and the individual needs of residents.</p>
+      </div>
+    </div>
+  </section>
+  <section style="background:var(--color-surface);border-top:2px solid var(--color-divider)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,72px)">
+      <h2 style="font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:28px">Already a tenant?</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <button onClick="{{ go.repair }}" style="text-align:left;padding:24px;background:var(--color-accent);color:var(--color-bg);border:0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:20px" style-hover="background:var(--color-accent-600)">Report a repair <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+        <button onClick="{{ go.contact }}" style="text-align:left;padding:22px;background:transparent;color:var(--color-text);border:2px solid var(--color-text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:20px" style-hover="background:var(--color-text);color:var(--color-bg)">Make a complaint <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+        <a href="tel:+447507921011" style="text-decoration:none;padding:22px;color:var(--color-text);border:2px solid var(--color-text);display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:20px" style-hover="background:var(--color-text);color:var(--color-bg)">Call the team <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></a>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.repair }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Report a repair" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px) 40px;display:flex;flex-direction:column;gap:20px">
+    <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Report a repair</p>
+    <h1 style="font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-0.03em;margin-left:-0.04em">Maintenance requests.</h1>
+    <p style="font-size:18px;line-height:1.6;max-width:64ch">This short form lets you report a maintenance issue for your property managed by Avenir Housing CIC. Our team will review your request and arrange for the appropriate repair or inspection as soon as possible. All information is kept confidential and used only to process your maintenance report.</p>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(56px,8vw,104px)">
+    <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:18px 20px;background:var(--color-text);color:var(--color-bg);margin-bottom:32px">
+      <span style="width:12px;height:12px;background:var(--color-accent);flex:none"></span>
+      <p style="font-size:16px;line-height:1.5;flex:1;min-width:240px"><strong>Emergency or risk to safety?</strong> Don’t wait for the form — call us now.</p>
+      <a href="tel:+447507921011" style="color:var(--color-bg);font-family:var(--font-heading);font-weight:800;font-size:18px;text-decoration:none;border-bottom:2px solid var(--color-accent)">+44 7507 921011</a>
+    </div>
+    <sc-if value="{{ repairSent }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:16px;padding:32px;background:var(--color-surface);max-width:720px">
+        <span style="width:14px;height:14px;background:var(--color-accent)"></span>
+        <h2 style="font-size:32px">Repair reported.</h2>
+        <p style="font-size:16px;line-height:1.6">Thank you! Your submission has been received. We’ll review it and contact you to arrange the repair or inspection.</p>
+        <div><button onClick="{{ resetRepair }}" style="padding:10px 14px;background:transparent;border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer;color:var(--color-text)">Report another issue</button></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ repairOpen }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submitRepair }}" style="display:flex;flex-direction:column;gap:28px;max-width:840px">
+        <div style="display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--color-divider);padding-top:20px">
+          <p style="font-family:var(--font-heading);font-weight:800;font-size:16px">1 · What needs fixing?</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ repairCats }}" as="c" hint-placeholder-count="6">
+              <button type="button" onClick="{{ c.onClick }}" style="padding:10px 14px;border:1px solid {{ c.border }};font-family:var(--font-body);font-size:15px;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--color-divider);padding-top:20px">
+          <p style="font-family:var(--font-heading);font-weight:800;font-size:16px">2 · How urgent is it?</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+            <sc-for list="{{ urgencies }}" as="u" hint-placeholder-count="3">
+              <button type="button" onClick="{{ u.onClick }}" style="text-align:left;padding:14px 16px;border:2px solid {{ u.border }};cursor:pointer;background:{{ u.bg }};color:var(--color-text);display:flex;flex-direction:column;gap:4px;font-family:var(--font-body)">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:16px">{{ u.label }}</span>
+                <span style="font-size:13px;color:var(--color-neutral-800)">{{ u.hint }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800);margin-top:8px">Describe the problem<textarea required rows="5" placeholder="Where is it, when did it start, and is anything damaged?" style="padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider);resize:vertical" style-focus="border-color:var(--color-accent);outline:none"></textarea></label>
+          <label style="display:flex;align-items:center;gap:12px;padding:16px;border:1px dashed var(--color-divider);cursor:pointer;font-size:14px;color:var(--color-neutral-800)" style-hover="border-color:var(--color-accent)"><input type="file" accept="image/*" multiple style="font-size:13px"> Add photos (optional)</label>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--color-divider);padding-top:20px">
+          <p style="font-family:var(--font-heading);font-weight:800;font-size:16px">3 · Your details</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Full name<input required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Phone<input type="tel" required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Email<input type="email" style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Property address<input required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+        </div>
+        <div><button type="submit" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">Submit repair request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button></div>
+      </form>
+    </sc-if>
+  </section>
+</sc-if>
+
+<sc-if value="{{ is.contact }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Contact" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,5vw,72px) 40px;display:flex;flex-direction:column;gap:20px">
+    <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700)">Contact</p>
+    <h1 style="font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-0.03em;margin-left:-0.04em">Let’s talk.</h1>
+    <p style="font-size:18px;line-height:1.6;max-width:64ch">We're here to help. Whether you're looking to make a referral, explore partnership opportunities, or simply learn more about our supported housing services, the Avenir team is ready to assist. We’ll respond promptly and confidentially.</p>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(56px,8vw,104px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:48px 64px;align-items:start">
+    <div style="grid-column:span 2;min-width:0;border-top:2px solid var(--color-divider);padding-top:28px">
+      <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;padding:32px;background:var(--color-surface)">
+          <span style="width:14px;height:14px;background:var(--color-accent)"></span>
+          <h2 style="font-size:32px">Thank you!</h2>
+          <p style="font-size:16px;line-height:1.6">Your submission has been received. We’ll be in touch shortly.</p>
+          <div><button onClick="{{ resetContact }}" style="padding:10px 14px;background:transparent;border:2px solid var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:14px;cursor:pointer;color:var(--color-text)">Send another message</button></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitContact }}" style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Name<input required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Email<input type="email" required style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Phone<input type="tel" style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider)" style-focus="border-color:var(--color-accent);outline:none"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">I’m getting in touch about<select style="min-height:44px;padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider);border-radius:0"><option>A referral</option><option>A partnership or property</option><option>An existing tenancy</option><option>A complaint</option><option>Something else</option></select></label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-neutral-800)">Message<textarea required rows="6" style="padding:10px 12px;font:inherit;font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-divider);resize:vertical" style-focus="border-color:var(--color-accent);outline:none"></textarea></label>
+          <div><button type="submit" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-accent);color:var(--color-bg);border:0;font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">Send message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button></div>
+        </form>
+      </sc-if>
+    </div>
+    <aside style="display:flex;flex-direction:column">
+      <a href="tel:+447507921011" style="text-decoration:none;color:var(--color-text);border-top:2px solid var(--color-text);padding:18px 0;display:flex;flex-direction:column;gap:4px" style-hover="color:var(--color-accent-700)"><span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Give us a call</span><span style="font-family:var(--font-heading);font-weight:800;font-size:22px">+44 7507 921011</span></a>
+      <a href="mailto:info@avenirhousing.co.uk" style="text-decoration:none;color:var(--color-text);border-top:2px solid var(--color-divider);padding:18px 0;display:flex;flex-direction:column;gap:4px" style-hover="color:var(--color-accent-700)"><span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Send us an email</span><span style="font-family:var(--font-heading);font-weight:800;font-size:20px;word-break:break-word">info@avenirhousing.co.uk</span></a>
+      <a href="https://maps.app.goo.gl/fsE7RHoMwUdPWpNe8" target="_blank" rel="noopener" style="text-decoration:none;color:var(--color-text);border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider);padding:18px 0;display:flex;flex-direction:column;gap:4px" style-hover="color:var(--color-accent-700)"><span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Location</span><span style="font-family:var(--font-heading);font-weight:800;font-size:18px;line-height:1.3">656 Streatham High Road, London SW16 3QL</span></a>
+    </aside>
+  </section>
+</sc-if>
+
+<sc-if value="{{ showComplaints }}" hint-placeholder-val="{{ false }}">
+  <section style="background:var(--color-surface);border-top:2px solid var(--color-divider)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,72px)">
+      <p style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Complaints</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px 64px;margin-bottom:40px">
+        <h2 style="font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-0.02em">Need to make a complaint?</h2>
+        <p style="font-size:16px;line-height:1.7;color:var(--color-neutral-800)">If you are unhappy with any aspect of our service, email <a href="mailto:info@avenirhousing.co.uk">info@avenirhousing.co.uk</a>. Please include your contact details, the nature of your complaint, and any relevant dates or documentation.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--color-divider);border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider)">
+        <sc-for list="{{ complaintSteps }}" as="c" hint-placeholder-count="3">
+          <div style="background:var(--color-surface);padding:28px 24px 28px 0;display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:clamp(32px,3.4vw,44px);line-height:1;color:var(--color-accent);letter-spacing:-0.03em;padding-left:20px">{{ c.time }}</span>
+            <h3 style="font-size:18px;padding-left:20px">{{ c.title }}</h3>
+            <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);padding-left:20px">{{ c.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-size:15px;line-height:1.6;margin-top:24px;max-width:70ch;color:var(--color-neutral-800)">Escalations go to our Director at <a href="mailto:ismail@avenirhousing.co.uk">Ismail@avenirhousing.co.uk</a>. We are committed to handling all complaints with fairness and discretion — because we care deeply about the people and communities we serve.</p>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ showClose }}" hint-placeholder-val="{{ true }}">
+  <section style="background:var(--color-accent);color:var(--color-bg)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,5vw,72px);display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap">
+      <h2 style="font-size:clamp(44px,6vw,88px);line-height:1;letter-spacing:-0.03em;margin-left:-0.04em">Let’s talk.</h2>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="tel:+447507921011" style="display:inline-flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-bg);color:var(--color-text);font-family:var(--font-heading);font-weight:800;font-size:15px;text-decoration:none" style-hover="background:var(--color-text);color:var(--color-bg)">Call +44 7507 921011</a>
+        <button onClick="{{ go.contact }}" style="display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:transparent;color:var(--color-bg);border:2px solid var(--color-bg);font-family:var(--font-heading);font-weight:800;font-size:15px;cursor:pointer" style-hover="background:var(--color-accent-600)">Send a message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"></path></svg></button>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+</main>
+
+<footer style="border-top:2px solid var(--color-divider)">
+  <div style="max-width:1200px;margin:0 auto;padding:40px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:40px 64px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px;max-width:300px">
+      <img src="assets/avenir-logo.png" alt="Avenir Housing" style="height:40px;width:auto;align-self:flex-start;mix-blend-mode:multiply">
+      <p style="font-size:14px;line-height:1.5;color:var(--color-neutral-700)">Safe, supported accommodation for vulnerable adults across the UK.</p>
+    </div>
+    <div style="display:flex;gap:40px 56px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <p style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Explore</p>
+        <sc-for list="{{ footerExplore }}" as="l" hint-placeholder-count="3"><button onClick="{{ l.onClick }}" style="background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--color-text);text-align:left" style-hover="color:var(--color-accent-700)">{{ l.label }}</button></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <p style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Get help</p>
+        <sc-for list="{{ footerHelp }}" as="l" hint-placeholder-count="3"><button onClick="{{ l.onClick }}" style="background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--color-text);text-align:left" style-hover="color:var(--color-accent-700)">{{ l.label }}</button></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+        <p style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700)">Contact</p>
+        <a href="tel:+447507921011" style="color:var(--color-text);text-decoration:none" style-hover="color:var(--color-accent-700)">+44 7507 921011</a>
+        <a href="mailto:info@avenirhousing.co.uk" style="color:var(--color-text);text-decoration:none" style-hover="color:var(--color-accent-700)">info@avenirhousing.co.uk</a>
+        <span style="color:var(--color-neutral-700)">656 Streatham High Road, SW16 3QL</span>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid var(--color-divider)">
+    <div style="max-width:1200px;margin:0 auto;padding:16px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--color-neutral-700)">
+      <span>© Avenir Housing CIC</span>
+      <a href="#" style="color:var(--color-neutral-700);text-decoration:none" style-hover="color:var(--color-accent-700)">Privacy policy</a>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showHouses }}" hint-placeholder-val="{{ false }}">
+  <div ref="{{ houseRef }}" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:5"></div>
+</sc-if>
+
+<sc-if value="{{ is.home }}" hint-placeholder-val="{{ true }}">
+  <div style="position:fixed;left:16px;bottom:16px;z-index:30;display:flex;align-items:center;gap:0;background:var(--color-text);color:var(--color-bg);box-shadow:var(--shadow-lg);font-family:var(--font-body)">
+    <span style="padding:10px 14px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase">Homepage</span>
+    <sc-for list="{{ dirOpts }}" as="d" hint-placeholder-count="2">
+      <button onClick="{{ d.onClick }}" title="{{ d.title }}" style="padding:10px 14px;border:0;border-left:1px solid var(--color-neutral-700);cursor:pointer;font-family:var(--font-heading);font-weight:800;font-size:13px;background:{{ d.bg }};color:var(--color-bg)">{{ d.label }}</button>
+    </sc-for>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;homeDirection&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;],&quot;default&quot;:&quot;A&quot;,&quot;tsType&quot;:&quot;'A'|'B'&quot;,&quot;section&quot;:&quot;Homepage&quot;},&quot;houseParallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Homepage&quot;},&quot;propertyLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;List&quot;,&quot;Grid&quot;],&quot;default&quot;:&quot;List&quot;,&quot;tsType&quot;:&quot;'List'|'Grid'&quot;,&quot;section&quot;:&quot;Properties&quot;},&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;properties&quot;,&quot;landlords&quot;,&quot;apply&quot;,&quot;support&quot;,&quot;repair&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+class Component extends DCLogic {
+  state = {
+    page: (typeof localStorage !== 'undefined' && localStorage.getItem('avenir.page')) || this.props.startPage || 'home',
+    dir: this.props.homeDirection || 'A',
+    faq: 0, propFilter: 'All', propType: 'All types', propArea: 'All areas', propSort: 'Available soonest', propSel: null, applyMode: 'self',
+    repairCat: 'Plumbing', urgency: 'Routine',
+    applySent: false, repairSent: false, contactSent: false
+  };
+  houseRef = (el) => {
+    if (this._houses) { this._houses.dispose(); this._houses = null; }
+    if (el) this._houses = this.startHouses(el);
+  };
+  componentWillUnmount() { if (this._houses) this._houses.dispose(); }
+  startHouses(el) {
+    let alive = true, raf = 0, renderer, cleanup = [];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (async () => {
+      const [THREE, buf] = await Promise.all([
+        import('https://esm.sh/three@0.160.0'),
+        fetch('assets/house.bin').then(r => r.arrayBuffer())
+      ]);
+      if (!alive) return;
+      const head = new Uint32Array(buf, 0, 2);
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(buf, 8, head[0] * 3), 3));
+      geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, 8 + head[0] * 12, head[1]), 1));
+      geo.computeVertexNormals();
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      el.appendChild(renderer.domElement);
+      const scene = new THREE.Scene();
+      const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -2000, 2000);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x8fa58f, 1.6));
+      const sun = new THREE.DirectionalLight(0xffffff, 1.8); sun.position.set(-0.6, 1, 0.8); scene.add(sun);
+      const cols = [0x22543f, 0xa3c09f];
+      // x: viewport fraction, y: page px, size px, speed (parallax rate), fade start (scroll px)
+      const spec = [
+        [0.75, 120, 84, 0.55, 80], [0.9, 290, 160, 1.35, 160], [0.68, 520, 70, 0.4, 240],
+        [0.95, 640, 120, 1.6, 120], [0.55, 700, 64, 0.8, 300], [0.08, 780, 90, 1.25, 200], [0.40, 930, 130, 1.5, 360]
+      ];
+      const houses = spec.map((s, i) => {
+        const mat = new THREE.MeshStandardMaterial({ color: cols[i % 2], roughness: 0.7, metalness: 0, flatShading: true, transparent: true });
+        const m = new THREE.Mesh(geo, mat); scene.add(m);
+        return { m, mat, x: s[0], y: s[1], size: s[2], speed: s[3], fade: s[4], ry: i * 1.3, dir: i % 2 ? 1 : -1 };
+      });
+      let W = 0, H = 0;
+      const resize = () => {
+        W = el.clientWidth; H = el.clientHeight; renderer.setSize(W, H);
+        cam.left = 0; cam.right = W; cam.top = 0; cam.bottom = -H; cam.updateProjectionMatrix();
+      };
+      resize(); window.addEventListener('resize', resize); cleanup.push(() => window.removeEventListener('resize', resize));
+      const ease = (t) => t * t * (3 - 2 * t);
+      const t0 = performance.now();
+      const frame = () => {
+        if (!alive) return;
+        const sc = window.scrollY, t = (performance.now() - t0) / 1000, mobile = W < 760;
+        houses.forEach((h, i) => {
+          if (mobile && (h.x < 0.6 || i > 4)) { h.m.visible = false; return; }
+          const life = reduce ? 0 : Math.min(1, Math.max(0, (sc - h.fade) / 420));
+          const k = 1 - ease(life);
+          const size = (mobile ? h.size * 0.6 : h.size) * k;
+          h.m.visible = k > 0.01;
+          const bob = reduce ? 0 : Math.sin(t * 0.9 + i) * 6;
+          h.m.position.set(h.x * W, -(h.y - sc * (reduce ? 1 : h.speed) + bob - life * 120), 0);
+          h.m.scale.setScalar(size);
+          h.m.rotation.set(0.32 + life * 0.6, h.ry + h.dir * (sc * 0.004 + (reduce ? 0 : t * 0.15)) + life * Math.PI, h.dir * life * 0.4);
+          h.mat.opacity = Math.min(1, k * 1.4);
+        });
+        renderer.render(scene, cam);
+        raf = requestAnimationFrame(frame);
+      };
+      frame();
+    })().catch(e => console.warn('house layer', e));
+    return { dispose: () => { alive = false; cancelAnimationFrame(raf); cleanup.forEach(f => f()); if (renderer) { renderer.dispose(); renderer.domElement.remove(); } } };
+  }
+  componentDidUpdate(pp) {
+    if (pp.homeDirection !== this.props.homeDirection && this.props.homeDirection) this.setState({ dir: this.props.homeDirection });
+  }
+  nav(page, extra) {
+    try { localStorage.setItem('avenir.page', page); } catch (e) {}
+    this.setState({ page, ...(extra || {}) });
+    window.scrollTo(0, 0);
+  }
+  renderVals() {
+    const s = this.state, p = s.page;
+    const go = {
+      home: () => this.nav('home'), properties: () => this.nav('properties', { propSel: null }), landlords: () => this.nav('landlords'),
+      apply: () => this.nav('apply', { applyMode: 'self' }), refer: () => this.nav('apply', { applyMode: 'referral' }),
+      support: () => this.nav('support'), repair: () => this.nav('repair'), contact: () => this.nav('contact'),
+      contactLink: (e) => { e.preventDefault(); this.nav('contact'); }
+    };
+    const accent = 'var(--color-accent)', ink = 'var(--color-text)', paper = 'var(--color-bg)';
+    const navLinks = [['Properties', 'properties'], ['Work with us', 'landlords'], ['Support', 'support'], ['Contact', 'contact']]
+      .map(([label, k]) => ({ label, onClick: go[k], color: p === k ? 'var(--color-accent-700)' : ink, line: p === k ? accent : 'transparent' }));
+    const fl = (arr) => arr.map(([label, k]) => ({ label, onClick: go[k] }));
+    const footerExplore = fl([['Properties', 'properties'], ['Work with us', 'landlords'], ['Support', 'support']]);
+    const footerHelp = fl([['Refer or apply', 'apply'], ['Report a repair', 'repair'], ['Contact us', 'contact']]);
+    const paths = [
+      { kicker: 'I need a home', title: 'Apply for accommodation', body: 'Apply directly — we assess each application to make sure we can meet your needs.', onClick: go.apply },
+      { kicker: 'I’m referring someone', title: 'Make a referral', body: 'For local authorities, support agencies and charities.', onClick: go.refer },
+      { kicker: 'I’m a landlord or partner', title: 'Work with us', body: 'Partner with us to create secure, sustainable homes.', onClick: go.landlords },
+      { kicker: 'I’m a tenant', title: 'Report a repair', body: 'Tell us about a maintenance issue and we’ll arrange it promptly.', onClick: go.repair }
+    ];
+    const faqsRaw = [
+      ['What support do you provide?', 'Support is tailored to each resident and may include:', ['Help with budgeting and managing benefits', 'Support accessing healthcare and mental health services', 'Life skills training (e.g., cooking, cleaning, job readiness)', 'Assistance with moving towards independent living', 'Emotional support and signposting to other services']],
+      ['How do I apply for accommodation?', 'You can apply directly by contacting us, or you may be referred by a local authority, support agency, or charity. We assess each application to ensure we can meet the individual’s needs.'],
+      ['How long can someone stay in your accommodation?', 'Length of stay depends on the individual’s needs and progress. Some residents stay for a few months, others for longer, until they are ready to move on to more independent housing.'],
+      ['Are staff on-site?', 'Yes — our trained support workers are available to provide guidance and assistance. Staff presence levels depend on the property and the individual needs of residents.'],
+      ['Do you work with other organisations?', 'Absolutely. We partner with local authorities, health services, charities, and community organisations to ensure residents receive comprehensive care and support.'],
+      ['How is your service funded?', 'Our service is funded through a combination of rent (often covered by Housing Benefit), local authority funding, and charitable contributions.'],
+      ['Can residents have visitors?', 'Visitors are welcome within reasonable limits, but we have safeguarding and safety procedures in place to protect all residents.'],
+      ['How do you ensure residents’ safety?', 'We maintain safe, well-managed properties with risk assessments, safeguarding policies, and trained staff. Safety and dignity are always our top priorities.']
+    ];
+    const faqs = faqsRaw.map(([q, a, bullets], i) => ({
+      q, a, bullets: bullets || [], open: s.faq === i, sign: s.faq === i ? '–' : '+',
+      toggle: () => this.setState({ faq: s.faq === i ? -1 : i })
+    }));
+    const approach = [
+      'Our tenants have diverse backgrounds and lived experiences, and for some, bare or impersonal environments may trigger trauma-related distress or feelings of vulnerability.',
+      'We take a person-centred approach to creating welcoming, comfortable living environments that reflect each individual’s preferences and needs, while encouraging them to personalise their space and develop a sense of ownership, independence and belonging.',
+      'We are committed to empowering vulnerable adults through tailored, person-centred care and support that recognises each individual’s unique circumstances and challenges. Whether navigating financial hardship, mental health difficulties or other barriers to wellbeing, we work collaboratively with a network of charities, community organisations and specialist workshops to connect individuals with the right resources and opportunities. By taking a holistic approach, we aim to provide well-rounded, responsive support that promotes independence, builds confidence and enables people to make positive, lasting changes in their lives.',
+      'By building strong partnerships with Local Authorities, Housing Associations, charities and community groups across London, we deliver joined-up support that tackles the root causes of homelessness, helps individuals move towards stability and independence, and creates lasting positive change in their lives.'
+    ].map((text, i) => ({ n: '0' + (i + 1), text }));
+    const shared = ['Fully furnished', 'Bills included', 'Wi-Fi', 'Shared kitchen', 'Washing machine', 'Shared lounge'];
+    const allProps = [
+      { id: 'AH-101', title: '24 Leigham Court Road', street: 'Leigham Court Road', area: 'Streatham', postcode: 'SW16', type: 'Shared supported house', beds: 5, bedsUnit: 'Bedrooms', baths: 3, bathsUnit: 'Bathrooms', support: 'Medium', status: 'Available', availOrder: 0, avail: 'Available now', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Lambeth', photos: 12,
+        summary: 'A bright Victorian house with a large garden, five minutes from Streatham station.', features: [...shared, 'Private garden', 'Bike storage'], chips: ['Furnished', 'Bills included', 'Garden'],
+        transport: [['Streatham station', '6 min walk'], ['Buses 57, 109, 250', '2 min walk'], ['Streatham Common', '8 min walk']] },
+      { id: 'AH-102', title: '8 Norbury Crescent', street: 'Norbury Crescent', area: 'Norbury', postcode: 'SW16', type: 'Shared supported house', beds: 4, bedsUnit: 'Bedrooms', baths: 2, bathsUnit: 'Bathrooms', support: 'Medium', status: 'Available', availOrder: 1, avail: 'From 1 Nov 2026', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Croydon', photos: 9,
+        summary: 'A quiet, family-sized home on a residential street with two shared bathrooms.', features: [...shared, 'Dining room', 'Rear patio'], chips: ['Furnished', 'Bills included', 'Quiet street'],
+        transport: [['Norbury station', '5 min walk'], ['Buses 60, 109', '3 min walk'], ['Norbury Park', '10 min walk']] },
+      { id: 'AH-103', title: '51 Smallwood Road', street: 'Smallwood Road', area: 'Tooting', postcode: 'SW17', type: 'Detached house', beds: 3, bedsUnit: 'Bedrooms', baths: 2, bathsUnit: 'Bathrooms', support: 'Medium', status: 'Available', availOrder: 0, avail: 'Available now', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Wandsworth', photos: 14,
+        summary: 'Contemporary two-storey detached home with a clean modern design. Features spacious bedrooms, two full bathrooms, and open-plan living areas. Light grey exterior with white trim, navy front door, and landscaped front garden create a refined suburban aesthetic ideal for modern family living.', features: [...shared, 'Open-plan living', 'Landscaped front garden'], chips: ['Detached', 'Open-plan', 'Front garden'],
+        transport: [['Tooting Broadway (Northern line)', '8 min walk'], ['Tooting station', '10 min walk'], ['Tooting Bec Common', '12 min walk']] },
+      { id: 'AH-104', title: '117 Addiscombe Road', street: 'Addiscombe Road', area: 'Croydon', postcode: 'CR0', type: 'Shared supported house', beds: 6, bedsUnit: 'Bedrooms', baths: 3, bathsUnit: 'Bathrooms', support: 'High', status: 'Coming soon', availOrder: 2, avail: 'From Jan 2027', staff: 'Staff on site daily', suitable: 'Vulnerable adults, 18+', la: 'Croydon', photos: 6,
+        summary: 'A newly refurbished house with on-site staff presence and a ground-floor accessible room.', features: [...shared, 'Accessible ground-floor room', 'Staff office'], chips: ['Furnished', 'Staff on site', 'Accessible room'],
+        transport: [['East Croydon station', '9 min walk'], ['Tram — Lebanon Road', '3 min walk'], ['Croydon town centre', '12 min walk']] },
+      { id: 'AH-105', title: '42 Acre Lane', street: 'Acre Lane', area: 'Brixton', postcode: 'SW2', type: 'Self-contained flats', beds: 3, bedsUnit: 'One-bed flats', baths: 3, bathsUnit: 'Private bathrooms', support: 'Low', status: 'Full', availOrder: 9, avail: 'Currently full', staff: 'Weekly support visits', suitable: 'Adults moving towards independence', la: 'Lambeth', photos: 8,
+        summary: 'Three one-bedroom flats close to Brixton’s shops, market and transport links.', features: ['Fully furnished', 'Wi-Fi', 'Private kitchen', 'Private bathroom', 'Secure entry', 'Bike storage'], chips: ['Self-contained', 'Central', 'Secure entry'],
+        transport: [['Brixton (Victoria line)', '6 min walk'], ['Clapham North (Northern line)', '9 min walk'], ['Brockwell Park', '14 min walk']] },
+      { id: 'AH-106', title: '305 London Road', street: 'London Road', area: 'Mitcham', postcode: 'CR4', type: 'Shared supported house', beds: 5, bedsUnit: 'Bedrooms', baths: 2, bathsUnit: 'Bathrooms', support: 'Medium', status: 'Available', availOrder: 0, avail: 'Available now', staff: 'Daily support visits', suitable: 'Single adults, 18+', la: 'Merton', photos: 11,
+        summary: 'A spacious semi-detached house with a large shared kitchen and off-street parking.', features: [...shared, 'Off-street parking', 'Garden'], chips: ['Furnished', 'Bills included', 'Parking'],
+        transport: [['Mitcham Junction', '8 min walk'], ['Tram — Mitcham', '5 min walk'], ['Mitcham Common', '6 min walk']] }
+    ];
+    const tag = { 'Available': ['var(--color-accent-100)', 'var(--color-accent-800)'], 'Full': ['var(--color-neutral-200)', 'var(--color-neutral-800)'], 'Coming soon': ['var(--color-text)', 'var(--color-bg)'] };
+    const openProp = (id) => { this.setState({ propSel: id }); window.scrollTo(0, 0); };
+    const extra = { 'AH-101': [1, 'SW16 1EH'], 'AH-102': [1, 'SW16 3LX'], 'AH-103': [1, 'SW17 0TN'], 'AH-104': [2, 'CR0 6SR'], 'AH-105': [0, 'SW2 5RF'], 'AH-106': [1, 'CR4 3LB'] };
+    const pl = (n, one, many) => n === 1 ? one : many;
+    const decorate = (x) => ({ ...x, reception: extra[x.id][0], receptionLabel: pl(extra[x.id][0], 'Reception room', 'Reception rooms'), postcodeFull: extra[x.id][1], addressLine: x.area + ', London, ' + extra[x.id][1], bedsLabel: x.bedsUnit === 'Bedrooms' ? pl(x.beds, 'Bedroom', 'Bedrooms') : x.bedsUnit, bathsLabel: x.bathsUnit === 'Bathrooms' ? pl(x.baths, 'Bathroom', 'Bathrooms') : x.bathsUnit, tagBg: tag[x.status][0], tagFg: tag[x.status][1], availLabel: x.avail, open: () => openProp(x.id) });
+    let properties = allProps.filter(x => (s.propFilter === 'All' || x.status === s.propFilter) && (s.propType === 'All types' || x.type === s.propType) && (s.propArea === 'All areas' || x.area === s.propArea));
+    if (s.propSort === 'Most bedrooms') properties.sort((a, b) => b.beds - a.beds);
+    else if (s.propSort === 'Area A–Z') properties.sort((a, b) => a.area.localeCompare(b.area));
+    else properties.sort((a, b) => a.availOrder - b.availOrder);
+    properties = properties.map(decorate);
+    const selIdx = allProps.findIndex(x => x.id === s.propSel);
+    let sel = {};
+    if (selIdx >= 0) {
+      const x = allProps[selIdx], shown = 5;
+      const rooms = ['living room', 'bedroom', 'kitchen', 'bathroom', 'exterior'];
+      sel = { ...decorate(x), ref: x.id,
+        availLong: x.avail,
+        gallery0: 'photo — ' + x.title.toLowerCase() + ', front',
+        galleryRest: rooms.slice(0, 4).map((r, i) => ({ label: r, more: i === 3 && x.photos > shown, moreCount: x.photos - shown })),
+        description: [
+          x.summary + ' Each room is furnished with care, and residents are encouraged to personalise their space and develop a sense of ownership, independence and belonging.',
+          'Support is tailored to each resident — from budgeting and benefits to accessing healthcare and life skills — with ' + x.staff.toLowerCase() + ' from our trained team.'
+        ],
+        facts: [['Property type', x.type], [x.bedsUnit, String(x.beds)], [x.bathsUnit, String(x.baths)], ['Furnishing', x.features.includes('Fully furnished') ? 'Fully furnished' : 'Part furnished'], ['Bills', x.features.includes('Bills included') ? 'Included' : 'Not included'], ['Support level', x.support], ['Staff presence', x.staff], ['Suitable for', x.suitable], ['Availability', x.avail], ['Local authority', x.la]].map(([label, value]) => ({ label, value })),
+        transport: x.transport.map(([place, time]) => ({ place, time }))
+      };
+    }
+    const stepProp = (d) => openProp(allProps[(selIdx + d + allProps.length) % allProps.length].id);
+    const seg = (opts, cur, key) => opts.map(([label, val]) => ({ label, bg: cur === val ? accent : 'transparent', fg: cur === val ? paper : ink, onClick: () => this.setState({ [key]: val }) }));
+    const isReferral = s.applyMode === 'referral';
+    return {
+      go, navLinks, footerExplore, footerHelp,
+      houseRef: this.houseRef, showHouses: p === 'home' && (this.props.houseParallax ?? true), paths, faqs, approach, properties,
+      is: { home: p === 'home', homeA: p === 'home' && s.dir === 'A', homeB: p === 'home' && s.dir === 'B', properties: p === 'properties', propList: p === 'properties' && selIdx < 0, propDetail: p === 'properties' && selIdx >= 0, landlords: p === 'landlords', apply: p === 'apply', support: p === 'support', repair: p === 'repair', contact: p === 'contact' },
+      dirOpts: [['A', 'Ruled grid'], ['B', 'Poster']].map(([v, t]) => ({ label: v + ' · ' + t, title: t, bg: s.dir === v ? accent : 'transparent', onClick: () => this.setState({ dir: v }) })),
+      whoWeHelp: ['Formerly homeless individuals.', 'Vulnerable adults.', 'Those in transition from temporary or unsafe housing.'],
+      team: [{ name: 'Ismail Hasan', role: 'Director / Co-founder' }, { name: 'Amaan Hafeez', role: 'Director / Co-founder' }, { name: 'Anis Hasan', role: 'Finance Manager' }, { name: 'Rayaan Hafeez', role: 'Housing Manager' }],
+      propFilters: seg([['All', 'All'], ['Available', 'Available'], ['Coming soon', 'Coming soon']], s.propFilter, 'propFilter'),
+      propCount: properties.length + (properties.length === 1 ? ' property' : ' properties'),
+      noProps: properties.length === 0, sel,
+      propRows: (s.propView || this.props.propertyLayout || 'List') === 'List',
+      propGrid: (s.propView || this.props.propertyLayout || 'List') === 'Grid',
+      viewOpts: ['List', 'Grid'].map(v => { const on = (s.propView || this.props.propertyLayout || 'List') === v; return { label: v, bg: on ? ink : 'transparent', fg: on ? paper : ink, onClick: () => this.setState({ propView: v }) }; }),
+      propType: s.propType, propArea: s.propArea, propSort: s.propSort,
+      setPropType: (e) => this.setState({ propType: e.target.value }),
+      setPropArea: (e) => this.setState({ propArea: e.target.value }),
+      setPropSort: (e) => this.setState({ propSort: e.target.value }),
+      clearPropFilters: () => this.setState({ propFilter: 'All', propType: 'All types', propArea: 'All areas' }),
+      closeProp: () => { this.setState({ propSel: null }); window.scrollTo(0, 0); },
+      prevProp: () => stepProp(-1), nextProp: () => stepProp(1),
+      partners: [
+        { title: 'Landlords', body: 'Let your property to a community interest company that houses and supports vulnerable adults.' },
+        { title: 'Local Authorities', body: 'Joined-up support that tackles the root causes of homelessness.' },
+        { title: 'Housing Associations', body: 'Helping individuals move towards stability and independence.' },
+        { title: 'Charities & community groups', body: 'Connecting residents with the right resources and opportunities.' }
+      ],
+      partnerSteps: [
+        { n: '01', title: 'Get in touch', body: 'Tell us about your property or organisation and what you’re looking for.' },
+        { n: '02', title: 'We review together', body: 'We assess suitability and agree how we’ll work together.' },
+        { n: '03', title: 'Homes made welcoming', body: 'We create welcoming, comfortable living environments and support each tenant to settle, belong and thrive.' }
+      ],
+      supportAreas: ['Help with budgeting and managing benefits', 'Support accessing healthcare and mental health services', 'Life skills training — cooking, cleaning, job readiness', 'Assistance with moving towards independent living', 'Emotional support and signposting to other services'].map((title, i) => ({ n: '0' + (i + 1), title })),
+      complaintSteps: [
+        { time: '24–48 hrs', title: 'We acknowledge', body: 'We will acknowledge your complaint within 24–48 hours.' },
+        { time: '3 days', title: 'We investigate', body: 'A full written response within 3 working days. If more time is needed, we’ll keep you updated.' },
+        { time: '10 days', title: 'Escalation', body: 'Not satisfied? A senior review by our Director, with a final response within 10 working days.' }
+      ],
+      showComplaints: p === 'support' || p === 'contact',
+      showClose: p !== 'contact' && p !== 'apply' && p !== 'repair',
+      applyModes: seg([['Myself', 'self'], ['Someone I’m referring', 'referral']], s.applyMode, 'applyMode'),
+      isReferral, applicantHeading: isReferral ? 'About the person you’re referring' : 'About you',
+      applySubmitLabel: isReferral ? 'Submit referral' : 'Submit application',
+      applySent: s.applySent, applyOpen: !s.applySent,
+      submitApply: (e) => { e.preventDefault(); this.setState({ applySent: true }); window.scrollTo(0, 0); },
+      resetApply: () => this.setState({ applySent: false }),
+      repairCats: ['Plumbing', 'Heating & hot water', 'Electrical', 'Damp & mould', 'Doors, windows & locks', 'Appliances', 'Other'].map(label => {
+        const on = s.repairCat === label;
+        return { label, bg: on ? ink : 'transparent', fg: on ? paper : ink, border: on ? ink : 'var(--color-divider)', onClick: () => this.setState({ repairCat: label }) };
+      }),
+      urgencies: [['Emergency', 'Risk to safety — please also call us'], ['Urgent', 'Affects daily living'], ['Routine', 'Can be scheduled']].map(([label, hint]) => {
+        const on = s.urgency === label;
+        return { label, hint, border: on ? accent : 'var(--color-divider)', bg: on ? 'var(--color-accent-100)' : 'transparent', onClick: () => this.setState({ urgency: label }) };
+      }),
+      repairSent: s.repairSent, repairOpen: !s.repairSent,
+      submitRepair: (e) => { e.preventDefault(); this.setState({ repairSent: true }); window.scrollTo(0, 0); },
+      resetRepair: () => this.setState({ repairSent: false }),
+      contactSent: s.contactSent, contactOpen: !s.contactSent,
+      submitContact: (e) => { e.preventDefault(); this.setState({ contactSent: true }); },
+      resetContact: () => this.setState({ contactSent: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
