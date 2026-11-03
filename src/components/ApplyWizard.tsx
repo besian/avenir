@@ -14,16 +14,17 @@ type Mode = 'self' | 'referral';
 type Fields = 'refName' | 'refOrg' | 'refEmail' | 'name' | 'phone' | 'email' | 'needs' | 'pref' | 'situation';
 interface Draft {
   step: number;
-  mode: Mode;
+  /** null until the visitor picks who it's for — nothing is preselected. */
+  mode: Mode | null;
   d: Partial<Record<Fields, string>> & { consent?: boolean };
 }
-const FRESH: Draft = { step: 0, mode: 'self', d: {} };
+const FRESH: Draft = { step: 0, mode: null, d: {} };
 
 const top = () => window.scrollTo(0, 0);
 
 export function ApplyWizard() {
-  const [draft, setDraft, loaded] = useLocalState<Draft>('apply', FRESH);
-  const [sentRef, setSentRef] = useState<string | null>(null);
+  const [draft, setDraft, loaded] = useLocalState<Draft>('apply.v2', FRESH);
+  const [sent, setSent] = useState<{ ref: string; isRef: boolean } | null>(null);
   const [sending, setSending] = useState(false);
   const params = useSearchParams();
   const router = useRouter();
@@ -35,7 +36,7 @@ export function ApplyWizard() {
     if (!loaded || !forParam || handled.current === forParam) return;
     handled.current = forParam;
     if (forParam === 'self' || forParam === 'referral') {
-      setSentRef(null);
+      setSent(null);
       setDraft((a) => ({ ...a, mode: forParam, step: Math.max(1, a.step) }));
     }
     router.replace('/apply', { scroll: false });
@@ -66,27 +67,27 @@ export function ApplyWizard() {
     }
     setSending(true);
     try {
-      const { ref } = await submitApplication({ mode, ...d });
-      setDraft({ ...FRESH, mode });
-      setSentRef(ref);
+      const { ref } = await submitApplication({ mode: mode ?? 'self', ...d });
+      setDraft(FRESH);
+      setSent({ ref, isRef });
       top();
     } finally {
       setSending(false);
     }
   };
 
-  if (sentRef) {
+  if (sent) {
     return (
       <div className="done">
         <span className="icon-tile icon-tile--56">
           <Icon d={IC.check} size={28} stroke={2.6} round={false} />
         </span>
-        <h1 className="h-done">{isRef ? 'Referral sent.' : 'Application sent.'}</h1>
+        <h1 className="h-done">{sent.isRef ? 'Referral sent.' : 'Application sent.'}</h1>
         <p>A member of the team will call within two working days. Everything shared is kept confidential.</p>
         <div className="done__box">
           <div className="done__ref">
             <span>Your reference</span>
-            <strong>{sentRef}</strong>
+            <strong>{sent.ref}</strong>
           </div>
           <div className="done__next">
             <p style={{ fontWeight: 700 }}>What happens next</p>
@@ -99,7 +100,7 @@ export function ApplyWizard() {
           <Link href="/properties" className="btn btn--primary btn--md">
             Browse homes
           </Link>
-          <button type="button" onClick={() => setSentRef(null)} className="btn btn--outline btn--md" style={{ padding: '0 16px' }}>
+          <button type="button" onClick={() => setSent(null)} className="btn btn--outline btn--md" style={{ padding: '0 16px' }}>
             Start another
           </button>
         </div>
