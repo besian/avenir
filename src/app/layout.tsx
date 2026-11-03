@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo } from 'next/font/google';
 import './globals.css';
-import { UIProvider } from '@/components/UIProvider';
-import { Header } from '@/components/Header';
-import { ClosingBanner, Footer } from '@/components/Chrome';
 
 const archivo = Archivo({ subsets: ['latin'], variable: '--font-archivo', display: 'swap' });
 
@@ -23,18 +20,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-GB" className={archivo.variable}>
-      <body>
-        <UIProvider>
-          <div className="site">
-            <Header />
-            <main className="main">
-              {children}
-              <ClosingBanner />
-            </main>
-            <Footer />
-          </div>
-        </UIProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

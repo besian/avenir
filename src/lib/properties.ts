@@ -1,13 +1,20 @@
 /**
- * Property listings.
+ * Property model + helpers.
  *
- * PLACEHOLDER DATA — these six homes are illustrative only. Replace them with
- * real listings (and drop photos into /public/images/properties/<id>/) before
- * going live. Everything on the listings page, map view, property pages,
- * homepage "available now" strip and search palette reads from this array.
+ * Live listings are managed at /admin and stored in Firestore (see
+ * src/lib/firebase). SAMPLE_PROPERTIES below are placeholder homes, used when
+ * Firebase isn't configured yet and offered as a one-click import in /admin.
  */
 
-export type PropertyStatus = 'Available' | 'Coming soon' | 'Full';
+export const STATUSES = ['Available', 'Coming soon', 'Full'] as const;
+export const SUPPORT_LEVELS = ['Low', 'Medium', 'High'] as const;
+export type PropertyStatus = (typeof STATUSES)[number];
+
+export interface PropertyImage {
+  url: string;
+  /** Firebase Storage path, used to delete the file. */
+  path: string;
+}
 export type SupportLevel = 'Low' | 'Medium' | 'High';
 
 export interface Property {
@@ -29,7 +36,11 @@ export interface Property {
   staff: string;
   suitable: string;
   la: string;
+  /** Placeholder photo count shown when there are no uploaded images. */
   photos: number;
+  /** Uploaded photos, first one is the cover. */
+  images?: PropertyImage[];
+  updatedAt?: number;
   /** Position of the pin on the placeholder map, in % of the map box. */
   mx: number;
   my: number;
@@ -40,7 +51,7 @@ export interface Property {
 
 const shared = ['Fully furnished', 'Bills included', 'Wi-Fi', 'Shared kitchen', 'Washing machine', 'Shared lounge'];
 
-export const PROPERTIES: Property[] = [
+export const SAMPLE_PROPERTIES: Property[] = [
   {
     id: 'AH-101', title: '24 Leigham Court Road', area: 'Streatham', pc: 'SW16 1EH', type: 'Shared supported house',
     beds: 5, bedsUnit: 'Bedrooms', baths: 3, bathsUnit: 'Bathrooms', rec: 1, support: 'Medium', status: 'Available', ord: 0,
@@ -91,16 +102,17 @@ export const PROPERTIES: Property[] = [
   },
 ];
 
-export const AREAS = ['Streatham', 'Norbury', 'Tooting', 'Croydon', 'Brixton', 'Mitcham'];
+export const DEFAULT_AREAS = ['Streatham', 'Norbury', 'Tooting', 'Croydon', 'Brixton', 'Mitcham'];
+export const DEFAULT_TYPES = ['Shared supported house', 'Detached house', 'Self-contained flats'];
+export const SHARED_FEATURES = shared;
+
+/** Areas present in the given listings, in first-seen order. */
+export const areasOf = (list: Property[]) => [...new Set(list.map((p) => p.area))];
 
 const pl = (n: number, one: string, many: string) => (n === 1 ? one : many);
 
 /** Sort by `ord` (stable), matching the prototype. */
-export const byOrder = (a: Property, b: Property) => a.ord - b.ord;
-
-export function getProperty(id: string) {
-  return PROPERTIES.find((p) => p.id.toLowerCase() === id.toLowerCase());
-}
+export const byOrder = (a: Property, b: Property) => a.ord - b.ord || a.id.localeCompare(b.id);
 
 export function propertyHref(p: Pick<Property, 'id'>) {
   return `/properties/${p.id.toLowerCase()}`;
@@ -140,17 +152,26 @@ export function keyFacts(p: Property): { label: string; value: string }[] {
   ).map(([label, value]) => ({ label, value }));
 }
 
-export const availableHomes = () => PROPERTIES.filter((p) => p.status === 'Available');
+export const availableHomes = (list: Property[]) => list.filter((p) => p.status === 'Available');
 
-export function availabilitySummary() {
-  const avail = availableHomes();
+/** Total photo count: uploaded images, else the placeholder count. */
+export const photoCount = (p: Property) => (p.images?.length ? p.images.length : p.photos);
+
+export function availabilitySummary(list: Property[]) {
+  const avail = availableHomes(list);
+  if (!avail.length) return { label: 'New homes coming soon', areas: 'Call us to hear what’s coming up next.' };
   const now = avail.filter((p) => p.ord === 0).length;
   return {
     label: `${now} ${pl(now, 'home', 'homes')} available now`,
-    areas: `In ${[...new Set(avail.map((p) => p.area))].join(', ')} — more coming in Croydon from January.`,
+    areas: `In ${areasOf(avail).join(', ')}.${comingNote(list)}`,
   };
 }
 
-export const featuredHomes = () => availableHomes().slice().sort(byOrder).slice(0, 3);
+function comingNote(list: Property[]) {
+  const soon = list.filter((p) => p.status === 'Coming soon');
+  return soon.length ? ` More coming in ${areasOf(soon).join(', ')}.` : '';
+}
+
+export const featuredHomes = (list: Property[]) => availableHomes(list).slice().sort(byOrder).slice(0, 3);
 
 export const homesCount = (n: number) => `${n}${pl(n, ' home', ' homes')}`;

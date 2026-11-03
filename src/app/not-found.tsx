@@ -1,7 +1,9 @@
 import Link from 'next/link';
+import { SiteShell } from '@/components/SiteShell';
 
 export default function NotFound() {
   return (
+    <SiteShell>
     <section className="wrap page-intro" style={{ paddingBottom: 'clamp(56px,8vw,112px)' }}>
       <p className="eyebrow">Page not found</p>
       <h1 className="h-display">We can’t find that page.</h1>
@@ -11,5 +13,6 @@ export default function NotFound() {
         <Link href="/properties" className="btn btn--outline">Find a home</Link>
       </div>
     </section>
+    </SiteShell>
   );
 }

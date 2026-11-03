@@ -4,9 +4,12 @@ import { Photo } from '@/components/Photo';
 import { FaqSection } from '@/components/FaqSection';
 import { APPROACH, HREF, PATHS, TEAM, WHO_WE_HELP } from '@/lib/content';
 import { availabilitySummary, featuredHomes, labels, propertyHref } from '@/lib/properties';
+import { getProperties } from '@/lib/firebase/server';
 
-export default function Home() {
-  const avail = availabilitySummary();
+export default async function Home() {
+  const homes = await getProperties();
+  const avail = availabilitySummary(homes);
+  const featured = featuredHomes(homes);
   return (
     <>
       <section className="rule-bottom">
@@ -65,6 +68,7 @@ export default function Home() {
         </div>
       </section>
 
+      {featured.length > 0 && (
       <section className="rule-top">
         <div className="wrap section-pad">
           <div className="section-head">
@@ -77,13 +81,18 @@ export default function Home() {
             </Link>
           </div>
           <div className="cards">
-            {featuredHomes().map((p) => {
+            {featured.map((p) => {
               const l = labels(p);
               return (
                 <Link key={p.id} href={propertyHref(p)} className="fcard">
                   <span className="fcard__img">
+                    {p.images?.[0] ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={p.images[0].url} alt="" loading="lazy" className="cover-img" />
+                    ) : (
+                      <span className="fcard__ph">photo</span>
+                    )}
                     <span className={`tag tag--${p.status.split(' ')[0]}`}>{p.avail}</span>
-                    <span className="fcard__ph">photo</span>
                   </span>
                   <span className="fcard__body">
                     <span className="fcard__title">{p.title}</span>
@@ -96,6 +105,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
 
       <section className="bg-surface rule-top">
         <div className="wrap section-pad">

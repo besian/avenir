@@ -1,0 +1,20 @@
+rules_version = '2';
+
+// Avenir Housing — Cloud Storage security rules (property photos).
+// Deploy: firebase deploy --only storage   (or paste into the console)
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /properties/{houseId}/{file} {
+      allow read: if true;
+      allow delete: if isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    function isAdmin() {
+      return request.auth != null
+        && firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid));
+    }
+  }
+}

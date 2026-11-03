@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Icon } from './Icon';
 import { IC } from '@/lib/icons';
 import { CONTACT, HREF } from '@/lib/content';
-import { PROPERTIES, propertyHref } from '@/lib/properties';
+import { propertyHref } from '@/lib/properties';
+import type { PaletteHome } from './UIProvider';
 
 interface Intent {
   label: string;
@@ -15,7 +16,7 @@ interface Intent {
   href: string;
 }
 
-const INTENTS: Intent[] = [
+const PAGES: Intent[] = [
   { label: 'Find an available home', hint: 'Properties', icon: IC.home, kw: 'property house room flat available search', href: '/properties' },
   { label: 'Apply for accommodation', hint: 'For myself', icon: IC.user, kw: 'apply need home myself homeless', href: HREF.applySelf },
   { label: 'Refer someone', hint: 'Councils, agencies, charities', icon: IC.userPlus, kw: 'referral refer council agency charity', href: HREF.refer },
@@ -25,16 +26,9 @@ const INTENTS: Intent[] = [
   { label: 'Support we offer', hint: 'Budgeting, health, life skills', icon: IC.shield, kw: 'support help budgeting benefits mental health', href: '/support' },
   { label: 'Make a complaint', hint: 'How we handle it', icon: IC.message, kw: 'complaint unhappy problem', href: '/support#complaints' },
   { label: 'Contact us', hint: 'Call, email or visit', icon: IC.mail, kw: 'contact email call address visit', href: '/contact' },
-  ...PROPERTIES.map((p) => ({
-    label: p.title,
-    hint: `${p.area} · ${p.avail}`,
-    icon: IC.pin,
-    kw: `home property ${p.area} ${p.type}`,
-    href: propertyHref(p),
-  })),
 ];
 
-export function CommandPalette({ onClose }: { onClose: () => void }) {
+export function CommandPalette({ onClose, homes }: { onClose: () => void; homes: PaletteHome[] }) {
   const router = useRouter();
   const [q, setQ] = useState('');
   const [idx, setIdx] = useState(0);
@@ -51,13 +45,21 @@ export function CommandPalette({ onClose }: { onClose: () => void }) {
     };
   }, []);
 
+  const intents = useMemo<Intent[]>(
+    () => [
+      ...PAGES,
+      ...homes.map((p) => ({ label: p.title, hint: `${p.area} · ${p.avail}`, icon: IC.pin, kw: `home property ${p.area} ${p.type}`, href: propertyHref(p) })),
+    ],
+    [homes],
+  );
+
   const results = useMemo(() => {
     const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
     const all = terms.length
-      ? INTENTS.filter((it) => terms.every((t) => `${it.label} ${it.hint} ${it.kw}`.toLowerCase().includes(t)))
-      : INTENTS;
+      ? intents.filter((it) => terms.every((t) => `${it.label} ${it.hint} ${it.kw}`.toLowerCase().includes(t)))
+      : intents;
     return all.slice(0, 9);
-  }, [q]);
+  }, [q, intents]);
 
   const sel = Math.min(idx, Math.max(0, results.length - 1));
 

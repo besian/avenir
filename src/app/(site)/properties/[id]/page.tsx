@@ -6,28 +6,39 @@ import { Photo } from '@/components/Photo';
 import { SaveShare } from '@/components/SaveShare';
 import { IC } from '@/lib/icons';
 import { CONTACT, HREF } from '@/lib/content';
-import { PROPERTIES, description, getProperty, keyFacts, labels, propertyHref } from '@/lib/properties';
+import { description, keyFacts, labels, photoCount, propertyHref } from '@/lib/properties';
+import { getProperties } from '@/lib/firebase/server';
 
 type Params = { params: Promise<{ id: string }> };
 
-export function generateStaticParams() {
-  return PROPERTIES.map((p) => ({ id: p.id.toLowerCase() }));
+// Homes added in /admin after a build are rendered on first visit.
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  return (await getProperties()).map((p) => ({ id: p.id.toLowerCase() }));
+}
+
+async function find(id: string) {
+  const all = await getProperties();
+  const i = all.findIndex((p) => p.id.toLowerCase() === id.toLowerCase());
+  return { all, i, p: all[i] };
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const p = getProperty((await params).id);
+  const { p } = await find((await params).id);
   if (!p) return {};
   return { title: `${p.title}, ${p.area}`, description: p.summary };
 }
 
 export default async function PropertyPage({ params }: Params) {
-  const p = getProperty((await params).id);
+  const { all, i, p } = await find((await params).id);
   if (!p) notFound();
   const l = labels(p);
-  const i = PROPERTIES.indexOf(p);
-  const prev = PROPERTIES[(i - 1 + PROPERTIES.length) % PROPERTIES.length];
-  const next = PROPERTIES[(i + 1) % PROPERTIES.length];
+  const prev = all[(i - 1 + all.length) % all.length];
+  const next = all[(i + 1) % all.length];
   const rooms = ['living room', 'bedroom', 'kitchen', 'bathroom'];
+  const imgs = p.images ?? [];
+  const total = photoCount(p);
 
   return (
     <>
@@ -60,12 +71,12 @@ export default async function PropertyPage({ params }: Params) {
           <SaveShare id={p.id} title={p.title} />
         </div>
 
-        {/* Photos: put files in /public/images/properties/<id>/ and pass src to each <Photo>. */}
+        {/* Uploaded photos (from /admin) fill the grid; striped placeholders stand in for any missing. */}
         <div className="gallery">
-          <Photo className="gallery__main" label={`photo — ${p.title.toLowerCase()}, front`} />
+          <Photo className="gallery__main" src={imgs[0]?.url} alt={`${p.title}, ${p.area}`} label={`photo — ${p.title.toLowerCase()}, front`} />
           {rooms.map((r, k) => (
-            <Photo key={r} label={r}>
-              {k === 3 && p.photos > 5 && <span className="gallery__more">+{p.photos - 5} photos</span>}
+            <Photo key={r} src={imgs[k + 1]?.url} alt="" label={r}>
+              {k === 3 && total > 5 && <span className="gallery__more">+{total - 5} photos</span>}
             </Photo>
           ))}
         </div>

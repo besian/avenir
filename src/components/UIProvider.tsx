@@ -11,13 +11,15 @@ interface UI {
 
 const Ctx = createContext<UI | null>(null);
 
+export interface PaletteHome { id: string; title: string; area: string; avail: string; type: string }
+
 export function useUI() {
   const ui = useContext(Ctx);
   if (!ui) throw new Error('useUI must be used inside <UIProvider>');
   return ui;
 }
 
-export function UIProvider({ children }: { children: ReactNode }) {
+export function UIProvider({ children, homes }: { children: ReactNode; homes: PaletteHome[] }) {
   const [pal, setPal] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -59,7 +61,7 @@ export function UIProvider({ children }: { children: ReactNode }) {
           {toastMsg}
         </div>
       )}
-      {pal && <CommandPalette onClose={() => setPal(false)} />}
+      {pal && <CommandPalette homes={homes} onClose={() => setPal(false)} />}
     </Ctx.Provider>
   );
 }

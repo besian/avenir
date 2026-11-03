@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { Icon } from './Icon';
 import { HeartIcon } from './HeartIcon';
 import { IC } from '@/lib/icons';
-import { AREAS, PROPERTIES, byOrder, homesCount, labels, propertyHref, type Property } from '@/lib/properties';
+import { areasOf, byOrder, homesCount, labels, photoCount, propertyHref, type Property } from '@/lib/properties';
 import { useSaved } from '@/lib/storage';
 import { useModal } from '@/lib/useModal';
 
@@ -15,7 +15,8 @@ const STATUS = ['All', 'Available', 'Coming soon'] as const;
 const BEDS: [number, string][] = [[0, 'Any'], [3, '3+'], [4, '4+'], [5, '5+']];
 const tagClass = (p: Property) => `tag tag--${p.status.split(' ')[0]}`;
 
-export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View }) {
+export function PropertiesBrowser({ homes, defaultView = 'Grid' }: { homes: Property[]; defaultView?: View }) {
+  const areas = areasOf(homes).filter(Boolean).sort();
   const [status, setStatus] = useState<(typeof STATUS)[number]>('All');
   const [area, setArea] = useState('All areas');
   const [beds, setBeds] = useState(0);
@@ -26,7 +27,7 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
   const closeSheet = useCallback(() => setSheet(false), []);
   const { saved, toggle, isSaved } = useSaved();
 
-  const list = PROPERTIES.filter(
+  const list = homes.filter(
     (p) =>
       (status === 'All' || p.status === status) &&
       (area === 'All areas' || p.area === area) &&
@@ -75,7 +76,7 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
             Area
             <select aria-label="Area" value={area} onChange={(e) => setArea(e.target.value)}>
               <option>All areas</option>
-              {AREAS.map((a) => (
+              {areas.map((a) => (
                 <option key={a}>{a}</option>
               ))}
             </select>
@@ -123,6 +124,7 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
           setStatus={setStatus}
           area={area}
           setArea={setArea}
+          areas={areas}
           beds={beds}
           setBeds={setBeds}
           onClear={clear}
@@ -150,8 +152,13 @@ export function PropertiesBrowser({ defaultView = 'Grid' }: { defaultView?: View
             {list.map((p) => (
               <article key={p.id} className="pcard">
                 <Link href={propertyHref(p)} aria-label={`View ${p.title}`} className="pcard__img" tabIndex={-1}>
+                  {p.images?.[0] ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={p.images[0].url} alt="" loading="lazy" className="cover-img" />
+                  ) : (
+                    <span className="fcard__ph">photo · {photoCount(p)}</span>
+                  )}
                   <span className={tagClass(p)}>{p.avail}</span>
-                  <span className="fcard__ph">photo · {p.photos}</span>
                 </Link>
                 {heart(p, true)}
                 <Link href={propertyHref(p)} className="pcard__body">
@@ -237,6 +244,7 @@ interface SheetProps {
   setStatus: (v: (typeof STATUS)[number]) => void;
   area: string;
   setArea: (v: string) => void;
+  areas: string[];
   beds: number;
   setBeds: (v: number) => void;
   onClear: () => void;
@@ -244,7 +252,7 @@ interface SheetProps {
 }
 
 /** Phone-only bottom sheet holding the availability, area and bedroom filters. */
-function FilterSheet({ onClose, count, status, setStatus, area, setArea, beds, setBeds, onClear, active }: SheetProps) {
+function FilterSheet({ onClose, count, status, setStatus, area, setArea, areas, beds, setBeds, onClear, active }: SheetProps) {
   useModal(onClose);
   return createPortal(
     <div className="sheet-backdrop" onClick={onClose}>
@@ -270,7 +278,7 @@ function FilterSheet({ onClose, count, status, setStatus, area, setArea, beds, s
             <span className="sheet__label">Area</span>
             <select className="input" value={area} onChange={(e) => setArea(e.target.value)}>
               <option>All areas</option>
-              {AREAS.map((a) => (
+              {areas.map((a) => (
                 <option key={a}>{a}</option>
               ))}
             </select>
