@@ -1,3 +1,35 @@
+# Avenir Housing — website
+
+A Next.js 16 (App Router, TypeScript) build of the **Avenir Housing v2** design from Claude Design.
+The original design bundle is kept for reference in `project/` and `chats/` (handoff notes below).
+
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build && npm start
+```
+
+## Where things live
+
+| Path | What |
+| --- | --- |
+| `src/app/globals.css` | Design tokens (forest green / sage palette, Archivo type) and all component styles |
+| `src/lib/properties.ts` | **Placeholder** property listings — replace with real homes |
+| `src/lib/content.ts` | Site copy: contact details, FAQs, team, approach, support areas, form options |
+| `src/lib/forms.ts` | Form submission stubs (front-end only) — wire to a backend/email service here |
+| `src/lib/storage.ts` | localStorage helpers (saved shortlist, apply/refer draft) |
+| `src/components/` | Header, search palette (⌘K or /), footer, mobile action bar, wizards, forms |
+
+Pages: `/`, `/properties`, `/properties/[id]`, `/apply` (`?for=self` or `?for=referral`), `/repair`, `/landlords`, `/support`, `/contact`.
+
+### Still to do before launch
+- Real property listings, photos (`<Photo src=…>`) and a real map
+- Connect forms in `src/lib/forms.ts` to a backend
+- Privacy policy page (footer link is `#`)
+- Confirm the promised response times (two working days call-back; reply within a working day)
+
+---
+
 # CODING AGENTS: READ THIS FIRST
 
 This is a **handoff bundle** from Claude Design (claude.ai/design).
