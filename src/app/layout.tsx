@@ -3,7 +3,7 @@ import { Archivo } from 'next/font/google';
 import './globals.css';
 import { UIProvider } from '@/components/UIProvider';
 import { Header } from '@/components/Header';
-import { ClosingBanner, Footer, MobileActionBar } from '@/components/Chrome';
+import { ClosingBanner, Footer } from '@/components/Chrome';
 
 const archivo = Archivo({ subsets: ['latin'], variable: '--font-archivo', display: 'swap' });
 
@@ -32,7 +32,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <ClosingBanner />
             </main>
             <Footer />
-            <MobileActionBar />
           </div>
         </UIProvider>
       </body>

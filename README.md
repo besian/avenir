@@ -18,7 +18,7 @@ npm run build && npm start
 | `src/lib/content.ts` | Site copy: contact details, FAQs, team, approach, support areas, form options |
 | `src/lib/forms.ts` | Form submission stubs (front-end only) — wire to a backend/email service here |
 | `src/lib/storage.ts` | localStorage helpers (saved shortlist, apply/refer draft) |
-| `src/components/` | Header, search palette (⌘K or /), footer, mobile action bar, wizards, forms |
+| `src/components/` | Header, search palette (⌘K or /), footer, phone menu, wizards, forms |
 
 Pages: `/`, `/properties`, `/properties/[id]`, `/apply` (`?for=self` or `?for=referral`), `/repair`, `/landlords`, `/support`, `/contact`.
 

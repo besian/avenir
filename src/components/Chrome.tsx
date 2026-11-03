@@ -2,10 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Icon } from './Icon';
 import { LogoMark } from './Logo';
-import { useUI } from './UIProvider';
-import { IC } from '@/lib/icons';
 import { CONTACT, FOOTER_EXPLORE, FOOTER_HELP } from '@/lib/content';
 
 /** "Not sure where to start?" banner — hidden on the form-led pages. */
@@ -71,27 +68,6 @@ export function Footer() {
           <a href="#">Privacy policy</a>
         </div>
       </div>
-      <div className="footer__spacer" />
     </footer>
-  );
-}
-
-/** Phone-only bottom bar: Call · Search · Refer or apply. */
-export function MobileActionBar() {
-  const { openPalette } = useUI();
-  return (
-    <nav aria-label="Quick actions" className="mbar">
-      <a href={CONTACT.tel} className="mbar__item">
-        <Icon d={IC.phone} size={20} />
-        Call
-      </a>
-      <button type="button" onClick={openPalette} className="mbar__item">
-        <Icon d={IC.search} size={20} stroke={2.2} />
-        Search
-      </button>
-      <Link href="/apply" className="mbar__item mbar__cta">
-        Refer or apply
-      </Link>
-    </nav>
   );
 }
