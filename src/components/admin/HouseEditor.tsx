@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useAdmin } from './AdminShell';
 import { ConfirmDialog } from './ConfirmDialog';
-import { LeafletMap } from '../LeafletMap';
+import { SiteMap } from '../SiteMap';
 import { Icon } from '../Icon';
 import { IC } from '@/lib/icons';
 import { deleteHouse, deleteImage, getHouse, listHouses, nextId, refreshSite, saveHouse, uploadImage } from '@/lib/admin/api';
@@ -432,7 +432,7 @@ export function HouseEditor({ id }: { id: string }) {
           )}
         </div>
         <div className="adm-map">
-          <LeafletMap
+          <SiteMap
             ariaLabel="Choose the home’s location"
             zoom={15}
             pins={h.lat != null && h.lng != null ? [{ id: h.id, lat: h.lat, lng: h.lng, label: '', title: h.title, status: h.status }] : []}

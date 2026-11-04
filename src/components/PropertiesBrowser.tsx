@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { LeafletMap } from './LeafletMap';
+import { SiteMap } from './SiteMap';
 import { createPortal } from 'react-dom';
 import { Icon } from './Icon';
 import { HeartIcon } from './HeartIcon';
@@ -215,7 +215,7 @@ export function PropertiesBrowser({ homes, defaultView = 'Grid' }: { homes: Prop
               ))}
             </div>
             <div className="mapbox">
-              <LeafletMap
+              <SiteMap
                 ariaLabel="Map of homes"
                 pins={list
                   .map((p, i) => ({ p, n: i + 1 }))
