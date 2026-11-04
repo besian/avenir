@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { LeafletMap } from './LeafletMap';
 import { createPortal } from 'react-dom';
 import { Icon } from './Icon';
 import { HeartIcon } from './HeartIcon';
@@ -24,6 +26,7 @@ export function PropertiesBrowser({ homes, defaultView = 'Grid' }: { homes: Prop
   const [view, setView] = useState<View>(defaultView);
   const [hoverId, setHoverId] = useState<string | null>(null);
   const [sheet, setSheet] = useState(false);
+  const router = useRouter();
   const closeSheet = useCallback(() => setSheet(false), []);
   const { saved, toggle, isSaved } = useSaved();
 
@@ -211,24 +214,17 @@ export function PropertiesBrowser({ homes, defaultView = 'Grid' }: { homes: Prop
                 </div>
               ))}
             </div>
-            {/* Placeholder map — swap for a real map (e.g. Mapbox/Leaflet) using each property's coordinates. */}
             <div className="mapbox">
-              <span className="mapbox__label">map — South London</span>
-              {list.map((p, i) => (
-                <Link
-                  key={p.id}
-                  href={propertyHref(p)}
-                  aria-label={p.title}
-                  className="pin"
-                  data-status={p.status}
-                  data-hover={hoverId === p.id}
-                  style={{ left: `${p.mx}%`, top: `${p.my}%` }}
-                  onMouseEnter={() => setHoverId(p.id)}
-                  onMouseLeave={() => setHoverId(null)}
-                >
-                  {i + 1}
-                </Link>
-              ))}
+              <LeafletMap
+                ariaLabel="Map of homes"
+                pins={list
+                  .map((p, i) => ({ p, n: i + 1 }))
+                  .filter(({ p }) => p.lat != null && p.lng != null)
+                  .map(({ p, n }) => ({ id: p.id, lat: p.lat!, lng: p.lng!, label: String(n), title: p.title, status: p.status }))}
+                activeId={hoverId}
+                onPinHover={setHoverId}
+                onPinClick={(id) => router.push(propertyHref({ id }))}
+              />
             </div>
           </div>
         )}

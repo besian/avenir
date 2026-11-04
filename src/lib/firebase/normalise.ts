@@ -54,8 +54,8 @@ export function normalise(id: string, raw: Record<string, unknown>): Property {
     suitable: str(raw.suitable),
     la: str(raw.la),
     photos: n(raw.photos),
-    mx: n(raw.mx, 50),
-    my: n(raw.my, 50),
+    lat: typeof raw.lat === 'number' && Math.abs(raw.lat) <= 90 ? raw.lat : undefined,
+    lng: typeof raw.lng === 'number' && Math.abs(raw.lng) <= 180 ? raw.lng : undefined,
     summary: str(raw.summary),
     features: arr<string>(raw.features).filter((x) => typeof x === 'string'),
     transport: arr<unknown>(raw.transport)

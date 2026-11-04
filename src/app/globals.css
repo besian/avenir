@@ -418,7 +418,6 @@ textarea.input { height: auto; padding: 12px 14px; line-height: 1.5; resize: ver
 .maprow__sub { font-size: 13px; color: var(--color-neutral-700); }
 .maprow .tag { padding: 4px 8px; flex: none; }
 .mapbox { position: sticky; top: 150px; aspect-ratio: 1/1; max-height: 70vh; width: 100%; border: 1px solid var(--color-divider); background: var(--stripes); }
-.mapbox__label { position: absolute; left: 12px; bottom: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--color-neutral-700); }
 .pin {
   position: absolute; width: 36px; height: 36px; margin: -18px 0 0 -18px; display: grid; place-items: center; text-decoration: none;
   background: var(--color-neutral-600); color: var(--color-bg); border: 1px solid var(--color-bg); font-family: var(--font-heading); font-weight: 700; font-size: 14px;
@@ -833,8 +832,9 @@ select.input { appearance: auto; cursor: pointer; }
 .adm-photo__tools { position: absolute; right: 6px; bottom: 6px; display: flex; gap: 4px; }
 .adm-photo__tools button { width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 4px; background: color-mix(in srgb, var(--color-bg) 92%, transparent); color: var(--color-text); cursor: pointer; box-shadow: var(--shadow-sm); }
 .adm-photo__tools button:disabled { opacity: .4; cursor: default; }
-.adm-map { position: relative; aspect-ratio: 16/9; max-width: 520px; border: 1px solid var(--color-divider); background: var(--stripes); cursor: crosshair; border-radius: 4px; }
-.adm-map .pin { pointer-events: none; }
+.adm-map { position: relative; height: clamp(280px, 45vw, 420px); border: 1px solid var(--color-divider); border-radius: 4px; overflow: hidden; }
+.adm-map .leaflet-container { cursor: crosshair; }
+.adm-locbar { display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; }
 .adm-savebar {
   position: sticky; bottom: 0; z-index: 30; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   margin: 8px calc(-1 * clamp(16px, 4vw, 40px)) 0; padding: 12px clamp(16px, 4vw, 40px) calc(12px + env(safe-area-inset-bottom));
@@ -842,3 +842,12 @@ select.input { appearance: auto; cursor: pointer; }
 }
 .adm-dialog { width: 100%; max-width: 440px; background: var(--color-bg); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-lg); }
 .adm .toast { bottom: 88px; }
+
+/* ---------- real maps (Leaflet) ---------- */
+.lmap { position: relative; width: 100%; height: 100%; min-height: 240px; z-index: 0; background: var(--color-surface); font-family: var(--font-body); }
+.lmap .leaflet-tile-pane { filter: saturate(.55) contrast(.95); }
+.lmap .leaflet-control-attribution { font-size: 10px; background: color-mix(in srgb, var(--color-bg) 85%, transparent); }
+.lmap .leaflet-bar a { color: var(--color-text); }
+.pin--map { position: static; margin: 0; cursor: pointer; }
+.mapbox .lmap { position: absolute; inset: 0; }
+.around__map { position: relative; min-height: 260px; border: 1px solid var(--color-divider); }

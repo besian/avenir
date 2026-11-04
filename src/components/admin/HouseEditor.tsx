@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useAdmin } from './AdminShell';
 import { ConfirmDialog } from './ConfirmDialog';
+import { LeafletMap } from '../LeafletMap';
 import { Icon } from '../Icon';
 import { IC } from '@/lib/icons';
 import { deleteHouse, deleteImage, getHouse, listHouses, nextId, refreshSite, saveHouse, uploadImage } from '@/lib/admin/api';
@@ -25,7 +26,7 @@ const blank = (id: string, ord: number): Property => ({
   beds: 1, bedsUnit: 'Bedrooms', baths: 1, bathsUnit: 'Bathrooms', rec: 1,
   support: 'Medium', status: 'Available', ord, avail: 'Available now',
   staff: 'Daily support visits', suitable: 'Single adults, 18+', la: '',
-  photos: 0, images: [], mx: 50, my: 50, summary: '',
+  photos: 0, images: [], summary: '',
   features: [...SHARED_FEATURES], transport: [['', '']],
 });
 
@@ -41,6 +42,8 @@ export function HouseEditor({ id }: { id: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [confirmDel, setConfirmDel] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const [locating, setLocating] = useState(false);
+  const [locMsg, setLocMsg] = useState('');
   // Photos uploaded this session (deleted if the edit is abandoned) and removed ones (deleted on save).
   const added = useRef<string[]>([]);
   const removed = useRef<string[]>([]);
@@ -87,6 +90,26 @@ export function HouseEditor({ id }: { id: string }) {
     setH((x) => (x ? { ...x, ...patch } : x));
     setDirty(true);
   };
+  /** Look up the postcode (postcodes.io, free UK service) and pin it; also fills an empty local authority. */
+  const locate = async (quiet: boolean) => {
+    const pc = h.pc.trim();
+    if (!pc) return !quiet && setLocMsg('Enter the postcode above first.');
+    setLocating(true);
+    setLocMsg('');
+    try {
+      const res = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(pc)}`);
+      const json = await res.json();
+      if (!res.ok || !json.result) throw new Error('not found');
+      const { latitude, longitude, admin_district } = json.result as { latitude: number; longitude: number; admin_district?: string };
+      set({ lat: +latitude.toFixed(6), lng: +longitude.toFixed(6), ...(h.la.trim() ? {} : { la: admin_district ?? '' }) });
+      if (!quiet) setLocMsg(`Found ${pc.toUpperCase()} — drag the pin if it needs adjusting.`);
+    } catch {
+      if (!quiet) setLocMsg('Couldn’t find that postcode. Check it, or click the map to place the pin.');
+    } finally {
+      setLocating(false);
+    }
+  };
+
   const num = (k: 'beds' | 'baths' | 'rec' | 'ord') => ({
     value: String(h[k]),
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => set({ [k]: Math.max(0, Math.floor(Number(e.target.value) || 0)) }),
@@ -218,7 +241,7 @@ export function HouseEditor({ id }: { id: string }) {
           </label>
           <label className="field">
             <span className="field__label">Postcode</span>
-            <input className="input input--upper" placeholder="e.g. SW16 1EH" {...txt('pc')} />
+            <input className="input input--upper" placeholder="e.g. SW16 1EH" {...txt('pc')} onBlur={() => h.lat == null && h.pc.trim() && locate(true)} />
           </label>
           <label className="field">
             <span className="field__label">Local authority</span>
@@ -391,18 +414,33 @@ export function HouseEditor({ id }: { id: string }) {
       </section>
 
       <section className="adm-card adm-sec">
-        <h2 className="adm-h2">Map pin</h2>
-        <p className="adm-muted adm-small">Click to place the pin on the South London map preview.</p>
-        <div
-          className="adm-map"
-          role="application"
-          aria-label="Map pin position"
-          onClick={(e) => {
-            const r = e.currentTarget.getBoundingClientRect();
-            set({ mx: Math.round(((e.clientX - r.left) / r.width) * 100), my: Math.round(((e.clientY - r.top) / r.height) * 100) });
-          }}
-        >
-          <span className="pin" data-status={h.status} style={{ left: `${h.mx}%`, top: `${h.my}%` }}>•</span>
+        <h2 className="adm-h2">Location on the map</h2>
+        <p className="adm-muted adm-small">
+          Find it from the postcode, then click the map or drag the pin to the exact spot.
+        </p>
+        <div className="adm-locbar">
+          <button type="button" className="btn btn--outline btn--sm" onClick={() => locate(false)} aria-disabled={locating}>
+            {locating ? 'Finding…' : h.pc.trim() ? `Find ${h.pc.trim().toUpperCase()}` : 'Find from postcode'}
+          </button>
+          <span className="adm-muted adm-small" aria-live="polite">
+            {locMsg || (h.lat != null && h.lng != null ? `Pinned at ${h.lat.toFixed(5)}, ${h.lng.toFixed(5)}` : 'No location yet — this home won’t appear on maps.')}
+          </span>
+          {h.lat != null && (
+            <button type="button" className="adm-link adm-link--danger" onClick={() => set({ lat: undefined, lng: undefined })}>
+              Remove pin
+            </button>
+          )}
+        </div>
+        <div className="adm-map">
+          <LeafletMap
+            ariaLabel="Choose the home’s location"
+            zoom={15}
+            pins={h.lat != null && h.lng != null ? [{ id: h.id, lat: h.lat, lng: h.lng, label: '', title: h.title, status: h.status }] : []}
+            onPick={(lat, lng) => {
+              setLocMsg('');
+              set({ lat, lng });
+            }}
+          />
         </div>
       </section>
 

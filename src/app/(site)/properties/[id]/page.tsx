@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Arrow, Icon } from '@/components/Icon';
 import { Photo } from '@/components/Photo';
+import { LeafletMap } from '@/components/LeafletMap';
 import { SaveShare } from '@/components/SaveShare';
 import { IC } from '@/lib/icons';
 import { CONTACT, HREF } from '@/lib/content';
@@ -134,7 +135,13 @@ export default async function PropertyPage({ params }: Params) {
                 ))}
               </div>
             </div>
-            <Photo className="around__map" label={`map — ${p.area} ${p.pc}`} />
+            <div className="around__map">
+              {p.lat != null && p.lng != null ? (
+                <LeafletMap ariaLabel={`Map showing ${p.title}`} zoom={15} pins={[{ id: p.id, lat: p.lat, lng: p.lng, label: '', title: p.title, status: p.status }]} />
+              ) : (
+                <Photo className="lmap" label={`map — ${p.area} ${p.pc}`} />
+              )}
+            </div>
           </div>
         </div>
 
