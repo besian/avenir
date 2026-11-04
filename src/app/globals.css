@@ -277,6 +277,9 @@ textarea.input { height: auto; padding: 12px 14px; line-height: 1.5; resize: ver
 .hero__lead { font-size: clamp(16px, 1.3vw, 18px); line-height: 1.55; max-width: 44ch; color: var(--color-neutral-800); }
 .hero__ctas { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
 .hero__media { position: relative; width: 100%; height: clamp(320px, calc(100svh - 220px), 720px); min-height: 0; border-radius: 6px; overflow: hidden; }
+.hero__img { object-fit: cover; object-position: 50% 60%; }
+/* Single-column hero (phones/tablets): a landscape frame shows the room, not the ceiling. */
+@media (max-width: 979px) { .hero__media { height: auto; aspect-ratio: 4 / 3; } }
 .hero__media .ph { position: absolute; inset: 0; justify-content: center; align-items: center; font-family: var(--font-body); font-size: 13px; font-weight: 500; text-align: center; }
 
 .availbar { background: var(--color-accent-100); border-bottom: 1px solid var(--color-divider); }

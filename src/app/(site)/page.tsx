@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import heroImage from '../../../public/images/hero-living-room.webp';
 import { Arrow, Icon } from '@/components/Icon';
 import { Photo } from '@/components/Photo';
 import { FaqSection } from '@/components/FaqSection';
@@ -27,8 +29,15 @@ export default async function Home() {
             </div>
           </div>
           <div className="hero__media">
-            {/* Hero photo: drop a file at /public/images/hero.jpg and pass src="/images/hero.jpg" */}
-            <Photo label="Hero photo — resident at home" />
+            <Image
+              src={heroImage}
+              alt="A bright, furnished living room with two sofas, plants and morning light"
+              fill
+              priority
+              placeholder="blur"
+              sizes="(max-width: 979px) 100vw, 46vw"
+              className="hero__img"
+            />
           </div>
         </div>
       </section>
