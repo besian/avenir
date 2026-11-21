@@ -176,7 +176,7 @@ export default async function Home() {
         <div className="team">
           {TEAM.map((t) => (
             <div key={t.name} className="team__member">
-              <Photo className="team__photo" label="headshot" />
+              <Photo className="team__photo" src={t.photo} alt={`${t.name}, ${t.role}`} label="headshot" />
               <div className="team__meta">
                 <p className="team__name">{t.name}</p>
                 <p className="team__role">{t.role}</p>

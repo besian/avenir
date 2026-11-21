@@ -51,10 +51,10 @@ export const APPROACH = [
 export const WHO_WE_HELP = ['Formerly homeless individuals', 'Vulnerable adults', 'People leaving temporary or unsafe housing'];
 
 export const TEAM = [
-  { name: 'Ismail Hasan', role: 'Director & Co-founder' },
-  { name: 'Amaan Hafeez', role: 'Director & Co-founder' },
-  { name: 'Anis Hasan', role: 'Finance Manager' },
-  { name: 'Rayaan Hafeez', role: 'Housing Manager' },
+  { name: 'Ismail Hasan', role: 'Director & Co-founder', photo: '/images/team/ismail-hasan.webp' },
+  { name: 'Amaan Hafeez', role: 'Director & Co-founder', photo: '/images/team/amaan-hafeez.webp' },
+  { name: 'Anis Hasan', role: 'Finance Manager', photo: '/images/team/anis-hasan.webp' },
+  { name: 'Rayaan Hafeez', role: 'Housing Manager', photo: '/images/team/rayaan-hafeez.webp' },
 ];
 
 export interface Faq { q: string; a: string; bullets?: string[] }
