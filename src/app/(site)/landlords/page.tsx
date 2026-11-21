@@ -3,6 +3,9 @@ import { Photo } from '@/components/Photo';
 import { LandlordForm } from '@/components/LandlordForm';
 import { PARTNERS, PARTNER_STEPS } from '@/lib/content';
 
+const LANDLORDS_PHOTO =
+  'https://images.unsplash.com/photo-1774199496664-a9690967be5a?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.1.0';
+
 export const metadata: Metadata = {
   title: 'Landlords & partners',
   description: 'We partner with landlords and local organisations to create secure, sustainable homes and stronger communities.',
@@ -19,7 +22,13 @@ export default function LandlordsPage() {
             We partner with landlords and local organisations to create secure, sustainable homes and stronger communities.
           </p>
         </div>
-        <Photo className="ll-hero__img" label="photo — furnished room" />
+        {/* Unsplash photo (free licence), loaded from Unsplash's image CDN as they recommend. */}
+        <Photo
+          className="ll-hero__img"
+          src={LANDLORDS_PHOTO}
+          alt="A bright, furnished living room with tall wood-framed windows, a fireplace, armchairs and a sofa"
+          eager
+        />
       </section>
 
       <section className="rule-top bg-surface">
